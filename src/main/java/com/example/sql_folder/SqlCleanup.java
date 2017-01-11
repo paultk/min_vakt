@@ -59,6 +59,18 @@ public class SqlCleanup {
         }
     }
 
+    public static void closeEverything(ResultSet res, PreparedStatement query, Connection con) {
+        if (!(res == null)) {
+            SqlCleanup.closeResSet(res);
+        }
+        if (!(query == null)) {
+            SqlCleanup.closeStatement(query);
+        }
+        if (!(con == null)) {
+            SqlCleanup.setAutoCommit(con);
+        }
+    }
+
     public static void writeMessage(Exception e, String message) {
         System.err.println("*** Feil oppstått: " + message + ". ***");
         e.printStackTrace(System.err);

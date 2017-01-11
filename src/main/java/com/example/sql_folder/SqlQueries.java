@@ -244,6 +244,40 @@ public class SqlQueries extends DBConnection {
         return null;
     }
 
+    public Vakt[] selectVakter(Bruker bruker) {
+        ResultSet res = null;
+        ArrayList<Vakt> vakter = new ArrayList<>();
+
+        try {
+            String selectVaktId = "SELECT vakt_id FROM bruker_vakt WHERE bruker_id = ?";
+            selectQuery = connection.prepareStatement(selectVaktId);
+            selectQuery.setInt(1, bruker.getBrukerId());
+            res = selectQuery.executeQuery();
+
+            ResultSet res2 = null;
+            while (res.next()) {
+                try {
+                    int vaktId = res.getInt("vakt_id");
+                    String selectVaktStr = "SELECT vaktansvarlig_id, avdeling_id, fra_tid, til_tid, ant_pers FROM vakt WHERE vakt_id = " + vaktId;
+                    res2 = connection.createStatement().executeQuery(selectVaktStr);
+                    vakter.add(new Vakt(vaktId,
+                            res2.getInt("vaktansvarlig_id"),
+                            res2.getInt("avdeling_id"),
+                            res2.getTimestamp("fra_tid").toLocalDateTime(),
+                            res2.getTimestamp("til_tid").toLocalDateTime(),
+                            res2.getInt("ant_pers")));
+                } finally {
+                    SqlCleanup.closeResSet(res2);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            SqlCleanup.closeEverything(res, selectQuery, connection);
+        }
+        return (Vakt[])vakter.toArray();
+    }
+
     public boolean insertVakt(Vakt newVakt) {
         try {
             String insertSql = "INSERT INTO vakt(vaktansvarlig_id, avdeling_id, fra_tid, til_tid, ant_pers) VALUES(?,?,?,?,?)";
