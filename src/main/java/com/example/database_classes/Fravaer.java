@@ -17,6 +17,38 @@ public class Fravaer {
 
     }
 
+    public int getBrukerId() {
+        return brukerId;
+    }
+
+    public void setBrukerId(int brukerId) {
+        this.brukerId = brukerId;
+    }
+
+    public int getVaktId() {
+        return vaktId;
+    }
+
+    public void setVaktId(int vaktId) {
+        this.vaktId = vaktId;
+    }
+
+    public double getAntTimer() {
+        return antTimer;
+    }
+
+    public void setAntTimer(double antTimer) {
+        this.antTimer = antTimer;
+    }
+
+    public String getKommentar() {
+        return kommentar;
+    }
+
+    public void setKommentar(String kommentar) {
+        this.kommentar = kommentar;
+    }
+
     @Override
     public String toString() {
         return "Bruker ID: " + brukerId + "\nVaktId: " + vaktId + "\nAntall timer: " + antTimer + "\nKommentar: " + kommentar;
