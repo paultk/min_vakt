@@ -23,6 +23,12 @@ public class SqlQueries extends DBConnection {
         // tom inntil videre pga inheritance av DBConnection
     }
 
+    /*
+    *
+    * AVDELING
+    *
+    */
+
     public Avdeling selectAvdeling(int avdelingId) {
 
         try {
@@ -74,6 +80,12 @@ public class SqlQueries extends DBConnection {
         return false;
     }
 
+    /*
+    *
+    * BRUKER
+    *
+    */
+
     public Bruker getBruker(int brukerId) {
         DBConnection conn = new DBConnection();
         try {
@@ -105,6 +117,12 @@ public class SqlQueries extends DBConnection {
 
     }
 
+    /*
+    *
+    * VAKT
+    *
+    */
+
     public Vakt selectVakt(int vaktId) {
         try {
             String selectSql = "SELECT vaktansvarlig_id, avdeling_id, fra_tid, til_tid, ant_pers FROM vakt WHERE vakt_id = ?";
@@ -131,9 +149,9 @@ public class SqlQueries extends DBConnection {
     public boolean insertVakt(Vakt newVakt) {
 
         try {
-
             String insertSql = "INSERT INTO vakt(vaktansvarlig_id, avdeling_id, fra_tid, til_tid, ant_pers) VALUES(?,?,?,?,?)";
             insertQuery = connection.prepareStatement(insertSql);
+
             insertQuery.setInt(1, newVakt.getVaktansvarligId());
             insertQuery.setInt(2, newVakt.getAvdelingId());
             Timestamp fraTid = Timestamp.valueOf(newVakt.getFraTid()); // oversetter LocalDateTime til Timestamp
@@ -151,7 +169,14 @@ public class SqlQueries extends DBConnection {
         return false;
     }
 
+    /*
+    *
+    * FRAVAER
+    *
+    */
+
     public Fravaer selectFravaer(int brukerId) {
+
         try {
             String selectSql = "SELECT vakt_id, ant_timer, kommentar FROM fravaer WHERE bruker_id = ?";
             selectQuery = connection.prepareStatement(selectSql);
