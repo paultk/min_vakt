@@ -7,6 +7,14 @@ public class Avdeling {
     private int avdelingId;
     private String navn;
 
-    public Avdeling() {
+    public Avdeling(int avdelingId, String navn) {
+        this.avdelingId = avdelingId;
+        this.navn = navn;
+    }
+
+
+    @Override
+    public String toString() {
+        return "Avdeling ID: " + avdelingId + "\nNavn: " + navn;
     }
 }
