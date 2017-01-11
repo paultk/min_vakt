@@ -14,6 +14,7 @@ public class SqlQueries {
     PreparedStatement selectQuery;
     PreparedStatement insertQuery;
     PreparedStatement updateQuery;
+    PreparedStatement deleteQuery;
 
     Connection connection;
 
@@ -54,6 +55,21 @@ public class SqlQueries {
             res.next();
             newAvdeling.setAvdelingId(res.getInt(1));
             return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public boolean deleteAvdeling(Avdeling avdeling) {
+        try {
+            String deleteSql = "DELETE FROM avdeling WHERE avdeling_id = ?";
+            deleteQuery = connection.prepareStatement(deleteSql);
+            deleteQuery.setInt(1, avdeling.getAvdelingId());
+
+            if (deleteQuery.executeUpdate() == 1) {
+                return true;
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
