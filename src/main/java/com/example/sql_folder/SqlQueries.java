@@ -1,5 +1,12 @@
 package com.example.sql_folder;
 import com.example.database_classes.*;
+import com.sun.corba.se.impl.orb.PrefixParserData;
+
+import java.sql.PreparedStatement;
+
+/**
+ * Created by axelkvistad on 10/01/17.
+ */
 
 import java.sql.*;
 import java.time.LocalDateTime;
@@ -110,6 +117,35 @@ public class SqlQueries extends DBConnection {
         }
         return null;
     }
+
+    public Bruker[] selectBrukere() {
+		try {
+			PreparedStatement prep = connection.prepareStatement("SELECT * FROM bruker");
+			ResultSet res = prep.executeQuery();
+			ArrayList<Bruker> brukere = new ArrayList<>();
+			while (res.next()) {
+				Bruker brk = new Bruker(
+						res.getInt("bruker_id"),
+						res.getInt("passord_id"),
+						res.getInt("stilling_id"),
+						res.getInt("avdeling_id"),
+						res.getInt("telefonnr"),
+						res.getInt("stillingsprosent"),
+						res.getDouble("timelonn"),
+						res.getBoolean("admin"),
+						res.getString("fornavn"),
+						res.getString("etternavn"),
+						res.getString("epost"));
+				brukere.add(brk);
+			}
+			Bruker[] ret = new Bruker[brukere.size()];
+			return brukere.toArray(ret);
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 
     public boolean addBruker(Bruker bruker) {
 		try {
