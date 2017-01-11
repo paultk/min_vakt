@@ -8,6 +8,7 @@ import java.sql.PreparedStatement;
  */
 
 import java.sql.*;
+import java.time.LocalDateTime;
 
 public class SqlQueries {
 
@@ -23,7 +24,7 @@ public class SqlQueries {
         connection = DBConnection.conn;
     }
 
-    public Avdeling getAvdeling(int avdelingId) {
+    public Avdeling selectAvdeling(int avdelingId) {
 
         try {
             String selectSql = "SELECT avd_navn FROM avdeling WHERE avdeling_id = ?";
@@ -45,7 +46,7 @@ public class SqlQueries {
 
     }
 
-    public boolean addAvdeling(Avdeling newAvdeling) {
+    public boolean insertAvdeling(Avdeling newAvdeling) {
         try {
             String insertSql = "INSERT INTO avdeling(avd_navn) VALUES(?)";
             insertQuery = connection.prepareStatement(insertSql, Statement.RETURN_GENERATED_KEYS);
@@ -86,7 +87,27 @@ public class SqlQueries {
 
     }
 
-    public void getVakt(int vaktId) {
+    public Vakt selectVakt(int vaktId) {
+        try {
+            String selectSql = "SELECT vaktansvarlig_id, avdeling_id, fra_tid, til_tid, ant_pers FROM vakt WHERE vakt_id = ?";
+            selectQuery = connection.prepareStatement(selectSql);
+            ResultSet res = selectQuery.executeQuery();
+
+            if (!res.next()) return null;
+
+            int vaktansvarligId = res.getInt("vaktansvarlig_id");
+            int avdelingId = res.getInt("avdeling_id");
+            LocalDateTime fraTid = res.getTimestamp("fra_tid").toLocalDateTime();
+            LocalDateTime tilTid = res.getTimestamp("til_tid").toLocalDateTime();
+            int antPers = res.getInt("ant_pers");
+
+            return new Vakt(vaktId, vaktansvarligId, avdelingId, fraTid, tilTid, antPers);
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public void addVakt() {
