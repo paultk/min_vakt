@@ -8,13 +8,21 @@ import java.sql.*;
 public class DBConnection {
 
 	static Connection conn;
-	static boolean connect() {
-		String url = "jdbc:mysql://mysql.stud.iie.ntnu.no/g_scrum06";
-		String user = "g_scrum06";
-		String pass = "aF9SoPaP";
+
+	public DBConnection() {
+		connect();
+	}
+
+	boolean connect() {
+		//Sjekker om connection allerede finnes
 		try {
-			conn = DriverManager.getConnection(url, user, pass);
-			if (conn.isValid(1)) {
+			if (conn == null || conn.isClosed()) {
+				String url = "jdbc:mysql://mysql.stud.iie.ntnu.no/g_scrum06";
+				String user = "g_scrum06";
+				String pass = "aF9SoPaP";
+				conn = DriverManager.getConnection(url, user, pass);
+			}
+			if (conn.isValid(3)){
 				return true;
 			}
 		}
@@ -23,9 +31,10 @@ public class DBConnection {
 		}
 		return false;
 	}
-
-	public static void main(String[] args) throws Exception {
-		DBConnection.connect();
+	static void main(String[] args) throws Exception {
+		DBConnection conn = new DBConnection();
+//		DBConnection.connect();
+//		DBConnection.execute("SELECT fornavn FROM bruker", null);
 		PreparedStatement prep = DBConnection.conn.prepareStatement("SELECT fornavn FROM bruker");
 		ResultSet res = prep.executeQuery();
 		if (res.next()) {

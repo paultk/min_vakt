@@ -1,6 +1,8 @@
 package com.example.sql_folder;
 import com.example.database_classes.*;
 
+import java.sql.PreparedStatement;
+
 /**
  * Created by axelkvistad on 10/01/17.
  */
@@ -46,9 +48,11 @@ public class SqlQueries {
 
     }
 
-    public void getBruker(int brukerId) {
+    /*public void getBruker(int brukerId) {
+        DBConnection.connect();
+        PreparedStatement prep = DBConnection.conn.prepareStatement("SELECT * FROM bruker WHERE bruker_id = ?");
 
-    }
+    }*/
 
     public void addBruker(Bruker bruker) {
 
