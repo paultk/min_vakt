@@ -10,7 +10,7 @@ import java.sql.PreparedStatement;
 import java.sql.*;
 import java.time.LocalDateTime;
 
-public class SqlQueries {
+public class SqlQueries extends DBConnection {
 
     PreparedStatement selectQuery;
     PreparedStatement insertQuery;
@@ -20,8 +20,7 @@ public class SqlQueries {
     Connection connection;
 
     public SqlQueries() {
-
-        connection = DBConnection.conn;
+        // tom inntil videre pga inheritance av DBConnection
     }
 
     public Avdeling selectAvdeling(int avdelingId) {
@@ -108,10 +107,6 @@ public class SqlQueries {
             e.printStackTrace();
         }
         return null;
-    }
-
-    public void addVakt() {
-
     }
 
     public void setVakt() {
