@@ -1,7 +1,5 @@
-package sql;
+package com.example.sql_folder;
 import com.example.database_classes.*;
-
-import java.sql.*;
 
 /**
  * Created by axelkvistad on 10/01/17.

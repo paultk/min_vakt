@@ -1,7 +1,6 @@
-package com.example;
+package com.example.sql_folder;
 
 import java.sql.*;
-import java.util.Arrays;
 
 /**
  * Created by Jens on 11-Jan-17.
