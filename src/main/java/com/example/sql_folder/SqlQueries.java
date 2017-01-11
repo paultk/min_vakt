@@ -323,7 +323,37 @@ public class SqlQueries extends DBConnection {
 
         return null;
     }
+    public boolean insertFravaer(Fravaer newFravaer) {
+        try {
+            String insertSql = "INSERT INTO vakt(ant_timer, kommentar) VALUES(?,?)";
+            insertQuery = connection.prepareStatement(insertSql);
 
+            insertQuery.setDouble(1, newFravaer.getAntTimer());
+            insertQuery.setString(2, newFravaer.getKommentar());
+            insertQuery.execute();
+            return true;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+
+    }
+
+    public boolean deleteFravaer(Fravaer fravaer) {
+        try {
+            String deleteSql = "DELETE FROM fravaer WHERE bruker_id = ?";
+            deleteQuery = connection.prepareStatement(deleteSql);
+            deleteQuery.setInt(1, fravaer.getBrukerId());
+
+            if (deleteQuery.executeUpdate() == 1) {
+                return true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 
 
     public static void main(String[] args) {
