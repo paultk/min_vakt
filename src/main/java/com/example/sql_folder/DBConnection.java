@@ -32,7 +32,6 @@ public class DBConnection {
 		return false;
 	}
 
-
 	static void main(String[] args) throws Exception {
 		DBConnection conn = new DBConnection();
 //		DBConnection.connect();

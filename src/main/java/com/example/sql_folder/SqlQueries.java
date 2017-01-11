@@ -76,11 +76,32 @@ public class SqlQueries extends DBConnection {
         return false;
     }
 
-    /*public void getBruker(int brukerId) {
-        DBConnection.connect();
-        PreparedStatement prep = DBConnection.conn.prepareStatement("SELECT * FROM bruker WHERE bruker_id = ?");
-
-    }*/
+    public Bruker getBruker(int brukerId) {
+        DBConnection conn = new DBConnection();
+        try {
+            PreparedStatement prep = DBConnection.conn.prepareStatement("SELECT * FROM bruker WHERE bruker_id = ?");
+            prep.setInt(1, brukerId);
+            ResultSet res = prep.executeQuery();
+            if (res.next()) {
+                return new Bruker(
+                        res.getInt("bruker_id"),
+                        res.getInt("passord_id"),
+                        res.getInt("stilling_id"),
+                        res.getInt("avdeling_id"),
+                        res.getInt("telefonnr"),
+                        res.getInt("stillingsprosent"),
+                        res.getDouble("timelonn"),
+                        res.getBoolean("admin"),
+                        res.getString("fornavn"),
+                        res.getString("etternavn"),
+                        res.getString("epost"));
+            }
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
     public void addBruker(Bruker bruker) {
 
@@ -138,10 +159,8 @@ public class SqlQueries extends DBConnection {
 
 
 
-
-
-
-
-
-
+    public static void main(String[] args) {
+        SqlQueries query = new SqlQueries();
+        System.out.println(query.getBruker(0));
+    }
 }

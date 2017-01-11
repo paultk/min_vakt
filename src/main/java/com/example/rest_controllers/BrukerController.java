@@ -1,18 +1,24 @@
 package com.example.rest_controllers;
 
 import com.example.database_classes.Bruker;
+import com.example.sql_folder.SqlQueries;
 import com.fasterxml.jackson.databind.util.JSONPObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.websocket.server.PathParam;
+
 /**
  * Created by Jens on 11-Jan-17.
  */
-/*@RestController
+@RestController
 public class BrukerController {
-	@RequestMapping("/bruker/getbrukere")
-	public Bruker getBrukere() {
-
+	@RequestMapping("/bruker/getbruker/{id}")
+	public Bruker getBruker(@PathParam("id") Integer id) {
+		SqlQueries query = new SqlQueries();
+		Bruker ret = query.getBruker(id);
+		System.out.println(ret);
+		return query.getBruker(id);
 	}
-}*/
+}
