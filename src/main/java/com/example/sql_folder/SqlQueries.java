@@ -354,11 +354,12 @@ public class SqlQueries extends DBConnection {
     }
     public boolean insertFravaer(Fravaer newFravaer) {
         try {
-            String insertSql = "INSERT INTO vakt(ant_timer, kommentar) VALUES(?,?)";
+            String insertSql = "INSERT INTO fravaer(vakt_id,ant_timer, kommentar) VALUES(?,?)";
             insertQuery = connection.prepareStatement(insertSql);
 
-            insertQuery.setDouble(1, newFravaer.getAntTimer());
-            insertQuery.setString(2, newFravaer.getKommentar());
+            insertQuery.setDouble(1, newFravaer.getVaktId());
+            insertQuery.setDouble(2, newFravaer.getAntTimer());
+            insertQuery.setString(3, newFravaer.getKommentar());
             insertQuery.execute();
             return true;
 
