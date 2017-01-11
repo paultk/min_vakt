@@ -13,7 +13,7 @@ public class DBConnection {
 		connect();
 	}
 
-	boolean connect() {
+	static boolean connect() {
 		//Sjekker om connection allerede finnes
 		try {
 			if (conn == null || conn.isClosed()) {

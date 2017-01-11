@@ -20,6 +20,8 @@ public class SqlQueries extends DBConnection {
     Connection connection;
 
     public SqlQueries() {
+		DBConnection.connect();
+		connection = DBConnection.conn;
         // tom inntil videre pga inheritance av DBConnection
     }
 
@@ -80,16 +82,9 @@ public class SqlQueries extends DBConnection {
         return false;
     }
 
-    /*
-    *
-    * BRUKER
-    *
-    */
-
-    public Bruker getBruker(int brukerId) {
-        DBConnection conn = new DBConnection();
+    public Bruker selectBruker(int brukerId) {
         try {
-            PreparedStatement prep = DBConnection.conn.prepareStatement("SELECT * FROM bruker WHERE bruker_id = ?");
+            PreparedStatement prep = connection.prepareStatement("SELECT * FROM bruker WHERE bruker_id = ?");
             prep.setInt(1, brukerId);
             ResultSet res = prep.executeQuery();
             if (res.next()) {
@@ -114,8 +109,41 @@ public class SqlQueries extends DBConnection {
     }
 
     public void addBruker(Bruker bruker) {
-
+		try {
+			PreparedStatement prep = connection.prepareStatement("INSERT INTO bruker (bruker_id, passord_id, " +
+					"stilling_id, avdeling_id, fornavn, etternavn, timelonn, telefonnr, " +
+					"epost, stillingsprosent, admin) " +
+					"VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);");
+			prep.setInt(1, bruker.getBrukerId());
+			prep.setInt(2, bruker.getPassordId());
+			prep.setInt(3, bruker.getStillingsId());
+			prep.setInt(4, bruker.getAvdelingId());
+			prep.setString(5, bruker.getFornavn());
+			prep.setString(6, bruker.getEtternavn());
+			prep.setDouble(7, bruker.getTimelonn());
+			prep.setInt(8, bruker.getTelefonNr());
+			prep.setString(9, bruker.getEpost());
+			prep.setInt(10, bruker.getStillingsProsent());
+			prep.setBoolean(11, bruker.isAdmin());
+			prep.executeUpdate();
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
     }
+	public boolean deleteBruker(int id) {
+
+		try {
+			PreparedStatement prep = connection.prepareStatement("DELETE FROM bruker WHERE bruker.bruker_id = ?");
+			prep.setInt(1, id);
+			prep.executeUpdate();
+			return true;
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
 
     /*
     *
@@ -314,6 +342,9 @@ public class SqlQueries extends DBConnection {
 
     public static void main(String[] args) {
         SqlQueries query = new SqlQueries();
-        System.out.println(query.getBruker(0));
+		query.deleteBruker(1);
+		Bruker bruker = new Bruker(1, 0, 0, 0, 12345678, 50, 100, true, "Rob", "Bob", "bobby");
+		query.addBruker(bruker);
+        System.out.println(query.selectBruker(1));
     }
 }

@@ -16,11 +16,18 @@ import javax.websocket.server.PathParam;
  */
 @RestController
 public class BrukerController {
+	SqlQueries query = new SqlQueries();
 	@RequestMapping("/bruker/{id}")
 	public Bruker getBruker(@PathVariable("id") Integer id) {
-		SqlQueries query = new SqlQueries();
-		Bruker ret = query.getBruker(id);
+		Bruker ret = query.selectBruker(id);
 		System.out.println(ret);
-		return query.getBruker(id);
+		return query.selectBruker(id);
+	}
+
+	//TODO: ikke bruke pathvariable her
+	//Får ikke testa requestbody uten noen side
+	@RequestMapping("/bruker/delete/{id}")
+	public void deleteBruker(@PathVariable ("id") Integer id) {
+		query.deleteBruker(id);
 	}
 }
