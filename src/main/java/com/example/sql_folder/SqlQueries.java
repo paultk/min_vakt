@@ -118,6 +118,30 @@ public class SqlQueries {
 
     }
 
+    public Fravaer selectFravaer(int brukerId) {
+        try {
+            String selectSql = "SELECT vakt_id, ant_timer, kommentar FROM fravaer WHERE bruker_id = ?";
+            selectQuery = connection.prepareStatement(selectSql);
+            selectQuery.setInt(1, brukerId);
+            ResultSet res = selectQuery.executeQuery();
+
+            if (!res.next()) return null;
+
+            int vaktId = res.getInt("vakt_id");
+            int antTimer = res.getInt("ant_timer");
+            String kommentar = res.getString("kommentar");
+
+
+            return new Fravaer(brukerId, vaktId, antTimer, kommentar);
+
+        } catch (SQLException sqlE) {
+            sqlE.printStackTrace();
+        }
+
+        return null;
+    }
+
+
 
 
 
