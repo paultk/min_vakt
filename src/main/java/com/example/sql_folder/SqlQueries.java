@@ -8,28 +8,21 @@ import java.sql.PreparedStatement;
  */
 
 import java.sql.*;
-import java.time.LocalDateTime;
 
-public class SqlQueries extends DBConnection {
+public class SqlQueries {
 
     PreparedStatement selectQuery;
     PreparedStatement insertQuery;
     PreparedStatement updateQuery;
-    PreparedStatement deleteQuery;
 
     Connection connection;
 
     public SqlQueries() {
-        // tom inntil videre pga inheritance av DBConnection
+
+        connection = DBConnection.conn;
     }
 
-    /*
-    *
-    * AVDELING
-    *
-    */
-
-    public Avdeling selectAvdeling(int avdelingId) {
+    public Avdeling getAvdeling(int avdelingId) {
 
         try {
             String selectSql = "SELECT avd_navn FROM avdeling WHERE avdeling_id = ?";
@@ -43,34 +36,101 @@ public class SqlQueries extends DBConnection {
 
             return new Avdeling(avdelingId, avdelingNavn);
 
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException sqlE) {
+            sqlE.printStackTrace();
         }
+
         return null;
+
     }
 
-    public boolean insertAvdeling(Avdeling newAvdeling) {
+    public void addAvdeling(Avdeling avdeling) {
+
+    }
+
+    /*public void getBruker(int brukerId) {
+        DBConnection.connect();
+        PreparedStatement prep = DBConnection.conn.prepareStatement("SELECT * FROM bruker WHERE bruker_id = ?");
+
+    }*/
+
+    public void addBruker(Bruker bruker) {
+
+    }
+
+    public void getVakt(int vaktId) {
+    }
+
+    public void addVakt() {
+
+    }
+
+    public void setVakt() {
+
+    }
+
+    public Stilling selectStilling(int stilling_id){
+
+        try{
+            String selectSql = "SELECT beskrivelse FROM stilling WHERE stilling_id = ?";
+            selectQuery = connection.prepareStatement(selectSql);
+            selectQuery.setInt(1, stilling_id);
+
+            ResultSet res = selectQuery.executeQuery();
+
+            if (!res.next()) return null;
+
+            String beskrivelse = res.getString(1);
+
+            return new Stilling(stilling_id, beskrivelse);
+
+        } catch (SQLException sqlE) {
+            sqlE.printStackTrace();
+        }
+
+        return null;
+
+    }
+
+    public boolean updateStilling(Stilling stilling){
+
         try {
-            String insertSql = "INSERT INTO avdeling(avd_navn) VALUES(?)";
-            insertQuery = connection.prepareStatement(insertSql, Statement.RETURN_GENERATED_KEYS);
-            insertQuery.setString(1, newAvdeling.getNavn());
-            insertQuery.execute();
-            ResultSet res = insertQuery.getGeneratedKeys();
-            res.next();
-            newAvdeling.setAvdelingId(res.getInt(1));
-            return true;
+            String sql = "UPDATE stilling SET beskrivelse = ? WHERE stilling_id = ?";
+            PreparedStatement updateQuery = connection.prepareStatement(sql);
+            updateQuery.setString(1, stilling.getBeskrivelse());
+            updateQuery.setInt(2, stilling.getStillingId());
+            if (updateQuery.executeUpdate() == 1) {
+                return true;
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return false;
     }
 
-    public boolean deleteAvdeling(Avdeling avdeling) {
+    public boolean insertStilling(Stilling newStilling){
         try {
-            String deleteSql = "DELETE FROM avdeling WHERE avdeling_id = ?";
-            deleteQuery = connection.prepareStatement(deleteSql);
-            deleteQuery.setInt(1, avdeling.getAvdelingId());
+            String sql = "INSERT INTO stilling(beskrivelse) VALUES(?);";
+            insertQuery = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            insertQuery.setString(1, newStilling.getBeskrivelse());
+            insertQuery.execute();
+            ResultSet res = insertQuery.getGeneratedKeys();
+            res.next();
+            newStilling.setStillingId(res.getInt(1));
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
 
+    }
+
+    public boolean deleteStilling(Stilling stilling){
+        try {
+
+            String sql = "DELETE FROM stilling WHERE stilling_id = ?";
+            PreparedStatement deleteQuery = connection.prepareStatement(sql);
+            deleteQuery.setInt(1, stilling.getStillingId());
             if (deleteQuery.executeUpdate() == 1) {
                 return true;
             }
@@ -80,129 +140,30 @@ public class SqlQueries extends DBConnection {
         return false;
     }
 
-    /*
-    *
-    * BRUKER
-    *
-    */
+   /* public Passord getPassrod(int passord_id){
 
-    public Bruker getBruker(int brukerId) {
-        DBConnection conn = new DBConnection();
-        try {
-            PreparedStatement prep = DBConnection.conn.prepareStatement("SELECT * FROM bruker WHERE bruker_id = ?");
-            prep.setInt(1, brukerId);
-            ResultSet res = prep.executeQuery();
-            if (res.next()) {
-                return new Bruker(
-                        res.getInt("bruker_id"),
-                        res.getInt("passord_id"),
-                        res.getInt("stilling_id"),
-                        res.getInt("avdeling_id"),
-                        res.getInt("telefonnr"),
-                        res.getInt("stillingsprosent"),
-                        res.getDouble("timelonn"),
-                        res.getBoolean("admin"),
-                        res.getString("fornavn"),
-                        res.getString("etternavn"),
-                        res.getString("epost"));
-            }
-        }
-        catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    public void addBruker(Bruker bruker) {
-
-    }
-
-    /*
-    *
-    * VAKT
-    *
-    */
-
-    public Vakt selectVakt(int vaktId) {
-        try {
-            String selectSql = "SELECT vaktansvarlig_id, avdeling_id, fra_tid, til_tid, ant_pers FROM vakt WHERE vakt_id = ?";
+        try{
+            String selectSql = "SELECT avd_navn FROM avdeling WHERE avdeling_id = ?";
             selectQuery = connection.prepareStatement(selectSql);
+            selectQuery.setInt(1, passord_id);
             ResultSet res = selectQuery.executeQuery();
 
             if (!res.next()) return null;
 
-            int vaktansvarligId = res.getInt("vaktansvarlig_id");
-            int avdelingId = res.getInt("avdeling_id");
-            LocalDateTime fraTid = res.getTimestamp("fra_tid").toLocalDateTime();
-            LocalDateTime tilTid = res.getTimestamp("til_tid").toLocalDateTime();
-            int antPers = res.getInt("ant_pers");
+            String hash = res.getString(1);
+            String salt =
 
-            return new Vakt(vaktId, vaktansvarligId, avdelingId, fraTid, tilTid, antPers);
-
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    public boolean insertVakt(Vakt newVakt) {
-
-        try {
-            String insertSql = "INSERT INTO vakt(vaktansvarlig_id, avdeling_id, fra_tid, til_tid, ant_pers) VALUES(?,?,?,?,?)";
-            insertQuery = connection.prepareStatement(insertSql);
-
-            insertQuery.setInt(1, newVakt.getVaktansvarligId());
-            insertQuery.setInt(2, newVakt.getAvdelingId());
-            Timestamp fraTid = Timestamp.valueOf(newVakt.getFraTid()); // oversetter LocalDateTime til Timestamp
-            insertQuery.setTimestamp(3, fraTid);
-            Timestamp tilTid = Timestamp.valueOf(newVakt.getTilTid()); // oversetter LDT til Timestamp
-            insertQuery.setTimestamp(4, tilTid);
-            insertQuery.setInt(5, newVakt.getAntPers());
-
-            insertQuery.execute();
-            return true;
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return false;
-    }
-
-    /*
-    *
-    * FRAVAER
-    *
-    */
-
-    public Fravaer selectFravaer(int brukerId) {
-
-        try {
-            String selectSql = "SELECT vakt_id, ant_timer, kommentar FROM fravaer WHERE bruker_id = ?";
-            selectQuery = connection.prepareStatement(selectSql);
-            selectQuery.setInt(1, brukerId);
-            ResultSet res = selectQuery.executeQuery();
-
-            if (!res.next()) return null;
-
-            int vaktId = res.getInt("vakt_id");
-            int antTimer = res.getInt("ant_timer");
-            String kommentar = res.getString("kommentar");
-
-
-            return new Fravaer(brukerId, vaktId, antTimer, kommentar);
+            return new Passord(passord_id, );
 
         } catch (SQLException sqlE) {
             sqlE.printStackTrace();
         }
 
         return null;
-    }
+
+    }*/
 
 
 
-    public static void main(String[] args) {
-        SqlQueries query = new SqlQueries();
-        System.out.println(query.getBruker(0));
-    }
+
 }

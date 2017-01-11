@@ -5,13 +5,33 @@ package com.example.database_classes;
  */
 public class Stilling {
     private int stillingId;
-    private String stillingNavn;
+    private String beskrivelse;
 
-    public Stilling(int stillingId, String stillingNavn) {
+    public Stilling(int stillingId, String beskrivelse) {
         this.stillingId = stillingId;
-        this.stillingNavn = stillingNavn;
+        this.beskrivelse = beskrivelse;
+    }
+
+    public Stilling(String beskrivelse){
+        this.beskrivelse = beskrivelse;
+    }
+
+    public int getStillingId(){
+        return stillingId;
+    }
+
+    public String getBeskrivelse(){
+        return beskrivelse;
+    }
+
+    public void setStillingId(int stillingId){
+        this.stillingId = stillingId;
+    }
+
+    public void setBeskrivelse(String beskrivelse){
+        this.beskrivelse = beskrivelse;
     }
 
     @Override
-    public String toString(){ return "Stilling ID: " + stillingId + "\nStilling navn: " + stillingNavn; }
+    public String toString(){ return "Stilling ID: " + stillingId + "\nBeskrivelse: " + beskrivelse; }
 }
