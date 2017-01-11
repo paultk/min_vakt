@@ -7,6 +7,7 @@ public class Stilling {
     private int stillingId;
     private String stillingNavn;
 
-    public Stilling() {
+    public Stilling(int stillingId, String stillingNavn) {
+        this.stillingId =
     }
 }
