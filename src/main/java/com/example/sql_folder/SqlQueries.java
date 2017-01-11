@@ -368,6 +368,22 @@ public class SqlQueries extends DBConnection {
         return false;
 
     }
+    public boolean updateFravaer(Fravaer fravaer) {
+        try {
+            String updateSql = "UPDATE fravaer SET ant_timer = ?, kommentar = ? WHERE bruker_id = ?";
+            updateQuery = connection.prepareStatement(updateSql);
+
+            updateQuery.setDouble(1, fravaer.getAntTimer());
+            updateQuery.setString(2, fravaer.getKommentar());
+
+            if (updateQuery.executeUpdate() == 1) {
+                return true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 
     public boolean deleteFravaer(Fravaer fravaer) {
         try {
