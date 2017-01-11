@@ -54,12 +54,9 @@ public class SqlQueries extends DBConnection {
     public boolean insertAvdeling(Avdeling newAvdeling) {
         try {
             String insertSql = "INSERT INTO avdeling(avd_navn) VALUES(?)";
-            insertQuery = connection.prepareStatement(insertSql, Statement.RETURN_GENERATED_KEYS);
+            insertQuery = connection.prepareStatement(insertSql);
             insertQuery.setString(1, newAvdeling.getNavn());
             insertQuery.execute();
-            ResultSet res = insertQuery.getGeneratedKeys();
-            res.next();
-            newAvdeling.setAvdelingId(res.getInt(1));
             return true;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -218,6 +215,23 @@ public class SqlQueries extends DBConnection {
             if (updateQuery.executeUpdate() == 1) {
                 return true;
             }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public boolean deleteVakt(Vakt vakt) {
+        try {
+            String deleteSql = "DELETE FROM vakt WHERE vakt_id = ?";
+            deleteQuery = connection.prepareStatement(deleteSql);
+            deleteQuery.setInt(1, vakt.getVaktId());
+
+            if (deleteQuery.executeUpdate() == 1) {
+                return true;
+            }
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -337,7 +351,37 @@ public class SqlQueries extends DBConnection {
 
         return null;
     }
+    public boolean insertFravaer(Fravaer newFravaer) {
+        try {
+            String insertSql = "INSERT INTO vakt(ant_timer, kommentar) VALUES(?,?)";
+            insertQuery = connection.prepareStatement(insertSql);
 
+            insertQuery.setDouble(1, newFravaer.getAntTimer());
+            insertQuery.setString(2, newFravaer.getKommentar());
+            insertQuery.execute();
+            return true;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+
+    }
+
+    public boolean deleteFravaer(Fravaer fravaer) {
+        try {
+            String deleteSql = "DELETE FROM fravaer WHERE bruker_id = ?";
+            deleteQuery = connection.prepareStatement(deleteSql);
+            deleteQuery.setInt(1, fravaer.getBrukerId());
+
+            if (deleteQuery.executeUpdate() == 1) {
+                return true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 
 
     public static void main(String[] args) {
