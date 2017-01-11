@@ -9,4 +9,5 @@ public class MinVaktApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(MinVaktApplication.class, args);
 	}
+
 }
