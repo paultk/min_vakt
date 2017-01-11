@@ -52,12 +52,9 @@ public class SqlQueries extends DBConnection {
     public boolean insertAvdeling(Avdeling newAvdeling) {
         try {
             String insertSql = "INSERT INTO avdeling(avd_navn) VALUES(?)";
-            insertQuery = connection.prepareStatement(insertSql, Statement.RETURN_GENERATED_KEYS);
+            insertQuery = connection.prepareStatement(insertSql);
             insertQuery.setString(1, newAvdeling.getNavn());
             insertQuery.execute();
-            ResultSet res = insertQuery.getGeneratedKeys();
-            res.next();
-            newAvdeling.setAvdelingId(res.getInt(1));
             return true;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -190,6 +187,23 @@ public class SqlQueries extends DBConnection {
             if (updateQuery.executeUpdate() == 1) {
                 return true;
             }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public boolean deleteVakt(Vakt vakt) {
+        try {
+            String deleteSql = "DELETE FROM vakt WHERE vakt_id = ?";
+            deleteQuery = connection.prepareStatement(deleteSql);
+            deleteQuery.setInt(1, vakt.getVaktId());
+
+            if (deleteQuery.executeUpdate() == 1) {
+                return true;
+            }
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
