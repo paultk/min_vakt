@@ -1,5 +1,5 @@
 package com.example.sql_folder;
-import org.junit.*;
+//import org.junit.*;
 
 /**
  * Created by axelkvistad on 11/01/17.
