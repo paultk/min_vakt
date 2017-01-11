@@ -16,8 +16,27 @@ public class Vakt {
         this.avdelingId = avdelingId;
     }
 
+
     public Vakt(int vaktId, int vaktansvarligId, int avdelingId, LocalDateTime fraTid, LocalDateTime tilTid, int antPers) {
         this.vaktId = vaktId;
+        this.vaktansvarligId = vaktansvarligId;
+        this.avdelingId = avdelingId;
+        this.fraTid = fraTid;
+        this.tilTid = tilTid;
+        this.antPers = antPers;
+    }
+
+    /**
+     * Konstruktør for å skape et Vaktobjekt hentet fra databasen
+     *
+     * @param vaktansvarligId
+     * @param avdelingId
+     * @param fraTid
+     * @param tilTid
+     * @param antPers
+     */
+
+    public Vakt(int vaktansvarligId, int avdelingId, LocalDateTime fraTid, LocalDateTime tilTid, int antPers) {
         this.vaktansvarligId = vaktansvarligId;
         this.avdelingId = avdelingId;
         this.fraTid = fraTid;

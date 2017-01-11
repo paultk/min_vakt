@@ -40,9 +40,7 @@ public class SqlQueries extends DBConnection {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
         return null;
-
     }
 
     public boolean insertAvdeling(Avdeling newAvdeling) {
@@ -130,8 +128,27 @@ public class SqlQueries extends DBConnection {
         return null;
     }
 
-    public void setVakt() {
+    public boolean insertVakt(Vakt newVakt) {
 
+        try {
+
+            String insertSql = "INSERT INTO vakt(vaktansvarlig_id, avdeling_id, fra_tid, til_tid, ant_pers) VALUES(?,?,?,?,?)";
+            insertQuery = connection.prepareStatement(insertSql);
+            insertQuery.setInt(1, newVakt.getVaktansvarligId());
+            insertQuery.setInt(2, newVakt.getAvdelingId());
+            Timestamp fraTid = Timestamp.valueOf(newVakt.getFraTid()); // oversetter LocalDateTime til Timestamp
+            insertQuery.setTimestamp(3, fraTid);
+            Timestamp tilTid = Timestamp.valueOf(newVakt.getTilTid()); // oversetter LDT til Timestamp
+            insertQuery.setTimestamp(4, tilTid);
+            insertQuery.setInt(5, newVakt.getAntPers());
+
+            insertQuery.execute();
+            return true;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
     public Fravaer selectFravaer(int brukerId) {
