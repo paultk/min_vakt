@@ -1,6 +1,5 @@
 package com.example.sql_folder;
 import com.example.database_classes.*;
-import oracle.jvm.hotspot.jfr.StackTrace;
 
 /**
  * Created by axelkvistad on 10/01/17.
