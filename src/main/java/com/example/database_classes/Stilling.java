@@ -8,6 +8,10 @@ public class Stilling {
     private String stillingNavn;
 
     public Stilling(int stillingId, String stillingNavn) {
-        this.stillingId =
+        this.stillingId = stillingId;
+        this.stillingNavn = stillingNavn;
     }
+
+    @Override
+    public String toString(){ return "Stilling ID: " + stillingId + "\nStilling navn: " + stillingNavn; }
 }
