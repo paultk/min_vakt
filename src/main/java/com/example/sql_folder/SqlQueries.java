@@ -1,17 +1,14 @@
 package com.example.sql_folder;
 import com.example.database_classes.*;
-import com.sun.corba.se.impl.orb.PrefixParserData;
-
-import java.sql.PreparedStatement;
-
-/**
- * Created by axelkvistad on 10/01/17.
- */
 
 import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
+
+/**
+ * Created by axelkvistad on 10/01/17.
+ */
 
 public class SqlQueries extends DBConnection {
 
@@ -461,7 +458,7 @@ public class SqlQueries extends DBConnection {
             String insertSql = "INSERT INTO fravaer(vakt_id,ant_timer, kommentar) VALUES(?,?,?)";
             insertQuery = connection.prepareStatement(insertSql);
 
-            insertQuery.setDouble(1, newFravaer.getVaktId());
+            insertQuery.setInt(1, newFravaer.getVaktId());
             insertQuery.setDouble(2, newFravaer.getAntTimer());
             insertQuery.setString(3, newFravaer.getKommentar());
             insertQuery.execute();
@@ -504,6 +501,97 @@ public class SqlQueries extends DBConnection {
         }
         return false;
     }
+
+    /*
+    *
+    * OVERTID
+    *
+    */
+
+    public Overtid selectOvertid(int overtidId) {
+        try {
+            String selectSql = "SELECT bruker_id, ant_timer, dato, kommentar FROM overtid WHERE overtidId = ?";
+            selectQuery = connection.prepareStatement(selectSql);
+            ResultSet res = selectQuery.executeQuery();
+
+            if (!res.next()) return null;
+
+            int brukerId = res.getInt("bruker_id");
+            double antTimer = res.getDouble("ant_timer");
+            Date dato = res.getDate("dato");
+            String kommentar = res.getString("kommentar");
+
+            return new Overtid(overtidId, brukerId, antTimer, dato, kommentar);
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public boolean insertOvertid(Overtid newOvertid) {
+        try {
+            String insertSql = "INSERT INTO overtid(bruker_id, ant_timer, dato, kommentar) VALUES(?,?,?,?)";
+            insertQuery = connection.prepareStatement(insertSql);
+
+            insertQuery.setInt(1, newOvertid.getBrukerId());
+            insertQuery.setDouble(2, newOvertid.getAntTimer());
+            insertQuery.setDate(3, newOvertid.getDato());
+            insertQuery.setString(4, newOvertid.getKommentar());
+
+            insertQuery.execute();
+            return true;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public boolean updateOvertid(Overtid overtid) {
+        try {
+            String updateSql = "UPDATE overtid SET bruker_id = ?, ant_timer = ?, dato = ?, kommentar = ? WHERE overtid_id = ?";
+            updateQuery = connection.prepareStatement(updateSql);
+
+
+            updateQuery.setInt(1, overtid.getBrukerId());
+            updateQuery.setDouble(2, overtid.getAntTimer());
+            updateQuery.setDate(3, overtid.getDato());
+            updateQuery.setString(4, overtid.getKommentar());
+
+            if (updateQuery.executeUpdate() == 1) {
+                return true;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public boolean deleteOvertid(Overtid overtid) {
+        try {
+            String deleteSql = "DELETE FROM overtid WHERE overtid_id = ?";
+            deleteQuery = connection.prepareStatement(deleteSql);
+            deleteQuery.setInt(1, overtid.getOvertidId());
+
+            if (deleteQuery.executeUpdate() == 1) {
+                return true;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    /*
+    *
+    * TILGJENGELIGHET
+    *
+    */
+
 
     public boolean insertTilgjengelighet(Tilgjengelighet newTilgjengelighet){
 
