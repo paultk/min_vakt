@@ -474,6 +474,92 @@ public class SqlQueries extends DBConnection {
         return false;
     }
 
+    public boolean insertTilgjengelighet(Tilgjengelighet newTilgjengelighet){
+
+        try {
+            String sql = "INSERT INTO tilgjegnelighet(fra_tid, til_tid) VALUES(?,?);";
+            insertQuery = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            insertQuery.setTimestamp(1, Timestamp.valueOf(newTilgjengelighet.getFraTid()));
+            insertQuery.setTimestamp(2, Timestamp.valueOf(newTilgjengelighet.getTilTid()));
+            insertQuery.execute();
+
+            ResultSet res = insertQuery.getGeneratedKeys();
+            res.next();
+            newTilgjengelighet.setUserId(res.getInt(1));
+            return true;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+
+    }
+
+    public Tilgjengelighet selectTilgjengelighet(int userId) {
+
+        try {
+            String selectSql = "SELECT fra_tid, til_tid FROM tilgjengelighet WHERE bruker_id = ?";
+            selectQuery = connection.prepareStatement(selectSql);
+            ResultSet res = selectQuery.executeQuery();
+
+            if (!res.next()) return null;
+
+            LocalDateTime fraTid = res.getTimestamp("fra_tid").toLocalDateTime();
+            LocalDateTime tilTid = res.getTimestamp("til_tid").toLocalDateTime();
+
+
+            return new Tilgjengelighet(userId, fraTid, tilTid);
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public boolean deleteTilgjengelighet(Tilgjengelighet tilgjengelighet) {
+        try {
+            String deleteSql = "DELETE FROM tilgjengelighet WHERE bruker_id = ?";
+            deleteQuery = connection.prepareStatement(deleteSql);
+            deleteQuery.setInt(1, tilgjengelighet.getUserId());
+
+            if (deleteQuery.executeUpdate() == 1) {
+                return true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public boolean updateTilgjengelighet(Tilgjengelighet tilgjengelighet) {
+        try {
+            String updateSql = "UPDATE tilgjengelighet SET fra_tid = ?, til_tid = ? WHERE bruker_id = ?";
+            updateQuery = connection.prepareStatement(updateSql);
+
+            // Oversetter LocalDateTime til Timestamp:
+            Timestamp fraTid = Timestamp.valueOf(tilgjengelighet.getFraTid());
+            Timestamp tilTid = Timestamp.valueOf(tilgjengelighet.getTilTid());
+
+
+            updateQuery.setTimestamp(1, fraTid);
+            updateQuery.setTimestamp(2, tilTid);
+            updateQuery.setInt(3, tilgjengelighet.getUserId());
+
+            if (updateQuery.executeUpdate() == 1) {
+                return true;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+
+
+
+
 
     public static void main(String[] args) {
         SqlQueries query = new SqlQueries();
