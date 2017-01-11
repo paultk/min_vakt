@@ -18,7 +18,6 @@ public class SqlQueries {
     Connection connection;
 
     public SqlQueries() {
-        DBConnection.connect();
         connection = DBConnection.conn;
     }
 
@@ -39,9 +38,7 @@ public class SqlQueries {
         } catch (SQLException sqlE) {
             sqlE.printStackTrace();
         }
-
         return null;
-
     }
 
     public void addAvdeling(Avdeling avdeling) {
