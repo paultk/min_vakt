@@ -181,6 +181,7 @@ public class SqlQueries extends DBConnection {
 		}
 		return false;
 	}
+
 	public Bruker[] selectBrukerFromVaktId(int vaktId) {
 		try {
 			PreparedStatement prep = connection.prepareStatement("SELECT * FROM bruker WHERE bruker_id IN " +
@@ -203,11 +204,7 @@ public class SqlQueries extends DBConnection {
 						res.getString("epost"));
 				brukere.add(brk);
 			}
-			Bruker[] ret = new Bruker[brukere.size()];
-			for (int i = 0; i < ret.length; i++) {
-				ret[i] = brukere.get(i);
-			}
-			return ret;
+			return brukere.toArray(new Bruker[brukere.size()]);
 		}
 		catch (Exception e) {
 			e.printStackTrace();
@@ -275,7 +272,7 @@ public class SqlQueries extends DBConnection {
         } finally {
             SqlCleanup.closeEverything(res, selectQuery, connection);
         }
-        return (Vakt[])vakter.toArray();
+        return vakter.toArray(new Vakt[vakter.size()]);
     }
 
     public boolean insertVakt(Vakt newVakt) {
