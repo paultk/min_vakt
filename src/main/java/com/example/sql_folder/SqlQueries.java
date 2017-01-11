@@ -354,7 +354,7 @@ public class SqlQueries extends DBConnection {
     }
     public boolean insertFravaer(Fravaer newFravaer) {
         try {
-            String insertSql = "INSERT INTO fravaer(vakt_id,ant_timer, kommentar) VALUES(?,?)";
+            String insertSql = "INSERT INTO fravaer(vakt_id,ant_timer, kommentar) VALUES(?,?,?)";
             insertQuery = connection.prepareStatement(insertSql);
 
             insertQuery.setDouble(1, newFravaer.getVaktId());
