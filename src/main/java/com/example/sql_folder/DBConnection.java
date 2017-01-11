@@ -5,7 +5,7 @@ import java.sql.*;
 /**
  * Created by Jens on 11-Jan-17.
  */
-public class SQL {
+public class DBConnection {
 
 	static Connection conn;
 	static boolean connect() {
@@ -25,8 +25,8 @@ public class SQL {
 	}
 
 	public static void main(String[] args) throws Exception {
-		SQL.connect();
-		PreparedStatement prep = SQL.conn.prepareStatement("SELECT fornavn FROM bruker");
+		DBConnection.connect();
+		PreparedStatement prep = DBConnection.conn.prepareStatement("SELECT fornavn FROM bruker");
 		ResultSet res = prep.executeQuery();
 		if (res.next()) {
 			System.out.println(res.getString(1));
