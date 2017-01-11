@@ -12,6 +12,21 @@ public class Avdeling {
         this.navn = navn;
     }
 
+    public int getAvdelingId() {
+        return avdelingId;
+    }
+
+    public void setAvdelingId(int avdelingId) {
+        this.avdelingId = avdelingId;
+    }
+
+    public String getNavn() {
+        return navn;
+    }
+
+    public void setNavn(String navn) {
+        this.navn = navn;
+    }
 
     @Override
     public String toString() {

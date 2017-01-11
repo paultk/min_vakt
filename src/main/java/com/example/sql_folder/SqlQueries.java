@@ -36,16 +36,28 @@ public class SqlQueries {
 
             return new Avdeling(avdelingId, avdelingNavn);
 
-        } catch (SQLException sqlE) {
-            sqlE.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
 
         return null;
 
     }
 
-    public void addAvdeling(Avdeling avdeling) {
-
+    public boolean addAvdeling(Avdeling newAvdeling) {
+        try {
+            String insertSql = "INSERT INTO avdeling(avd_navn) VALUES(?)";
+            insertQuery = connection.prepareStatement(insertSql, Statement.RETURN_GENERATED_KEYS);
+            insertQuery.setString(1, newAvdeling.getNavn());
+            insertQuery.execute();
+            ResultSet res = insertQuery.getGeneratedKeys();
+            res.next();
+            newAvdeling.setAvdelingId(res.getInt(1));
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
     /*public void getBruker(int brukerId) {
