@@ -1,5 +1,6 @@
 package com.example.sql_folder;
 import com.example.database_classes.*;
+import com.sun.corba.se.impl.orb.PrefixParserData;
 
 import java.sql.PreparedStatement;
 
@@ -9,6 +10,8 @@ import java.sql.PreparedStatement;
 
 import java.sql.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class SqlQueries extends DBConnection {
 
@@ -79,6 +82,12 @@ public class SqlQueries extends DBConnection {
         return false;
     }
 
+    /*
+    *
+    * BRUKER
+    *
+    */
+
     public Bruker selectBruker(int brukerId) {
         try {
             PreparedStatement prep = connection.prepareStatement("SELECT * FROM bruker WHERE bruker_id = ?");
@@ -105,7 +114,7 @@ public class SqlQueries extends DBConnection {
         return null;
     }
 
-    public void addBruker(Bruker bruker) {
+    public boolean addBruker(Bruker bruker) {
 		try {
 			PreparedStatement prep = connection.prepareStatement("INSERT INTO bruker (bruker_id, passord_id, " +
 					"stilling_id, avdeling_id, fornavn, etternavn, timelonn, telefonnr, " +
@@ -123,10 +132,12 @@ public class SqlQueries extends DBConnection {
 			prep.setInt(10, bruker.getStillingsProsent());
 			prep.setBoolean(11, bruker.isAdmin());
 			prep.executeUpdate();
+			return true;
 		}
 		catch (Exception e) {
 			e.printStackTrace();
 		}
+		return false;
     }
 	public boolean deleteBruker(int id) {
 
@@ -140,6 +151,68 @@ public class SqlQueries extends DBConnection {
 			e.printStackTrace();
 		}
 		return false;
+	}
+
+	public boolean insertVaktBruker(int brukerId, int vaktId) {
+		try {
+			PreparedStatement prep = connection.prepareStatement("INSERT INTO bruker_vakt (bruker_id, vakt_id) VALUES (?, ?)");
+			prep.setInt(1, brukerId);
+			prep.setInt(2, vaktId);
+			prep.executeUpdate();
+			return true;
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+
+	public boolean deleteVaktBruker(int brukerId, int vaktId) {
+		try {
+			PreparedStatement prep = connection.prepareStatement("DELETE FROM bruker_vakt WHERE bruker_vakt.bruker_id = ?" +
+					" AND bruker_vakt.vakt_id = ?");
+			prep.setInt(1, brukerId);
+			prep.setInt(2, vaktId);
+			prep.executeUpdate();
+			return true;
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+	public Bruker[] selectBrukerFromVaktId(int vaktId) {
+		try {
+			PreparedStatement prep = connection.prepareStatement("SELECT * FROM bruker WHERE bruker_id IN " +
+					"(SELECT bruker_id FROM bruker_vakt WHERE vakt_id = ?)");
+			prep.setInt(1, vaktId);
+			ResultSet res = prep.executeQuery();
+			ArrayList<Bruker> brukere = new ArrayList<>();
+			while (res.next()) {
+				Bruker brk = new Bruker(
+						res.getInt("bruker_id"),
+						res.getInt("passord_id"),
+						res.getInt("stilling_id"),
+						res.getInt("avdeling_id"),
+						res.getInt("telefonnr"),
+						res.getInt("stillingsprosent"),
+						res.getDouble("timelonn"),
+						res.getBoolean("admin"),
+						res.getString("fornavn"),
+						res.getString("etternavn"),
+						res.getString("epost"));
+				brukere.add(brk);
+			}
+			Bruker[] ret = new Bruker[brukere.size()];
+			for (int i = 0; i < ret.length; i++) {
+				ret[i] = brukere.get(i);
+			}
+			return ret;
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 
     /*
@@ -404,9 +477,10 @@ public class SqlQueries extends DBConnection {
 
     public static void main(String[] args) {
         SqlQueries query = new SqlQueries();
-		query.deleteBruker(1);
-		Bruker bruker = new Bruker(1, 0, 0, 0, 12345678, 50, 100, true, "Rob", "Bob", "bobby");
-		query.addBruker(bruker);
-        System.out.println(query.selectBruker(1));
-    }
+//		query.deleteBruker(1);
+//		Bruker bruker = new Bruker(2, 0, 0, 0, 12345678, 50, 100, true, "Ken", "Bob", "bobby");
+//		query.addBruker(bruker);
+//        System.out.println(query.selectBruker(1));
+		System.out.println(Arrays.toString(query.selectBrukerFromVaktId(0)));
+	}
 }

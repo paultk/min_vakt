@@ -4,10 +4,7 @@ import com.example.database_classes.Bruker;
 import com.example.sql_folder.SqlQueries;
 import com.fasterxml.jackson.databind.util.JSONPObject;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.websocket.server.PathParam;
 
@@ -25,9 +22,14 @@ public class BrukerController {
 	}
 
 	//TODO: ikke bruke pathvariable her
-	//Får ikke testa requestbody uten noen side
-	@RequestMapping("/bruker/delete/{id}")
-	public void deleteBruker(@PathVariable ("id") Integer id) {
-		query.deleteBruker(id);
+	//Får ikke testa requestbody uten noen side?
+	@RequestMapping(value="/bruker/delete", method=RequestMethod.POST)
+	public void deleteBruker(@RequestBody Bruker bruker) {
+		query.deleteBruker(bruker.getBrukerId());
+	}
+
+	@RequestMapping(value="/bruker/add", method=RequestMethod.POST)
+	public void addBruker(@RequestBody Bruker bruker) {
+		query.addBruker(bruker);
 	}
 }
