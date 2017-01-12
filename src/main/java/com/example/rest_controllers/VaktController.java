@@ -18,9 +18,14 @@ public class VaktController {
         return query.selectVakt(id);
     }
 
-    @RequestMapping("/vakt/alle")
+    @RequestMapping("/vakt/bruker")    // TODO: 12/01/17 (Axel): fiks denne pathen
     public Vakt[] getVakter(Bruker bruker) {
         return query.selectVakter(bruker.getBrukerId());
+    }
+
+    @RequestMapping("/vakt/alle")
+    public Vakt[] getAllVakter() {
+        return query.selectAllVakter();
     }
 
     @RequestMapping(value="/vakt/delete", method= RequestMethod.DELETE)

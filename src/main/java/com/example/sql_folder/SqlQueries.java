@@ -456,6 +456,33 @@ public class SqlQueries extends DBConnection {
         return vakter.toArray(new Vakt[vakter.size()]);
     }
 
+    public Vakt[] selectAllVakter() {
+    	ResultSet res = null;
+    	try {
+    		ArrayList<Vakt> allVakter = new ArrayList<>();
+    		String selectSql = "SELECT * FROM vakt";
+    		selectQuery = connection.prepareStatement(selectSql);
+    		res = selectQuery.executeQuery();
+
+			while (res.next()) {
+				allVakter.add(new Vakt(
+						res.getInt("vakt_id"),
+						res.getInt("avdeling_id"),
+						res.getInt("vaktansvarlig_id"),
+						res.getTimestamp("fra_tid").toLocalDateTime(),
+						res.getTimestamp("til_tid").toLocalDateTime(),
+						res.getInt("ant_pers")
+						));
+			}
+			return allVakter.toArray(new Vakt[allVakter.size()]);
+    	} catch (SQLException e) {
+    		e.printStackTrace();
+		} finally {
+			SqlCleanup.closeEverything(res, selectQuery, connection);
+		}
+		return null;
+	}
+
     public boolean insertVakt(Vakt newVakt) {
         try {
             String insertSql = "INSERT INTO vakt(vaktansvarlig_id, avdeling_id, fra_tid, til_tid, ant_pers) VALUES(?,?,?,?,?)";
