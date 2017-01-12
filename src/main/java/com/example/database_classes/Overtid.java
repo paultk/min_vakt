@@ -21,6 +21,8 @@ public class Overtid {
       this.kommentar = kommentar;
     }
 
+    public Overtid() {}
+
     public int getOvertidId() {
         return overtidId;
     }

@@ -162,137 +162,29 @@ public class SqlQueries extends DBConnection {
 		return null;
 	}
 
-	public boolean updateBrukerPassord(int brukerId, int id) {
+	public boolean updateBruker(Bruker bruker) {
 		try {
-			updateQuery = connection.prepareStatement("UPDATE  bruker SET  passord_id = ? WHERE  bruker_id = ?");
-			updateQuery.setInt(1, id);
-			updateQuery.setInt(2, brukerId);
-			updateQuery.executeUpdate();
-			return true;
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-		}
-		return false;
-	}
-
-	public boolean updateBrukerStilling(int brukerId, int id) {
-		try {
-			updateQuery = connection.prepareStatement("UPDATE  bruker SET  stilling_id = ? WHERE  bruker_id = ?");
-			updateQuery.setInt(1, id);
-			updateQuery.setInt(2, brukerId);
-			updateQuery.executeUpdate();
-			return true;
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-		}
-		return false;
-	}
-
-	public boolean updateBrukerAvdeling(int brukerId, int id) {
-		try {
-			updateQuery = connection.prepareStatement("UPDATE  bruker SET  avdeling_id = ? WHERE  bruker_id = ?");
-			updateQuery.setInt(1, id);
-			updateQuery.setInt(2, brukerId);
-			updateQuery.executeUpdate();
-			return true;
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-		}
-		return false;
-	}
-
-	public boolean updateBrukerTelefon(int brukerId, int tlf) {
-		try {
-			updateQuery = connection.prepareStatement("UPDATE  bruker SET  telefonnr = ? WHERE  bruker_id = ?");
-			updateQuery.setInt(1, tlf);
-			updateQuery.setInt(2, brukerId);
-			updateQuery.executeUpdate();
-			return true;
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-		}
-		return false;
-	}
-
-	public boolean updateBrukerStillingPros(int brukerId, int pros) {
-		try {
-			updateQuery = connection.prepareStatement("UPDATE  bruker SET  stillingsprosent = ? WHERE  bruker_id = ?");
-			updateQuery.setInt(1, pros);
-			updateQuery.setInt(2, brukerId);
-			updateQuery.executeUpdate();
-			return true;
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-		}
-		return false;
-	}
-
-	public boolean updateBrukerTimelonn(int brukerId, double lonn) {
-		try {
-			updateQuery = connection.prepareStatement("UPDATE  bruker SET  timelonn = ? WHERE  bruker_id = ?");
-			updateQuery.setDouble(1, lonn);
-			updateQuery.setInt(2, brukerId);
-			updateQuery.executeUpdate();
-			return true;
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-		}
-		return false;
-	}
-
-	public boolean updateBrukerAdmin(int brukerId, boolean admin) {
-		try {
-			updateQuery = connection.prepareStatement("UPDATE  bruker SET  admin = ? WHERE  bruker_id = ?");
-			updateQuery.setBoolean(1, admin);
-			updateQuery.setInt(2, brukerId);
-			updateQuery.executeUpdate();
-			return true;
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-		}
-		return false;
-	}
-
-	public boolean updateBrukerFornavn(int brukerId, String fornavn) {
-		try {
-			updateQuery = connection.prepareStatement("UPDATE  bruker SET  fornavn = ? WHERE  bruker_id = ?");
-			updateQuery.setString(1, fornavn);
-			updateQuery.setInt(2, brukerId);
-			updateQuery.executeUpdate();
-			return true;
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-		}
-		return false;
-	}
-
-	public boolean updateBrukerEtternavn(int brukerId, String etternavn) {
-		try {
-			updateQuery = connection.prepareStatement("UPDATE  bruker SET etternavn = ? WHERE  bruker_id = ?");
-			updateQuery.setString(1, etternavn);
-			updateQuery.setInt(2, brukerId);
-			updateQuery.executeUpdate();
-			return true;
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-		}
-		return false;
-	}
-
-	public boolean updateBrukerEpost(int brukerId, String epost) {
-		try {
-			updateQuery = connection.prepareStatement("UPDATE  bruker SET  epost = ? WHERE  bruker_id = ?");
-			updateQuery.setString(1, epost);
-			updateQuery.setInt(2, brukerId);
+			updateQuery = connection.prepareStatement("UPDATE  bruker SET  passord_id =  ?,\n" +
+					"stilling_id =  ?,\n" +
+					"avdeling_id =  ?,\n" +
+					"fornavn =  ?,\n" +
+					"etternavn =  ?,\n" +
+					"timelonn =  ?,\n" +
+					"telefonnr =  ?,\n" +
+					"epost = ?,\n" +
+					"stillingsprosent =  ?,\n" +
+					"admin =  ? WHERE  bruker_id = ?;");
+			updateQuery.setInt(1, bruker.getPassordId());
+			updateQuery.setInt(2, bruker.getStillingsId());
+			updateQuery.setInt(3, bruker.getAvdelingId());
+			updateQuery.setString(4, bruker.getFornavn());
+			updateQuery.setString(5, bruker.getEtternavn());
+			updateQuery.setDouble(6, bruker.getTimelonn());
+			updateQuery.setInt(7, bruker.getTelefonNr());
+			updateQuery.setString(8, bruker.getEpost());
+			updateQuery.setInt(9, bruker.getStillingsProsent());
+			updateQuery.setBoolean(10, bruker.isAdmin());
+			updateQuery.setInt(11, bruker.getBrukerId());
 			updateQuery.executeUpdate();
 			return true;
 		}
@@ -719,8 +611,9 @@ public class SqlQueries extends DBConnection {
 
     public Overtid selectOvertid(int overtidId) {
         try {
-            String selectSql = "SELECT bruker_id, ant_timer, dato, kommentar FROM overtid WHERE overtidId = ?";
+            String selectSql = "SELECT bruker_id, ant_timer, dato, kommentar FROM overtid WHERE overtid_id = ?";
             selectQuery = connection.prepareStatement(selectSql);
+			selectQuery.setInt(1, overtidId);
             ResultSet res = selectQuery.executeQuery();
 
             if (!res.next()) return null;
@@ -741,13 +634,13 @@ public class SqlQueries extends DBConnection {
 
     public boolean insertOvertid(Overtid newOvertid) {
         try {
-            String insertSql = "INSERT INTO overtid(bruker_id, ant_timer, dato, kommentar) VALUES(?,?,?,?)";
+            String insertSql = "INSERT INTO overtid(overtid_id, bruker_id, ant_timer, dato, kommentar) VALUES(?,?,?,?,?)";
             insertQuery = connection.prepareStatement(insertSql);
-
-            insertQuery.setInt(1, newOvertid.getBrukerId());
-            insertQuery.setDouble(2, newOvertid.getAntTimer());
-            insertQuery.setDate(3, newOvertid.getDato());
-            insertQuery.setString(4, newOvertid.getKommentar());
+			insertQuery.setInt(1, newOvertid.getOvertidId());
+            insertQuery.setInt(2, newOvertid.getBrukerId());
+            insertQuery.setDouble(3, newOvertid.getAntTimer());
+            insertQuery.setDate(4, newOvertid.getDato());
+            insertQuery.setString(5, newOvertid.getKommentar());
 
             insertQuery.execute();
             return true;
@@ -768,6 +661,7 @@ public class SqlQueries extends DBConnection {
             updateQuery.setDouble(2, overtid.getAntTimer());
             updateQuery.setDate(3, overtid.getDato());
             updateQuery.setString(4, overtid.getKommentar());
+			updateQuery.setInt(5, overtid.getOvertidId());
 
             if (updateQuery.executeUpdate() == 1) {
                 return true;
@@ -898,21 +792,12 @@ public class SqlQueries extends DBConnection {
 //		query.updateBrukerAdmin()
 
 		//Testing av update
-		/*query.deleteBruker(19);
-		Bruker test = new Bruker(19, 0, 0, 0, 0, 0, 0, false, "null", "null", "null");
+//		query.deleteBruker(19);
+		Bruker test = new Bruker(33, 0, 0, 0, 0, 0, 0, false, "null", "null", "null");
 		query.insertBruker(test);
-		query.updateBrukerAdmin(19, true);
-		query.updateBrukerEpost(19, "Walla");
-		query.updateBrukerEtternavn(19, "Test");
-		query.updateBrukerFornavn(19, "Testern");
-		query.updateBrukerPassord(19, 1);
-		query.updateBrukerStilling(19, 1);
-		query.updateBrukerStillingPros(19, 100);
-		query.updateBrukerTelefon(19, 87654321);
-		query.updateBrukerTimelonn(19, 140);
-		query.updateBrukerAvdeling(19, 1);*/
-
-		System.out.println(query.selectBruker(19));
+		test = new Bruker(33, 1, 1, 1, 98765, 75, 50, true, "Bobby", "Jones", "bobby.com");
+		query.updateBruker(test);
+		System.out.println(query.selectBruker(33));
 
 
 		Bruker bruker19 = query.selectBruker(19);
