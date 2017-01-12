@@ -24,6 +24,11 @@ public class VaktController {
         return query.selectVakter(bruker);
     }
 
+    @RequestMapping("/vakt/alle")
+    public Vakt[] getVakter(Bruker bruker) {
+        return query.selectVakter(bruker);
+    }
+
     @RequestMapping(value="/vakt/delete", method= RequestMethod.DELETE)
     public boolean deleteVakt(@RequestBody Vakt vakt) {
         return query.deleteVakt(vakt);
