@@ -1,5 +1,4 @@
 package com.example.rest_controllers;
-
 import com.example.sql_folder.SqlQueries;
 import org.springframework.web.bind.annotation.*;
 import com.example.database_classes.Tilgjengelighet;
@@ -7,6 +6,8 @@ import com.example.database_classes.Tilgjengelighet;
 /**
  * Created by Håkon on 12.01.2017.
  */
+
+
 @RestController
 public class TilgjengelighetController {
     SqlQueries query = new SqlQueries();
@@ -31,4 +32,3 @@ public class TilgjengelighetController {
         return query.updateTilgjengelighet(tilgjengelighet);
     }
 }
-

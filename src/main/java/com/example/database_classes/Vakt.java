@@ -91,4 +91,9 @@ public class Vakt {
     public void setAntPers(int antPers) {
         this.antPers = antPers;
     }
+
+    @Override
+    public String toString() {
+        return "VaktId: " + vaktId + "\n";
+    }
 }

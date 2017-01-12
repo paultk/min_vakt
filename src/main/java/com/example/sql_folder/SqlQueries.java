@@ -1,17 +1,14 @@
 package com.example.sql_folder;
 import com.example.database_classes.*;
-import com.sun.corba.se.impl.orb.PrefixParserData;
-
-import java.sql.PreparedStatement;
-
-/**
- * Created by axelkvistad on 10/01/17.
- */
 
 import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
+
+/**
+ * Created by axelkvistad on 10/01/17.
+ */
 
 /**
  * Created by axelkvistad on 10/01/17.
@@ -325,31 +322,23 @@ public class SqlQueries extends DBConnection {
         return null;
     }
 
-    public Vakt[] selectVakter(Bruker bruker) {
+    public Vakt[] selectVakter(int brukerId) {
         ResultSet res = null;
         ArrayList<Vakt> vakter = new ArrayList<>();
 
         try {
-            String selectVaktId = "SELECT vakt_id FROM bruker_vakt WHERE bruker_id = ?";
-            selectQuery = connection.prepareStatement(selectVaktId);
-            selectQuery.setInt(1, bruker.getBrukerId());
+            String selectSql = "SELECT * FROM vakt WHERE vakt_id IN (SELECT vakt_id FROM bruker_vakt WHERE bruker_id = ?)";
+            selectQuery = connection.prepareStatement(selectSql);
+            selectQuery.setInt(1, brukerId);
             res = selectQuery.executeQuery();
-
-            ResultSet res2 = null;
             while (res.next()) {
-                try {
-                    int vaktId = res.getInt("vakt_id");
-                    String selectVaktStr = "SELECT vaktansvarlig_id, avdeling_id, fra_tid, til_tid, ant_pers FROM vakt WHERE vakt_id = " + vaktId;
-                    res2 = connection.createStatement().executeQuery(selectVaktStr);
-                    vakter.add(new Vakt(vaktId,
-                            res2.getInt("vaktansvarlig_id"),
-                            res2.getInt("avdeling_id"),
-                            res2.getTimestamp("fra_tid").toLocalDateTime(),
-                            res2.getTimestamp("til_tid").toLocalDateTime(),
-                            res2.getInt("ant_pers")));
-                } finally {
-                    SqlCleanup.closeResSet(res2);
-                }
+                vakter.add(new Vakt(
+                        res.getInt("vakt_id"),
+                        res.getInt("vaktansvarlig_id"),
+                        res.getInt("avdeling_id"),
+                        res.getTimestamp("fra_tid").toLocalDateTime(),
+                        res.getTimestamp("til_tid").toLocalDateTime(),
+                        res.getInt("ant_pers")));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -450,9 +439,7 @@ public class SqlQueries extends DBConnection {
         } catch (SQLException sqlE) {
             sqlE.printStackTrace();
         }
-
         return null;
-
     }
 
     public boolean updateStilling(Stilling stilling){
@@ -528,7 +515,7 @@ public class SqlQueries extends DBConnection {
             if (!res.next()) return null;
 
             int vaktId = res.getInt("vakt_id");
-            int antTimer = res.getInt("ant_timer");
+            double antTimer = res.getDouble("ant_timer");
             String kommentar = res.getString("kommentar");
 
 
@@ -537,9 +524,9 @@ public class SqlQueries extends DBConnection {
         } catch (SQLException sqlE) {
             sqlE.printStackTrace();
         }
-
         return null;
     }
+
     public boolean insertFravaer(Fravaer newFravaer) {
         try {
             String insertSql = "INSERT INTO fravaer(vakt_id,ant_timer, kommentar) VALUES(?,?,?)";
@@ -555,8 +542,8 @@ public class SqlQueries extends DBConnection {
             e.printStackTrace();
         }
         return false;
-
     }
+
     public boolean updateFravaer(Fravaer fravaer) {
         try {
             String updateSql = "UPDATE fravaer SET ant_timer = ?, kommentar = ? WHERE bruker_id = ?";
@@ -574,15 +561,15 @@ public class SqlQueries extends DBConnection {
         return false;
     }
 
-    public boolean deleteFravaer(Fravaer fravaer) {
+    public boolean deleteFravaer(int brukerId) {
         try {
             String deleteSql = "DELETE FROM fravaer WHERE bruker_id = ?";
             deleteQuery = connection.prepareStatement(deleteSql);
-            deleteQuery.setInt(1, fravaer.getBrukerId());
+            deleteQuery.setInt(1, brukerId);
+            deleteQuery.executeUpdate();
 
-            if (deleteQuery.executeUpdate() == 1) {
-                return true;
-            }
+            return true;
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -785,6 +772,11 @@ public class SqlQueries extends DBConnection {
 		query.updateBruker(test);
 		System.out.println(query.selectBruker(33));
 
+
+		Bruker bruker19 = query.selectBruker(19);
+		for (int i = 0; i < query.selectVakter(bruker19.getBrukerId()).length; i++) {
+            System.out.println(query.selectVakter(bruker19.getBrukerId())[i]);
+        }
 
 
 //		System.out.println(Arrays.toString(query.selectBrukereFromVaktId(0)));

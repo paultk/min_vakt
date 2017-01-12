@@ -18,10 +18,9 @@ public class VaktController {
         return query.selectVakt(id);
     }
 
-    //Må Sjekke ut json array objekter..
-    @RequestMapping(value= "/vakt", method= RequestMethod.POST)
-    public Vakt[] selectVakter(@RequestBody Bruker bruker){
-        return query.selectVakter(bruker);
+    @RequestMapping("/vakt/alle")
+    public Vakt[] getVakter(Bruker bruker) {
+        return query.selectVakter(bruker.getBrukerId());
     }
 
     @RequestMapping(value="/vakt/delete", method= RequestMethod.DELETE)
