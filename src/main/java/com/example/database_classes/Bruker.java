@@ -26,6 +26,9 @@ public class Bruker {
         this.epost = epost;
     }
 
+    //Empty constuctor for Spring REST
+    public Bruker(){}
+
     public int getBrukerId() {
         return brukerId;
     }

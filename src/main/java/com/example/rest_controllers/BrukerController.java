@@ -14,13 +14,13 @@ public class BrukerController {
 	@RequestMapping("/bruker/{id}")
 	public Bruker getBruker(@PathVariable("id") Integer id) {
 		Bruker ret = query.selectBruker(id);
-		System.out.println(ret);
 		return query.selectBruker(id);
 	}
 
 	//Får ikke testa requestbody uten noen side?
 	@RequestMapping(value="/bruker/delete", method=RequestMethod.POST)
 	public void deleteBruker(@RequestBody Bruker bruker) {
+		System.out.println(bruker);
 		query.deleteBruker(bruker.getBrukerId());
 	}
 
