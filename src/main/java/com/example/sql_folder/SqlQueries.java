@@ -430,47 +430,14 @@ public class SqlQueries extends DBConnection {
         return null;
     }
 
-    /*
-    public Bruker[] selectBrukereFromVaktId(int vaktId) {
-		try {
-			selectQuery = connection.prepareStatement("SELECT * FROM bruker WHERE bruker_id IN " +
-					"(SELECT bruker_id FROM bruker_vakt WHERE vakt_id = ?)");
-			selectQuery.setInt(1, vaktId);
-			ResultSet res = selectQuery.executeQuery();
-			ArrayList<Bruker> brukere = new ArrayList<>();
-			while (res.next()) {
-				Bruker brk = new Bruker(
-						res.getInt("bruker_id"),
-						res.getInt("passord_id"),
-						res.getInt("stilling_id"),
-						res.getInt("avdeling_id"),
-						res.getInt("telefonnr"),
-						res.getInt("stillingsprosent"),
-						res.getDouble("timelonn"),
-						res.getBoolean("admin"),
-						res.getString("fornavn"),
-						res.getString("etternavn"),
-						res.getString("epost"));
-				brukere.add(brk);
-			}
-			SqlCleanup.closeResSet(res);
-			return brukere.toArray(new Bruker[brukere.size()]);
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
-     */
-
-    public Vakt[] selectVakter(Bruker bruker) {
+    public Vakt[] selectVakter(int brukerId) {
         ResultSet res = null;
         ArrayList<Vakt> vakter = new ArrayList<>();
 
         try {
             String selectSql = "SELECT * FROM vakt WHERE vakt_id IN (SELECT vakt_id FROM bruker_vakt WHERE bruker_id = ?)";
             selectQuery = connection.prepareStatement(selectSql);
-            selectQuery.setInt(1, bruker.getBrukerId());
+            selectQuery.setInt(1, brukerId);
             res = selectQuery.executeQuery();
             while (res.next()) {
                 vakter.add(new Vakt(
@@ -580,9 +547,7 @@ public class SqlQueries extends DBConnection {
         } catch (SQLException sqlE) {
             sqlE.printStackTrace();
         }
-
         return null;
-
     }
 
     public boolean updateStilling(Stilling stilling){
@@ -667,9 +632,9 @@ public class SqlQueries extends DBConnection {
         } catch (SQLException sqlE) {
             sqlE.printStackTrace();
         }
-
         return null;
     }
+
     public boolean insertFravaer(Fravaer newFravaer) {
         try {
             String insertSql = "INSERT INTO fravaer(vakt_id,ant_timer, kommentar) VALUES(?,?,?)";
@@ -685,8 +650,8 @@ public class SqlQueries extends DBConnection {
             e.printStackTrace();
         }
         return false;
-
     }
+
     public boolean updateFravaer(Fravaer fravaer) {
         try {
             String updateSql = "UPDATE fravaer SET ant_timer = ?, kommentar = ? WHERE bruker_id = ?";
@@ -924,8 +889,8 @@ public class SqlQueries extends DBConnection {
 
 
 		Bruker bruker19 = query.selectBruker(19);
-		for (int i = 0; i < query.selectVakter(bruker19).length; i++) {
-            System.out.println(query.selectVakter(bruker19)[i]);
+		for (int i = 0; i < query.selectVakter(bruker19.getBrukerId()).length; i++) {
+            System.out.println(query.selectVakter(bruker19.getBrukerId())[i]);
         }
 
 
