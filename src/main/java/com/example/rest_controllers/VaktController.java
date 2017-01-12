@@ -1,6 +1,8 @@
 package com.example.rest_controllers;
 
 import com.example.sql_folder.SqlQueries;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import org.springframework.web.bind.annotation.*;
 import com.example.database_classes.Vakt;
 import com.example.database_classes.Bruker;
@@ -34,6 +36,7 @@ public class VaktController {
     }
 
     @RequestMapping(value="/vakt/add", method=RequestMethod.POST)
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     public boolean insertVakt(@RequestBody Vakt vakt) {
         return query.insertVakt(vakt);
     }

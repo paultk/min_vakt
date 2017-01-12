@@ -30,7 +30,6 @@ public class BrukerController {
 	}
 
 	@RequestMapping(value="/bruker/add", method=RequestMethod.POST)
-	@JsonDeserialize(using = LocalDateTimeDeserializer.class)
 	public boolean addBruker(@RequestBody Bruker bruker) {
 		return query.insertBruker(bruker);
 	}
