@@ -23,7 +23,7 @@ public class StillingController {
 
     @RequestMapping(value="/stilling/delete", method=RequestMethod.DELETE)
     public boolean deleteStilling(@RequestBody Stilling stilling) {
-        return query.deleteStilling(stilling);
+        return query.deleteStilling(stilling.getStillingId());
     }
 
     @RequestMapping(value="/stilling/add", method=RequestMethod.POST)

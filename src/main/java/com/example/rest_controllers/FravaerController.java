@@ -2,14 +2,12 @@ package com.example.rest_controllers;
 
 import com.example.database_classes.Fravaer;
 import com.example.sql_folder.SqlQueries;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * Created by Knut on 12.01.2017.
  */
+
 public class FravaerController {
     SqlQueries query = new SqlQueries();
     @RequestMapping("/fravaer/{id}")
