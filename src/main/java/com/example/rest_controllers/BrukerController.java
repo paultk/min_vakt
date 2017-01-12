@@ -3,6 +3,7 @@ package com.example.rest_controllers;
 import com.example.database_classes.Bruker;
 import com.example.database_classes.Vakt;
 import com.example.sql_folder.SqlQueries;
+import org.springframework.util.comparator.BooleanComparator;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -13,24 +14,21 @@ public class BrukerController {
 	SqlQueries query = new SqlQueries();
 	@RequestMapping("/bruker/{id}")
 	public Bruker getBruker(@PathVariable("id") Integer id) {
-		Bruker ret = query.selectBruker(id);
 		return query.selectBruker(id);
 	}
 
-	//Får ikke testa requestbody uten noen side?
 	@RequestMapping(value="/bruker/delete", method=RequestMethod.POST)
-	public void deleteBruker(@RequestBody Bruker bruker) {
-		System.out.println(bruker);
-		query.deleteBruker(bruker.getBrukerId());
+	public boolean deleteBruker(@RequestBody Bruker bruker) {
+		return query.deleteBruker(bruker.getBrukerId());
 	}
 
 	@RequestMapping(value="/bruker/add", method=RequestMethod.POST)
-	public void addBruker(@RequestBody Bruker bruker) {
-		query.insertBruker(bruker);
+	public boolean addBruker(@RequestBody Bruker bruker) {
+		return query.insertBruker(bruker);
 	}
 
 	@RequestMapping(value="/bruker/addvakt", method=RequestMethod.POST)
-	public void addVaktToBruker(@RequestBody Bruker bruker, Vakt vakt) {
-		query.insertVaktBruker(bruker.getBrukerId(), vakt.getVaktId());
+	public boolean addVaktToBruker(@RequestBody Bruker bruker, Vakt vakt) {
+		return query.insertVaktBruker(bruker.getBrukerId(), vakt.getVaktId());
 	}
 }
