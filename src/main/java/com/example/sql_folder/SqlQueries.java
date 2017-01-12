@@ -808,28 +808,14 @@ public class SqlQueries extends DBConnection {
 
 
     public static void main(String[] args) {
-        SqlQueries query = new SqlQueries();
-//		query.deleteBruker(1);
-//		Bruker bruker = new Bruker(2, 0, 0, 0, 12345678, 50, 100, true, "Ken", "Bob", "bobby");
-//		query.addBruker(bruker);
-//        System.out.println(query.selectBruker(1));
-//		query.updateBrukerAdmin()
+		SqlQueries query = new SqlQueries();
 
-		//Testing av update
-//		query.deleteBruker(19);
-		Bruker test = new Bruker(33, 0, 0, 0, 0, 0, 0, false, "null", "null", "null");
-		query.insertBruker(test);
-		test = new Bruker(33, 1, 1, 1, 98765, 75, 50, true, "Bobby", "Jones", "bobby.com");
-		query.updateBruker(test);
-		System.out.println(query.selectBruker(33));
+		Vakt vakt = query.selectVakt(1);
+		vakt.setAntPers(50);
+		query.updateVakt(vakt);
 
-
-		Bruker bruker19 = query.selectBruker(19);
-		for (int i = 0; i < query.selectVakter(bruker19.getBrukerId()).length; i++) {
-            System.out.println(query.selectVakter(bruker19.getBrukerId())[i]);
-        }
-
-
-//		System.out.println(Arrays.toString(query.selectBrukereFromVaktId(0)));
+		vakt.setAntPers(7);
+		vakt.setVaktansvarligId(2);
+		query.insertVakt(vakt);
 	}
 }
