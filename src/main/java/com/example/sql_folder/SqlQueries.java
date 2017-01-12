@@ -430,31 +430,56 @@ public class SqlQueries extends DBConnection {
         return null;
     }
 
+    /*
+    public Bruker[] selectBrukereFromVaktId(int vaktId) {
+		try {
+			selectQuery = connection.prepareStatement("SELECT * FROM bruker WHERE bruker_id IN " +
+					"(SELECT bruker_id FROM bruker_vakt WHERE vakt_id = ?)");
+			selectQuery.setInt(1, vaktId);
+			ResultSet res = selectQuery.executeQuery();
+			ArrayList<Bruker> brukere = new ArrayList<>();
+			while (res.next()) {
+				Bruker brk = new Bruker(
+						res.getInt("bruker_id"),
+						res.getInt("passord_id"),
+						res.getInt("stilling_id"),
+						res.getInt("avdeling_id"),
+						res.getInt("telefonnr"),
+						res.getInt("stillingsprosent"),
+						res.getDouble("timelonn"),
+						res.getBoolean("admin"),
+						res.getString("fornavn"),
+						res.getString("etternavn"),
+						res.getString("epost"));
+				brukere.add(brk);
+			}
+			SqlCleanup.closeResSet(res);
+			return brukere.toArray(new Bruker[brukere.size()]);
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+     */
+
     public Vakt[] selectVakter(Bruker bruker) {
         ResultSet res = null;
         ArrayList<Vakt> vakter = new ArrayList<>();
 
         try {
-            String selectVaktId = "SELECT vakt_id FROM bruker_vakt WHERE bruker_id = ?";
-            selectQuery = connection.prepareStatement(selectVaktId);
+            String selectSql = "SELECT * FROM vakt WHERE vakt_id IN (SELECT vakt_id FROM bruker_vakt WHERE bruker_id = ?)";
+            selectQuery = connection.prepareStatement(selectSql);
             selectQuery.setInt(1, bruker.getBrukerId());
             res = selectQuery.executeQuery();
-
-            ResultSet res2 = null;
             while (res.next()) {
-                try {
-                    int vaktId = res.getInt("vakt_id");
-                    String selectVaktStr = "SELECT vaktansvarlig_id, avdeling_id, fra_tid, til_tid, ant_pers FROM vakt WHERE vakt_id = " + vaktId;
-                    res2 = connection.createStatement().executeQuery(selectVaktStr);
-                    vakter.add(new Vakt(vaktId,
-                            res2.getInt("vaktansvarlig_id"),
-                            res2.getInt("avdeling_id"),
-                            res2.getTimestamp("fra_tid").toLocalDateTime(),
-                            res2.getTimestamp("til_tid").toLocalDateTime(),
-                            res2.getInt("ant_pers")));
-                } finally {
-                    SqlCleanup.closeResSet(res2);
-                }
+                vakter.add(new Vakt(
+                        res.getInt("vakt_id"),
+                        res.getInt("vaktansvarlig_id"),
+                        res.getInt("avdeling_id"),
+                        res.getTimestamp("fra_tid").toLocalDateTime(),
+                        res.getTimestamp("til_tid").toLocalDateTime(),
+                        res.getInt("ant_pers")));
             }
         } catch (SQLException e) {
             e.printStackTrace();
