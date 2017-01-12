@@ -20,7 +20,7 @@ public class VaktController {
 
     @RequestMapping("/vakt/alle")
     public Vakt[] getVakter(Bruker bruker) {
-        return query.selectVakter(bruker);
+        return query.selectVakter(bruker.getBrukerId());
     }
 
     @RequestMapping(value="/vakt/delete", method= RequestMethod.DELETE)
