@@ -199,7 +199,7 @@ public class SqlQueries extends DBConnection {
 			insertQuery = connection.prepareStatement("INSERT INTO bruker (passord_id, " +
 					"stilling_id, avdeling_id, fornavn, etternavn, timelonn, telefonnr, " +
 					"epost, stillingsprosent, admin) " +
-					"VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);");
+					"VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);");
 			insertQuery.setInt(1, bruker.getPassordId());
 			insertQuery.setInt(2, bruker.getStillingsId());
 			insertQuery.setInt(3, bruker.getAvdelingId());
@@ -325,9 +325,10 @@ public class SqlQueries extends DBConnection {
 
     public Vakt selectVakt(int vaktId) {
         try {
-            String selectSql = "SELECT vaktansvarlig_id, avdeling_id, fra_tid, til_tid, ant_pers FROM vakt WHERE vakt_id = ?";
-            selectQuery = connection.prepareStatement(selectSql);
-            ResultSet res = selectQuery.executeQuery();
+            String selectSql = "SELECT * FROM vakt WHERE vakt_id = ?";
+			selectQuery = connection.prepareStatement(selectSql);
+			selectQuery.setInt(1, vaktId);
+			ResultSet res = selectQuery.executeQuery();
 
             if (!res.next()) return null;
 
@@ -658,7 +659,7 @@ public class SqlQueries extends DBConnection {
 
     public boolean insertOvertid(Overtid newOvertid) {
         try {
-            String insertSql = "INSERT INTO overtid(bruker_id, ant_timer, dato, kommentar) VALUES(?,?,?,?,?)";
+            String insertSql = "INSERT INTO overtid(bruker_id, ant_timer, dato, kommentar) VALUES(?,?,?,?)";
             insertQuery = connection.prepareStatement(insertSql);
             insertQuery.setInt(1, newOvertid.getBrukerId());
             insertQuery.setDouble(2, newOvertid.getAntTimer());

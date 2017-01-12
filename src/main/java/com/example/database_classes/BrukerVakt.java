@@ -12,6 +12,8 @@ public class BrukerVakt {
         this.vaktId = vaktId;
     }
 
+    public BrukerVakt() {}
+
     public int getBrukerId() {
         return brukerId;
     }

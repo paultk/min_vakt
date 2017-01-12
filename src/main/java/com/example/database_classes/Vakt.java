@@ -44,6 +44,8 @@ public class Vakt {
         this.antPers = antPers;
     }
 
+    public Vakt(){}
+
     public int getVaktId() {
         return vaktId;
     }
