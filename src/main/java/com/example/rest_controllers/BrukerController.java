@@ -2,6 +2,9 @@ package com.example.rest_controllers;
 
 import com.example.database_classes.*;
 import com.example.sql_folder.SqlQueries;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import org.springframework.util.comparator.BooleanComparator;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,6 +30,7 @@ public class BrukerController {
 	}
 
 	@RequestMapping(value="/bruker/add", method=RequestMethod.POST)
+	@JsonDeserialize(using = LocalDateTimeDeserializer.class)
 	public boolean addBruker(@RequestBody Bruker bruker) {
 		return query.insertBruker(bruker);
 	}
