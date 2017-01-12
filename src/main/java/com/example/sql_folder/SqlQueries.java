@@ -923,6 +923,11 @@ public class SqlQueries extends DBConnection {
 		System.out.println(query.selectBruker(19));
 
 
+		Bruker bruker19 = query.selectBruker(19);
+		for (int i = 0; i < query.selectVakter(bruker19).length; i++) {
+            System.out.println(query.selectVakter(bruker19)[i]);
+        }
+
 
 //		System.out.println(Arrays.toString(query.selectBrukereFromVaktId(0)));
 	}
