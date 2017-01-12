@@ -1,7 +1,6 @@
 package com.example.rest_controllers;
 
-import com.example.database_classes.Bruker;
-import com.example.database_classes.Vakt;
+import com.example.database_classes.*;
 import com.example.sql_folder.SqlQueries;
 import org.springframework.util.comparator.BooleanComparator;
 import org.springframework.web.bind.annotation.*;
@@ -27,8 +26,56 @@ public class BrukerController {
 		return query.insertBruker(bruker);
 	}
 
+	@RequestMapping(value="/bruker/setpassord", method=RequestMethod.POST)
+	public boolean setPassord(@RequestBody Bruker bruker) {
+		return query.updateBrukerPassord(bruker.getBrukerId(), bruker.getPassordId());
+	}
 
-	//TODO: teste disse når man kan hente vakter som JSON
+	@RequestMapping(value="/bruker/setstilling", method=RequestMethod.POST)
+	public boolean setStilling(@RequestBody Bruker bruker) {
+		return query.updateBrukerStilling(bruker.getBrukerId(), bruker.getStillingsId());
+	}
+
+	@RequestMapping(value="/bruker/setavdeling", method=RequestMethod.POST)
+	public boolean setAvdeling(@RequestBody Bruker bruker) {
+		return query.updateBrukerAvdeling(bruker.getBrukerId(), bruker.getAvdelingId());
+	}
+
+	@RequestMapping(value="/bruker/settelefon", method=RequestMethod.POST)
+	public boolean setTelefon(@RequestBody Bruker bruker) {
+		return query.updateBrukerTelefon(bruker.getBrukerId(),  bruker.getTelefonNr());
+	}
+
+	@RequestMapping(value="/bruker/setstillingprosent", method=RequestMethod.POST)
+	public boolean setStillingPros(@RequestBody Bruker bruker) {
+		return query.updateBrukerStillingPros(bruker.getBrukerId(),  bruker.getStillingsProsent());
+	}
+
+	@RequestMapping(value="/bruker/settimelonn", method=RequestMethod.POST)
+	public boolean setTimelonn(@RequestBody Bruker bruker) {
+		return query.updateBrukerTimelonn(bruker.getBrukerId(),  bruker.getTimelonn());
+	}
+
+	@RequestMapping(value="/bruker/setadmin", method=RequestMethod.POST)
+	public boolean setAdmin(@RequestBody Bruker bruker) {
+		return query.updateBrukerAdmin(bruker.getBrukerId(),  bruker.isAdmin());
+	}
+
+	@RequestMapping(value="/bruker/setfornavn", method=RequestMethod.POST)
+	public boolean setFornavn(@RequestBody Bruker bruker) {
+		return query.updateBrukerFornavn(bruker.getBrukerId(),  bruker.getFornavn());
+	}
+
+	@RequestMapping(value="/bruker/setetternavn", method=RequestMethod.POST)
+	public boolean setEtternavn(@RequestBody Bruker bruker) {
+		return query.updateBrukerEtternavn(bruker.getBrukerId(),  bruker.getEtternavn());
+	}
+
+	@RequestMapping(value="/bruker/setepost", method=RequestMethod.POST)
+	public boolean setEpost(@RequestBody Bruker bruker) {
+		return query.updateBrukerEpost(bruker.getBrukerId(),  bruker.getEpost());
+	}
+
 	@RequestMapping(value="/bruker/addvakt", method=RequestMethod.POST)
 	public boolean addBrukerVakt(@RequestBody Bruker bruker, @RequestBody Vakt vakt) {
 		return query.insertVaktBruker(bruker.getBrukerId(), vakt.getVaktId());

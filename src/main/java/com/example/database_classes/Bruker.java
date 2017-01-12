@@ -24,9 +24,10 @@ public class Bruker {
         this.fornavn = fornavn;
         this.etternavn = etternavn;
         this.epost = epost;
+        this.avdelingId = avdelingId;
     }
 
-    //Empty constuctor for Spring REST
+    //Empty constructor for Spring REST
     public Bruker(){}
 
     public int getBrukerId() {

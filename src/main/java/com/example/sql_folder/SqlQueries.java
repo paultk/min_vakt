@@ -98,7 +98,7 @@ public class SqlQueries extends DBConnection {
             selectQuery.setInt(1, brukerId);
             ResultSet res = selectQuery.executeQuery();
             if (res.next()) {
-                return new Bruker(
+				return new Bruker(
                         res.getInt("bruker_id"),
                         res.getInt("passord_id"),
                         res.getInt("stilling_id"),
@@ -866,6 +866,26 @@ public class SqlQueries extends DBConnection {
 //		query.addBruker(bruker);
 //        System.out.println(query.selectBruker(1));
 //		query.updateBrukerAdmin()
-		System.out.println(Arrays.toString(query.selectBrukereFromVaktId(0)));
+
+		//Testing av update
+		/*query.deleteBruker(19);
+		Bruker test = new Bruker(19, 0, 0, 0, 0, 0, 0, false, "null", "null", "null");
+		query.insertBruker(test);
+		query.updateBrukerAdmin(19, true);
+		query.updateBrukerEpost(19, "Walla");
+		query.updateBrukerEtternavn(19, "Test");
+		query.updateBrukerFornavn(19, "Testern");
+		query.updateBrukerPassord(19, 1);
+		query.updateBrukerStilling(19, 1);
+		query.updateBrukerStillingPros(19, 100);
+		query.updateBrukerTelefon(19, 87654321);
+		query.updateBrukerTimelonn(19, 140);
+		query.updateBrukerAvdeling(19, 1);*/
+
+		System.out.println(query.selectBruker(19));
+
+
+
+//		System.out.println(Arrays.toString(query.selectBrukereFromVaktId(0)));
 	}
 }
