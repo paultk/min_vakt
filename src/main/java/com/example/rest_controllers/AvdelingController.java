@@ -18,7 +18,7 @@ public class AvdelingController {
         return query.selectAvdeling(id);
     }
 
-    @RequestMapping(value="/avdeling/delete", method= RequestMethod.DELETE)
+    @RequestMapping(value="/avdeling/delete", method= RequestMethod.POST)
     public boolean deleteAvdeling(@RequestBody Avdeling avdeling) {
         return query.deleteAvdeling(avdeling);
     }

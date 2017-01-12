@@ -57,9 +57,10 @@ public class SqlQueries extends DBConnection {
 
     public boolean insertAvdeling(Avdeling newAvdeling) {
         try {
-            String insertSql = "INSERT INTO avdeling(avd_navn) VALUES(?)";
+            String insertSql = "INSERT INTO avdeling(avdeling_id, avd_navn) VALUES(?,?)";
             insertQuery = connection.prepareStatement(insertSql);
-            insertQuery.setString(1, newAvdeling.getNavn());
+            insertQuery.setInt(1, newAvdeling.getAvdelingId());
+            insertQuery.setString(2, newAvdeling.getNavn());
             insertQuery.execute();
             return true;
         } catch (SQLException e) {
@@ -527,12 +528,12 @@ public class SqlQueries extends DBConnection {
 
     }
 
-    public boolean deleteStilling(Stilling stilling){
+    public boolean deleteStilling(int id){
         try {
 
             String sql = "DELETE FROM stilling WHERE stilling_id = ?";
             PreparedStatement deleteQuery = connection.prepareStatement(sql);
-            deleteQuery.setInt(1, stilling.getStillingId());
+            deleteQuery.setInt(1,id);
             if (deleteQuery.executeUpdate() == 1) {
                 return true;
             }
@@ -746,6 +747,7 @@ public class SqlQueries extends DBConnection {
         try {
             String selectSql = "SELECT fra_tid, til_tid FROM tilgjengelighet WHERE bruker_id = ?";
             selectQuery = connection.prepareStatement(selectSql);
+            selectQuery.setInt(1, userId);
             ResultSet res = selectQuery.executeQuery();
 
             if (!res.next()) return null;
