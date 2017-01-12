@@ -26,7 +26,7 @@ public class BrukerController {
 
 	@RequestMapping(value="/bruker/add", method=RequestMethod.POST)
 	public void addBruker(@RequestBody Bruker bruker) {
-		query.addBruker(bruker);
+		query.insertBruker(bruker);
 	}
 
 	@RequestMapping(value="/bruker/addvakt", method=RequestMethod.POST)
