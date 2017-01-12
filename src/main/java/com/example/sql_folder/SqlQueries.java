@@ -86,6 +86,22 @@ public class SqlQueries extends DBConnection {
         return false;
     }
 
+    public boolean updateAvdeling(Avdeling avdeling){
+
+        try {
+            String sql = "UPDATE avdeling SET avd_navn = ? WHERE avdeling_id = ?";
+            PreparedStatement updateQuery = connection.prepareStatement(sql);
+            updateQuery.setString(1, avdeling.getNavn());
+            updateQuery.setInt(2, avdeling.getAvdelingId());
+            if (updateQuery.executeUpdate() == 1) {
+                return true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
     /*
     *
     * BRUKER

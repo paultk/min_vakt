@@ -1,16 +1,36 @@
 package com.example.rest_controllers;
 
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+
+import com.example.sql_folder.SqlQueries;
+import org.springframework.web.bind.annotation.*;
+import com.example.database_classes.Avdeling;
+
 /**
- * Created by Håkon on 11.01.2017.
+ * Created by Håkon on 12.01.2017.
  */
 
-/*@RestController
+@RestController
 public class AvdelingController {
+    SqlQueries query = new SqlQueries();
+    @RequestMapping("/avdeling/{id}")
+    public Avdeling getAvdeling(@PathVariable("id") Integer id) {
+        Avdeling ret = query.selectAvdeling(id);
+        return query.selectAvdeling(id);
+    }
 
+    @RequestMapping(value="/avdeling/delete", method= RequestMethod.DELETE)
+    public boolean deleteAvdeling(@RequestBody Avdeling avdeling) {
+        return query.deleteAvdeling(avdeling);
+    }
 
-    @RequestMapping("/avdeling/getAvdeling")
-    public Avdeling getAvdeling(@RequestParam(value= ""))
-}*/
+    @RequestMapping(value="/avdeling/add", method=RequestMethod.POST)
+    public boolean insertAvdeling(@RequestBody Avdeling avdeling) {
+        return query.insertAvdeling(avdeling);
+    }
+
+    @RequestMapping(value="/avdeling/update", method=RequestMethod.PUT)
+    public boolean updateAvdeling(@RequestBody Avdeling avdeling){
+        return query.updateAvdeling(avdeling);
+    }
+}
+

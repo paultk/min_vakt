@@ -23,6 +23,8 @@ public class Tilgjengelighet {
         this.tilTid= tilTid;
     }
 
+    public Tilgjengelighet(){}
+
     public int getUserId(){
         return userId;
     }
