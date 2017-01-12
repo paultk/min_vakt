@@ -27,8 +27,15 @@ public class BrukerController {
 		return query.insertBruker(bruker);
 	}
 
+
+	//TODO: teste disse når man kan hente vakter som JSON
 	@RequestMapping(value="/bruker/addvakt", method=RequestMethod.POST)
-	public boolean addVaktToBruker(@RequestBody Bruker bruker, Vakt vakt) {
+	public boolean addBrukerVakt(@RequestBody Bruker bruker, @RequestBody Vakt vakt) {
 		return query.insertVaktBruker(bruker.getBrukerId(), vakt.getVaktId());
+	}
+
+	@RequestMapping(value="/bruker/deletevakt", method=RequestMethod.POST)
+	public boolean deleteBrukerVakt(@RequestBody Bruker bruker, @RequestBody Vakt vakt) {
+		return query.deleteVaktBruker(bruker.getBrukerId(), vakt.getVaktId());
 	}
 }

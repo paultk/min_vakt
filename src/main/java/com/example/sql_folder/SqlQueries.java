@@ -149,6 +149,146 @@ public class SqlQueries extends DBConnection {
 		return null;
 	}
 
+	public boolean updateBrukerPassord(int brukerId, int id) {
+		try {
+			updateQuery = connection.prepareStatement("UPDATE  bruker SET  passord_id = ? WHERE  bruker_id = ?");
+			updateQuery.setInt(1, id);
+			updateQuery.setInt(2, brukerId);
+			updateQuery.executeUpdate();
+			return true;
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+
+	public boolean updateBrukerStilling(int brukerId, int id) {
+		try {
+			updateQuery = connection.prepareStatement("UPDATE  bruker SET  stilling_id = ? WHERE  bruker_id = ?");
+			updateQuery.setInt(1, id);
+			updateQuery.setInt(2, brukerId);
+			updateQuery.executeUpdate();
+			return true;
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+
+	public boolean updateBrukerAvdeling(int brukerId, int id) {
+		try {
+			updateQuery = connection.prepareStatement("UPDATE  bruker SET  avdeling_id = ? WHERE  bruker_id = ?");
+			updateQuery.setInt(1, id);
+			updateQuery.setInt(2, brukerId);
+			updateQuery.executeUpdate();
+			return true;
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+
+	public boolean updateBrukerTelefon(int brukerId, int tlf) {
+		try {
+			updateQuery = connection.prepareStatement("UPDATE  bruker SET  telefonnr = ? WHERE  bruker_id = ?");
+			updateQuery.setInt(1, tlf);
+			updateQuery.setInt(2, brukerId);
+			updateQuery.executeUpdate();
+			return true;
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+
+	public boolean updateBrukerStillingPros(int brukerId, int pros) {
+		try {
+			updateQuery = connection.prepareStatement("UPDATE  bruker SET  stillingsprosent = ? WHERE  bruker_id = ?");
+			updateQuery.setInt(1, pros);
+			updateQuery.setInt(2, brukerId);
+			updateQuery.executeUpdate();
+			return true;
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+
+	public boolean updateBrukerTimelonn(int brukerId, double lonn) {
+		try {
+			updateQuery = connection.prepareStatement("UPDATE  bruker SET  timelonn = ? WHERE  bruker_id = ?");
+			updateQuery.setDouble(1, lonn);
+			updateQuery.setInt(2, brukerId);
+			updateQuery.executeUpdate();
+			return true;
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+
+	public boolean updateBrukerAdmin(int brukerId, boolean admin) {
+		try {
+			updateQuery = connection.prepareStatement("UPDATE  bruker SET  admin = ? WHERE  bruker_id = ?");
+			updateQuery.setBoolean(1, admin);
+			updateQuery.setInt(2, brukerId);
+			updateQuery.executeUpdate();
+			return true;
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+
+	public boolean updateBrukerFornavn(int brukerId, String fornavn) {
+		try {
+			updateQuery = connection.prepareStatement("UPDATE  bruker SET  fornavn = ? WHERE  bruker_id = ?");
+			updateQuery.setString(1, fornavn);
+			updateQuery.setInt(2, brukerId);
+			updateQuery.executeUpdate();
+			return true;
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+
+	public boolean updateBrukerEtternavn(int brukerId, String etternavn) {
+		try {
+			updateQuery = connection.prepareStatement("UPDATE  bruker SET etternavn = ? WHERE  bruker_id = ?");
+			updateQuery.setString(1, etternavn);
+			updateQuery.setInt(2, brukerId);
+			updateQuery.executeUpdate();
+			return true;
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+
+	public boolean updateBrukerEpost(int brukerId, String epost) {
+		try {
+			updateQuery = connection.prepareStatement("UPDATE  bruker SET  epost = ? WHERE  bruker_id = ?");
+			updateQuery.setString(1, epost);
+			updateQuery.setInt(2, brukerId);
+			updateQuery.executeUpdate();
+			return true;
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+
     public boolean insertBruker(Bruker bruker) {
 		try {
 			insertQuery = connection.prepareStatement("INSERT INTO bruker (bruker_id, passord_id, " +
@@ -725,6 +865,7 @@ public class SqlQueries extends DBConnection {
 //		Bruker bruker = new Bruker(2, 0, 0, 0, 12345678, 50, 100, true, "Ken", "Bob", "bobby");
 //		query.addBruker(bruker);
 //        System.out.println(query.selectBruker(1));
+//		query.updateBrukerAdmin()
 		System.out.println(Arrays.toString(query.selectBrukereFromVaktId(0)));
 	}
 }

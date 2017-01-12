@@ -12,6 +12,8 @@ public class Avdeling {
         this.navn = navn;
     }
 
+    public Avdeling() {}
+
     public int getAvdelingId() {
         return avdelingId;
     }
