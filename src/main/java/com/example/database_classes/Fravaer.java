@@ -16,6 +16,7 @@ public class Fravaer {
         this.kommentar = kommentar;
 
     }
+    public Fravaer(){}
 
     public int getBrukerId() {
         return brukerId;

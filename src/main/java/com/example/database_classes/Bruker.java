@@ -1,7 +1,5 @@
 package com.example.database_classes;
 
-import java.util.ArrayList;
-
 /**
  * Created by paul on 10.01.17.
  */

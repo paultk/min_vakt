@@ -1,17 +1,14 @@
 package com.example.sql_folder;
 import com.example.database_classes.*;
-import com.sun.corba.se.impl.orb.PrefixParserData;
-
-import java.sql.PreparedStatement;
-
-/**
- * Created by axelkvistad on 10/01/17.
- */
 
 import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
+
+/**
+ * Created by axelkvistad on 10/01/17.
+ */
 
 /**
  * Created by axelkvistad on 10/01/17.
@@ -636,7 +633,7 @@ public class SqlQueries extends DBConnection {
             if (!res.next()) return null;
 
             int vaktId = res.getInt("vakt_id");
-            int antTimer = res.getInt("ant_timer");
+            double antTimer = res.getDouble("ant_timer");
             String kommentar = res.getString("kommentar");
 
 
@@ -682,15 +679,15 @@ public class SqlQueries extends DBConnection {
         return false;
     }
 
-    public boolean deleteFravaer(Fravaer fravaer) {
+    public boolean deleteFravaer(int brukerId) {
         try {
             String deleteSql = "DELETE FROM fravaer WHERE bruker_id = ?";
             deleteQuery = connection.prepareStatement(deleteSql);
-            deleteQuery.setInt(1, fravaer.getBrukerId());
+            deleteQuery.setInt(1, brukerId);
+            deleteQuery.executeUpdate();
 
-            if (deleteQuery.executeUpdate() == 1) {
-                return true;
-            }
+            return true;
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
