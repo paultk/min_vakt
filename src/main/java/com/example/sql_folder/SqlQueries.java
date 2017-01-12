@@ -233,7 +233,13 @@ public class SqlQueries extends DBConnection {
 		return false;
 	}
 
-	public boolean insertVaktBruker(int brukerId, int vaktId) {
+	/*
+    *
+    * BRUKERVAKT
+    *
+    */
+
+	public boolean insertBrukerVakt(int brukerId, int vaktId) {
 		try {
 			insertQuery = connection.prepareStatement("INSERT INTO bruker_vakt (bruker_id, vakt_id) VALUES (?, ?)");
 			insertQuery.setInt(1, brukerId);
@@ -247,7 +253,7 @@ public class SqlQueries extends DBConnection {
 		return false;
 	}
 
-	public boolean deleteVaktBruker(int brukerId, int vaktId) {
+	public boolean deleteBrukerVakt(int brukerId, int vaktId) {
 		try {
 			deleteQuery = connection.prepareStatement("DELETE FROM bruker_vakt WHERE bruker_vakt.bruker_id = ?" +
 					" AND bruker_vakt.vakt_id = ?");
@@ -260,6 +266,25 @@ public class SqlQueries extends DBConnection {
 			e.printStackTrace();
 		}
 		return false;
+	}
+
+	public BrukerVakt[] selectBrukerVakter() {
+		try {
+			selectQuery = connection.prepareStatement("SELECT * FROM bruker_vakt");
+			ResultSet res = selectQuery.executeQuery();
+			ArrayList<BrukerVakt> brukerVakter = new ArrayList<>();
+			while (res.next()) {
+				BrukerVakt brk = new BrukerVakt(res.getInt("bruker_id"), res.getInt("vakt_id"));
+				brukerVakter.add(brk);
+			}
+			SqlCleanup.closeResSet(res);
+			BrukerVakt[] ret = new BrukerVakt[brukerVakter.size()];
+			return brukerVakter.toArray(ret);
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	public Bruker[] selectBrukereFromVaktId(int vaktId) {

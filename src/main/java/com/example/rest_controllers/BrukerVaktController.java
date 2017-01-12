@@ -1,11 +1,9 @@
 package com.example.rest_controllers;
 
+import com.example.database_classes.Bruker;
 import com.example.database_classes.BrukerVakt;
 import com.example.sql_folder.SqlQueries;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * Created by Jens on 12-Jan-17.
@@ -13,13 +11,19 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class BrukerVaktController {
 	SqlQueries query = new SqlQueries();
-	@RequestMapping(value="/brukervakt/addvakt", method= RequestMethod.POST)
-	public boolean addBrukerVakt(@RequestBody BrukerVakt brukervakt) {
-		return query.insertVaktBruker(brukervakt.getBrukerId(), brukervakt.getVaktId());
+
+	@RequestMapping(value="/brukervakt/alle")
+	public BrukerVakt[] getBrukerVakter() {
+		return query.selectBrukerVakter();
 	}
 
-	@RequestMapping(value="/brukervakt/deletevakt", method=RequestMethod.POST)
+	@RequestMapping(value="/brukervakt/add", method= RequestMethod.POST)
+	public boolean addBrukerVakt(@RequestBody BrukerVakt brukervakt) {
+		return query.insertBrukerVakt(brukervakt.getBrukerId(), brukervakt.getVaktId());
+	}
+
+	@RequestMapping(value="/brukervakt/delete", method=RequestMethod.POST)
 	public boolean deleteBrukerVakt(@RequestBody BrukerVakt brukervakt) {
-		return query.deleteVaktBruker(brukervakt.getBrukerId(), brukervakt.getVaktId());
+		return query.deleteBrukerVakt(brukervakt.getBrukerId(), brukervakt.getVaktId());
 	}
 }
