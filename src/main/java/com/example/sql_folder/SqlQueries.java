@@ -196,21 +196,20 @@ public class SqlQueries extends DBConnection {
 
     public boolean insertBruker(Bruker bruker) {
 		try {
-			insertQuery = connection.prepareStatement("INSERT INTO bruker (bruker_id, passord_id, " +
+			insertQuery = connection.prepareStatement("INSERT INTO bruker (passord_id, " +
 					"stilling_id, avdeling_id, fornavn, etternavn, timelonn, telefonnr, " +
 					"epost, stillingsprosent, admin) " +
 					"VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);");
-			insertQuery.setInt(1, bruker.getBrukerId());
-			insertQuery.setInt(2, bruker.getPassordId());
-			insertQuery.setInt(3, bruker.getStillingsId());
-			insertQuery.setInt(4, bruker.getAvdelingId());
-			insertQuery.setString(5, bruker.getFornavn());
-			insertQuery.setString(6, bruker.getEtternavn());
-			insertQuery.setDouble(7, bruker.getTimelonn());
-			insertQuery.setInt(8, bruker.getTelefonNr());
-			insertQuery.setString(9, bruker.getEpost());
-			insertQuery.setInt(10, bruker.getStillingsProsent());
-			insertQuery.setBoolean(11, bruker.isAdmin());
+			insertQuery.setInt(1, bruker.getPassordId());
+			insertQuery.setInt(2, bruker.getStillingsId());
+			insertQuery.setInt(3, bruker.getAvdelingId());
+			insertQuery.setString(4, bruker.getFornavn());
+			insertQuery.setString(5, bruker.getEtternavn());
+			insertQuery.setDouble(6, bruker.getTimelonn());
+			insertQuery.setInt(7, bruker.getTelefonNr());
+			insertQuery.setString(8, bruker.getEpost());
+			insertQuery.setInt(9, bruker.getStillingsProsent());
+			insertQuery.setBoolean(10, bruker.isAdmin());
 			insertQuery.executeUpdate();
 			return true;
 		}
@@ -659,13 +658,12 @@ public class SqlQueries extends DBConnection {
 
     public boolean insertOvertid(Overtid newOvertid) {
         try {
-            String insertSql = "INSERT INTO overtid(overtid_id, bruker_id, ant_timer, dato, kommentar) VALUES(?,?,?,?,?)";
+            String insertSql = "INSERT INTO overtid(bruker_id, ant_timer, dato, kommentar) VALUES(?,?,?,?,?)";
             insertQuery = connection.prepareStatement(insertSql);
-			insertQuery.setInt(1, newOvertid.getOvertidId());
-            insertQuery.setInt(2, newOvertid.getBrukerId());
-            insertQuery.setDouble(3, newOvertid.getAntTimer());
-            insertQuery.setDate(4, newOvertid.getDato());
-            insertQuery.setString(5, newOvertid.getKommentar());
+            insertQuery.setInt(1, newOvertid.getBrukerId());
+            insertQuery.setDouble(2, newOvertid.getAntTimer());
+            insertQuery.setDate(3, newOvertid.getDato());
+            insertQuery.setString(4, newOvertid.getKommentar());
 
             insertQuery.execute();
             return true;
@@ -724,7 +722,7 @@ public class SqlQueries extends DBConnection {
     public boolean insertTilgjengelighet(Tilgjengelighet newTilgjengelighet){
 
         try {
-            String sql = "INSERT INTO tilgjegnelighet(fra_tid, til_tid) VALUES(?,?);";
+            String sql = "INSERT INTO tilgjengelighet(fra_tid, til_tid) VALUES(?,?);";
             insertQuery = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             insertQuery.setTimestamp(1, Timestamp.valueOf(newTilgjengelighet.getFraTid()));
             insertQuery.setTimestamp(2, Timestamp.valueOf(newTilgjengelighet.getTilTid()));
