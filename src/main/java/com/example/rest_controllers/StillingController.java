@@ -18,18 +18,22 @@ public class StillingController {
     @RequestMapping("/stilling/{id}")
     public Stilling getStilling(@PathVariable("id") Integer id) {
         Stilling ret = query.selectStilling(id);
-        System.out.println(ret);
         return query.selectStilling(id);
     }
 
-    /*@RequestMapping(value="/stilling/delete", method=RequestMethod.POST)
-    public void deleteStilling(@RequestBody Stilling stilling) {
-        query.deleteStilling(stilling.getStillingId());
-    }*/
+    @RequestMapping(value="/stilling/delete", method=RequestMethod.DELETE)
+    public boolean deleteStilling(@RequestBody Stilling stilling) {
+        return query.deleteStilling(stilling);
+    }
 
     @RequestMapping(value="/stilling/add", method=RequestMethod.POST)
-    public void insertStilling(@RequestBody Stilling stilling) {
-        query.insertStilling(stilling);
+    public boolean insertStilling(@RequestBody Stilling stilling) {
+        return query.insertStilling(stilling);
+    }
+
+    @RequestMapping(value="/stilling/update", method=RequestMethod.PUT)
+    public boolean updateStilling(@RequestBody Stilling stilling){
+        return query.updateStilling(stilling);
     }
 }
 
