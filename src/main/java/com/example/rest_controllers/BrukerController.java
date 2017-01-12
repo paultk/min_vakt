@@ -16,6 +16,11 @@ public class BrukerController {
 		return query.selectBruker(id);
 	}
 
+	@RequestMapping("/bruker/alle")
+	public Bruker[] getBrukere() {
+		return query.selectBrukere();
+	}
+
 	@RequestMapping(value="/bruker/delete", method=RequestMethod.POST)
 	public boolean deleteBruker(@RequestBody Bruker bruker) {
 		return query.deleteBruker(bruker.getBrukerId());

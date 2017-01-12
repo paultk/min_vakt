@@ -19,7 +19,7 @@ public class VaktController {
     }
 
     //Må Sjekke ut json array objekter..
-    @RequestMapping(value= "/vakt", method= RequestMethod.GET)
+    @RequestMapping(value= "/vakt", method= RequestMethod.POST)
     public Vakt[] selectVakter(@RequestBody Bruker bruker){
         return query.selectVakter(bruker);
     }
