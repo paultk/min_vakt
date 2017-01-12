@@ -94,9 +94,9 @@ public class SqlQueries extends DBConnection {
 
     public Bruker selectBruker(int brukerId) {
         try {
-            PreparedStatement prep = connection.prepareStatement("SELECT * FROM bruker WHERE bruker_id = ?");
-            prep.setInt(1, brukerId);
-            ResultSet res = prep.executeQuery();
+            selectQuery = connection.prepareStatement("SELECT * FROM bruker WHERE bruker_id = ?");
+            selectQuery.setInt(1, brukerId);
+            ResultSet res = selectQuery.executeQuery();
             if (res.next()) {
                 return new Bruker(
                         res.getInt("bruker_id"),
@@ -111,6 +111,7 @@ public class SqlQueries extends DBConnection {
                         res.getString("etternavn"),
                         res.getString("epost"));
             }
+            SqlCleanup.closeResSet(res);
         }
         catch (SQLException e) {
             e.printStackTrace();
@@ -120,8 +121,8 @@ public class SqlQueries extends DBConnection {
 
     public Bruker[] selectBrukere() {
 		try {
-			PreparedStatement prep = connection.prepareStatement("SELECT * FROM bruker");
-			ResultSet res = prep.executeQuery();
+			selectQuery = connection.prepareStatement("SELECT * FROM bruker");
+			ResultSet res = selectQuery.executeQuery();
 			ArrayList<Bruker> brukere = new ArrayList<>();
 			while (res.next()) {
 				Bruker brk = new Bruker(
@@ -138,6 +139,7 @@ public class SqlQueries extends DBConnection {
 						res.getString("epost"));
 				brukere.add(brk);
 			}
+			SqlCleanup.closeResSet(res);
 			Bruker[] ret = new Bruker[brukere.size()];
 			return brukere.toArray(ret);
 		}
@@ -147,24 +149,24 @@ public class SqlQueries extends DBConnection {
 		return null;
 	}
 
-    public boolean addBruker(Bruker bruker) {
+    public boolean insertBruker(Bruker bruker) {
 		try {
-			PreparedStatement prep = connection.prepareStatement("INSERT INTO bruker (bruker_id, passord_id, " +
+			insertQuery = connection.prepareStatement("INSERT INTO bruker (bruker_id, passord_id, " +
 					"stilling_id, avdeling_id, fornavn, etternavn, timelonn, telefonnr, " +
 					"epost, stillingsprosent, admin) " +
 					"VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);");
-			prep.setInt(1, bruker.getBrukerId());
-			prep.setInt(2, bruker.getPassordId());
-			prep.setInt(3, bruker.getStillingsId());
-			prep.setInt(4, bruker.getAvdelingId());
-			prep.setString(5, bruker.getFornavn());
-			prep.setString(6, bruker.getEtternavn());
-			prep.setDouble(7, bruker.getTimelonn());
-			prep.setInt(8, bruker.getTelefonNr());
-			prep.setString(9, bruker.getEpost());
-			prep.setInt(10, bruker.getStillingsProsent());
-			prep.setBoolean(11, bruker.isAdmin());
-			prep.executeUpdate();
+			insertQuery.setInt(1, bruker.getBrukerId());
+			insertQuery.setInt(2, bruker.getPassordId());
+			insertQuery.setInt(3, bruker.getStillingsId());
+			insertQuery.setInt(4, bruker.getAvdelingId());
+			insertQuery.setString(5, bruker.getFornavn());
+			insertQuery.setString(6, bruker.getEtternavn());
+			insertQuery.setDouble(7, bruker.getTimelonn());
+			insertQuery.setInt(8, bruker.getTelefonNr());
+			insertQuery.setString(9, bruker.getEpost());
+			insertQuery.setInt(10, bruker.getStillingsProsent());
+			insertQuery.setBoolean(11, bruker.isAdmin());
+			insertQuery.executeUpdate();
 			return true;
 		}
 		catch (Exception e) {
@@ -175,9 +177,9 @@ public class SqlQueries extends DBConnection {
 	public boolean deleteBruker(int id) {
 
 		try {
-			PreparedStatement prep = connection.prepareStatement("DELETE FROM bruker WHERE bruker.bruker_id = ?");
-			prep.setInt(1, id);
-			prep.executeUpdate();
+			deleteQuery = connection.prepareStatement("DELETE FROM bruker WHERE bruker.bruker_id = ?");
+			deleteQuery.setInt(1, id);
+			deleteQuery.executeUpdate();
 			return true;
 		}
 		catch (Exception e) {
@@ -188,10 +190,10 @@ public class SqlQueries extends DBConnection {
 
 	public boolean insertVaktBruker(int brukerId, int vaktId) {
 		try {
-			PreparedStatement prep = connection.prepareStatement("INSERT INTO bruker_vakt (bruker_id, vakt_id) VALUES (?, ?)");
-			prep.setInt(1, brukerId);
-			prep.setInt(2, vaktId);
-			prep.executeUpdate();
+			insertQuery = connection.prepareStatement("INSERT INTO bruker_vakt (bruker_id, vakt_id) VALUES (?, ?)");
+			insertQuery.setInt(1, brukerId);
+			insertQuery.setInt(2, vaktId);
+			insertQuery.executeUpdate();
 			return true;
 		}
 		catch (Exception e) {
@@ -202,11 +204,11 @@ public class SqlQueries extends DBConnection {
 
 	public boolean deleteVaktBruker(int brukerId, int vaktId) {
 		try {
-			PreparedStatement prep = connection.prepareStatement("DELETE FROM bruker_vakt WHERE bruker_vakt.bruker_id = ?" +
+			deleteQuery = connection.prepareStatement("DELETE FROM bruker_vakt WHERE bruker_vakt.bruker_id = ?" +
 					" AND bruker_vakt.vakt_id = ?");
-			prep.setInt(1, brukerId);
-			prep.setInt(2, vaktId);
-			prep.executeUpdate();
+			deleteQuery.setInt(1, brukerId);
+			deleteQuery.setInt(2, vaktId);
+			deleteQuery.executeUpdate();
 			return true;
 		}
 		catch (Exception e) {
@@ -215,12 +217,12 @@ public class SqlQueries extends DBConnection {
 		return false;
 	}
 
-	public Bruker[] selectBrukerFromVaktId(int vaktId) {
+	public Bruker[] selectBrukereFromVaktId(int vaktId) {
 		try {
-			PreparedStatement prep = connection.prepareStatement("SELECT * FROM bruker WHERE bruker_id IN " +
+			selectQuery = connection.prepareStatement("SELECT * FROM bruker WHERE bruker_id IN " +
 					"(SELECT bruker_id FROM bruker_vakt WHERE vakt_id = ?)");
-			prep.setInt(1, vaktId);
-			ResultSet res = prep.executeQuery();
+			selectQuery.setInt(1, vaktId);
+			ResultSet res = selectQuery.executeQuery();
 			ArrayList<Bruker> brukere = new ArrayList<>();
 			while (res.next()) {
 				Bruker brk = new Bruker(
@@ -237,6 +239,7 @@ public class SqlQueries extends DBConnection {
 						res.getString("epost"));
 				brukere.add(brk);
 			}
+			SqlCleanup.closeResSet(res);
 			return brukere.toArray(new Bruker[brukere.size()]);
 		}
 		catch (Exception e) {
@@ -722,6 +725,6 @@ public class SqlQueries extends DBConnection {
 //		Bruker bruker = new Bruker(2, 0, 0, 0, 12345678, 50, 100, true, "Ken", "Bob", "bobby");
 //		query.addBruker(bruker);
 //        System.out.println(query.selectBruker(1));
-		System.out.println(Arrays.toString(query.selectBrukerFromVaktId(0)));
+		System.out.println(Arrays.toString(query.selectBrukereFromVaktId(0)));
 	}
 }
