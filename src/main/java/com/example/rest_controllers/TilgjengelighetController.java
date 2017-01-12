@@ -10,23 +10,23 @@ import com.example.database_classes.Tilgjengelighet;
 @RestController
 public class TilgjengelighetController {
     SqlQueries query = new SqlQueries();
-    @RequestMapping("/stilling/{id}")
+    @RequestMapping("/tilgjengelighet/{id}")
     public Tilgjengelighet getTilgjengelighet(@PathVariable("id") Integer id) {
         Tilgjengelighet ret = query.selectTilgjengelighet(id);
         return query.selectTilgjengelighet(id);
     }
 
-    @RequestMapping(value="/stilling/delete", method= RequestMethod.DELETE)
+    @RequestMapping(value="/tilgjengelighet/delete", method= RequestMethod.DELETE)
     public boolean deleteTilgjengelighet(@RequestBody Tilgjengelighet tilgjengelighet) {
         return query.deleteTilgjengelighet(tilgjengelighet);
     }
 
-    @RequestMapping(value="/stilling/add", method=RequestMethod.POST)
+    @RequestMapping(value="/tilgjengelighet/add", method=RequestMethod.POST)
     public boolean insertTilgjengelighet(@RequestBody Tilgjengelighet tilgjengelighet) {
         return query.insertTilgjengelighet(tilgjengelighet);
     }
 
-    @RequestMapping(value="/stilling/update", method=RequestMethod.PUT)
+    @RequestMapping(value="/tilgjengelighet/update", method=RequestMethod.PUT)
     public boolean updateTilgjengelighet(@RequestBody Tilgjengelighet tilgjengelighet){
         return query.updateTilgjengelighet(tilgjengelighet);
     }

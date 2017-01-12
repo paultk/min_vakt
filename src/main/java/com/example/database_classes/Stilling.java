@@ -16,6 +16,8 @@ public class Stilling {
         this.beskrivelse = beskrivelse;
     }
 
+    public Stilling(){}
+
     public int getStillingId(){
         return stillingId;
     }
