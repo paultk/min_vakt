@@ -54,6 +54,10 @@ public class PasswordEncoderGenerator {
     }
 
     public static String generatePassword() {
-        return null; // TODO: 13/01/17 (Axel): is this necessary? Consider. 
+        return null; // TODO: 13/01/17 (Axel): is this necessary? Consider.
+    }
+
+    public static void main(String[] args) {
+
     }
 }
