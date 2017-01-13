@@ -20,9 +20,7 @@ public class Fravaer {
     @JsonFormat(pattern = "YYYY-MM-dd HH:mm:ss")
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     @JsonSerialize(using = LocalDateTimeSerializer.class)
-    private LocalDateTime fraTid;
-    private LocalDateTime tilTid;
-
+    private LocalDateTime fraTid, tilTid;
     private String kommentar;
 
     public Fravaer(int brukerId, int vaktId, LocalDateTime fraTid, LocalDateTime tilTid, String kommentar) {
