@@ -122,7 +122,8 @@ public class SqlQueries extends DBConnection {
                         res.getBoolean("admin"),
                         res.getString("fornavn"),
                         res.getString("etternavn"),
-                        res.getString("epost"));
+                        res.getString("epost"),
+				        res.getString("hash"));
             }
             SqlCleanup.closeResSet(res);
         }
@@ -149,7 +150,8 @@ public class SqlQueries extends DBConnection {
 						res.getBoolean("admin"),
 						res.getString("fornavn"),
 						res.getString("etternavn"),
-						res.getString("epost"));
+						res.getString("epost"),
+                        res.getString("hash"));
 				brukere.add(brk);
 			}
 			SqlCleanup.closeResSet(res);
@@ -173,7 +175,8 @@ public class SqlQueries extends DBConnection {
 					"telefonnr =  ?,\n" +
 					"epost = ?,\n" +
 					"stillingsprosent =  ?,\n" +
-					"admin =  ? WHERE  bruker_id = ?;");
+					"admin =  ?,\n" +
+                    "hash = ? WHERE bruker_id = ?;");
 			updateQuery.setInt(1, bruker.getPassordId());
 			updateQuery.setInt(2, bruker.getStillingsId());
 			updateQuery.setInt(3, bruker.getAvdelingId());
@@ -185,6 +188,7 @@ public class SqlQueries extends DBConnection {
 			updateQuery.setInt(9, bruker.getStillingsProsent());
 			updateQuery.setBoolean(10, bruker.isAdmin());
 			updateQuery.setInt(11, bruker.getBrukerId());
+			updateQuery.setString(12, bruker.getHash());
 			updateQuery.executeUpdate();
 			return true;
 		}
@@ -196,10 +200,20 @@ public class SqlQueries extends DBConnection {
 
     public boolean insertBruker(Bruker bruker) {
 		try {
+		    bruker.hashPassord();
+		    String hash = bruker.getHash();
+		    String salt = bruker.getSalt();
+
+		    String passordSql = "INSERT INTO passord(hash, salt) VALUES(?,?);";
+
+		    PreparedStatement passordQuery = connection.prepareStatement(passordSql);
+		    passordQuery.setString(1, hash);
+		    passordQuery.setString(2, salt);
+
 			insertQuery = connection.prepareStatement("INSERT INTO bruker (passord_id, " +
 					"stilling_id, avdeling_id, fornavn, etternavn, timelonn, telefonnr, " +
-					"epost, stillingsprosent, admin) " +
-					"VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);");
+					"epost, stillingsprosent, admin, hash) " +
+					"VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);");
 			insertQuery.setInt(1, bruker.getPassordId());
 			insertQuery.setInt(2, bruker.getStillingsId());
 			insertQuery.setInt(3, bruker.getAvdelingId());
@@ -210,6 +224,7 @@ public class SqlQueries extends DBConnection {
 			insertQuery.setString(8, bruker.getEpost());
 			insertQuery.setInt(9, bruker.getStillingsProsent());
 			insertQuery.setBoolean(10, bruker.isAdmin());
+			insertQuery.setString(11, bruker.getHash());
 			insertQuery.executeUpdate();
 			return true;
 		}
@@ -305,7 +320,8 @@ public class SqlQueries extends DBConnection {
 						res.getBoolean("admin"),
 						res.getString("fornavn"),
 						res.getString("etternavn"),
-						res.getString("epost"));
+						res.getString("epost"),
+                        res.getString("hash"));
 				brukere.add(brk);
 			}
 			SqlCleanup.closeResSet(res);

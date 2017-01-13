@@ -1,5 +1,7 @@
 package com.example.database_classes;
 
+import com.example.security.PasswordEncoderGenerator;
+
 /**
  * Created by paul on 10.01.17.
  */
@@ -9,9 +11,12 @@ public class Bruker {
     private double timelonn;
     private boolean admin;
     private String fornavn, etternavn, epost;
+    private String plaintextPassord;
+    private String hash;
+    private String salt;
 
     public Bruker(int brukerId, int passordId, int stillingsId, int avdelingId, int telefonNr, int stillingsProsent, double timelonn,
-                  boolean admin, String fornavn, String etternavn, String epost) {
+                  boolean admin, String fornavn, String etternavn, String epost, String plaintextPassord) {
         this.brukerId = brukerId;
         this.passordId = passordId;
         this.stillingsId = stillingsId;
@@ -23,6 +28,7 @@ public class Bruker {
         this.etternavn = etternavn;
         this.epost = epost;
         this.avdelingId = avdelingId;
+        this.plaintextPassord = plaintextPassord;
     }
 
     //Empty constructor for Spring REST
@@ -114,6 +120,27 @@ public class Bruker {
 
     public void setEpost(String epost) {
         this.epost = epost;
+    }
+
+    public void setPassord(String newPassord) {
+        plaintextPassord = newPassord;
+    }
+
+    public String getHash() {
+        return hash;
+    }
+
+    public String getSalt() {
+        return salt;
+    }
+
+    public void hashPassord() {
+        PasswordEncoderGenerator passwordEncoder = new PasswordEncoderGenerator();
+        byte[] saltBytes = passwordEncoder.generateSalt();
+        byte[] hashBytes = passwordEncoder.generateHash(plaintextPassord, saltBytes);
+
+        salt = passwordEncoder.bytesToHex(saltBytes);
+        hash = passwordEncoder.bytesToHex(hashBytes);
     }
 
     @Override

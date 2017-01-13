@@ -16,6 +16,7 @@ public class PasswordEncoderGenerator {
     private static final int ITERATIONS = 10000;
     private static final int KEY_LENGTH = 256;
     private static final String REGEX_PATTERN = "^(?=.*[a-z])(?=.*[A-Z])(?=\\S+$)(?=.{2,}[@#$%^&+=]).{8,}$"; // at least one lowercase character, at least one uppercase character, no whitespace, at least 2 special characters, at least 8 total characters
+    private static final char[] HEX_ARRAY = "0123456789ABCDEF".toCharArray();
 
     public static byte[] generateSalt() {
         SecureRandom random = new SecureRandom();
@@ -55,6 +56,17 @@ public class PasswordEncoderGenerator {
 
     public static String generatePassword() {
         return null; // TODO: 13/01/17 (Axel): is this necessary? Consider.
+    }
+
+    public static String bytesToHex(byte[] bytes) {
+        char[] hexChars = new char[bytes.length * 2];
+
+        for (int i = 0; i < bytes.length; i++) {
+            int v = bytes[i] & 0xFF;
+            hexChars[i * 2] = HEX_ARRAY[v >>> 4];
+            hexChars[i * 2 + 1] = HEX_ARRAY[v & 0x0F];
+        }
+        return new String(hexChars);
     }
 
     public static void main(String[] args) {
