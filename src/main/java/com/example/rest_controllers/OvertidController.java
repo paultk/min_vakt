@@ -17,6 +17,11 @@ public class OvertidController {
 		return query.selectOvertid(id);
 	}
 
+	@RequestMapping("overtid/alle")
+	public Overtid[] getOvertider() {
+		return query.selectOvertider();
+	}
+
 	@RequestMapping(value="/overtid/add", method= RequestMethod.POST)
 	public boolean addOvertid(@RequestBody Overtid overtid) {
 		return query.insertOvertid(overtid);

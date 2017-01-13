@@ -1,9 +1,11 @@
 package com.example.sql_folder;
 import com.example.database_classes.*;
+import com.sun.corba.se.spi.orbutil.fsm.Guard;
 
 import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * Created by axelkvistad on 10/01/17.
@@ -763,6 +765,28 @@ public class SqlQueries extends DBConnection {
         return null;
     }
 
+    public Overtid[] selectOvertider() {
+		try {
+			selectQuery = connection.prepareStatement("SELECT * FROM overtid");
+			ResultSet res = selectQuery.executeQuery();
+			ArrayList<Overtid> overtider = new ArrayList<>();
+			while (res.next()) {
+				Overtid ny = new Overtid(
+						res.getInt("overtid_id"),
+						res.getInt("bruker_id"),
+						res.getDouble("ant_timer"),
+						res.getDate("dato"),
+						res.getString("kommentar"));
+				overtider.add(ny);
+			}
+			return overtider.toArray(new Overtid[overtider.size()]);
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
     public boolean insertOvertid(Overtid newOvertid) {
         try {
             String insertSql = "INSERT INTO overtid(bruker_id, ant_timer, dato, kommentar) VALUES(?,?,?,?)";
@@ -917,7 +941,7 @@ public class SqlQueries extends DBConnection {
     public static void main(String[] args) {
 		SqlQueries query = new SqlQueries();
 
-		Vakt vakt = query.selectVakt(1);
+		/*Vakt vakt = query.selectVakt(1);
 		vakt.setAntPers(50);
 		query.updateVakt(vakt);
 
@@ -929,7 +953,8 @@ public class SqlQueries extends DBConnection {
 		Stilling stilling1 = query.selectStilling(2);
 
 		Bruker bruker1 = new Bruker(2, 2, 90133787, 100, 300, false, "tb1Fornavn", "tb1Etternavn", "tb1@stolav.no", "abcDEF!#");
-        query.insertBruker(bruker1);
+        query.insertBruker(bruker1);*/
+		System.out.println(Arrays.toString(query.selectOvertider()));
 
 	}
 }
