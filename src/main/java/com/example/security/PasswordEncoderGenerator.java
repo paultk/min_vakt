@@ -69,7 +69,25 @@ public class PasswordEncoderGenerator {
         return new String(hexChars);
     }
 
+    public static byte[] hexStringToByteArray(String s) {
+        int len = s.length();
+        byte[] data = new byte[len / 2];
+        for (int i = 0; i < len; i += 2) {
+            data[i / 2] = (byte) ((Character.digit(s.charAt(i), 16) << 4)
+                    + Character.digit(s.charAt(i+1), 16));
+        }
+        return data;
+    }
+
     public static void main(String[] args) {
+        String testPassword = "abcDEF!#";
+        String hashHex = "0492F50418F9D05039504B90B2F980871D5D34D340B5ABB1B0F3D5D9A12017A0";
+        String saltHex = "9187DE9DADB3318455C8053DE0B62B1A";
+
+        byte[] hashTest = hexStringToByteArray(hashHex);
+        byte[] saltTest = hexStringToByteArray(saltHex);
+
+        System.out.println(checkPasswordMatch(testPassword, saltTest, hashTest));
 
     }
 }

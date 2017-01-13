@@ -204,17 +204,20 @@ public class SqlQueries extends DBConnection {
 		    String hash = bruker.getHash();
 		    String salt = bruker.getSalt();
 
-		    String passordSql = "INSERT INTO passord(hash, salt) VALUES(?,?);";
+            System.out.println("hash: " + hash + "\nsalt: " + salt);
+            System.out.println(hash.length());
+            String passordSql = "INSERT INTO passord(hash, salt) VALUES(?,?);";
 		    PreparedStatement passordQuery = connection.prepareStatement(passordSql);
 		    passordQuery.setString(1, hash);
 		    passordQuery.setString(2, salt);
 		    passordQuery.execute();
 
-		    String pOrdIdSql = "SELECT passord_id FROM passord WHERE hash = ? salt = ?";
+		    String pOrdIdSql = "SELECT passord_id FROM passord WHERE hash = ? AND salt = ?";
 		    PreparedStatement pOrdIdQuery = connection.prepareStatement(pOrdIdSql);
             pOrdIdQuery.setString(1, hash);
             pOrdIdQuery.setString(2, salt);
             ResultSet res = pOrdIdQuery.executeQuery();
+            res.next();
             int passordId = res.getInt("passord_id");
             bruker.setPassordId(passordId);
 
@@ -924,8 +927,11 @@ public class SqlQueries extends DBConnection {
 		vakt.setVaktansvarligId(2);
 		query.insertVakt(vakt);
 
-		System.out.println(query.selectFravaer(1));
-		Fravaer fravaer = query.selectFravaer(1);
-		System.out.println(query.deleteFravaer(fravaer));
+		Avdeling avdeling1 = query.selectAvdeling(2);
+		Stilling stilling1 = query.selectStilling(2);
+
+		Bruker bruker1 = new Bruker(2, 2, 90133787, 100, 300, false, "tb1Fornavn", "tb1Etternavn", "tb1@stolav.no", "abcDEF!#");
+        query.insertBruker(bruker1);
+
 	}
 }

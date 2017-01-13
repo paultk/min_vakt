@@ -34,6 +34,22 @@ public class Bruker {
     //Empty constructor for Spring REST
     public Bruker(){}
 
+    // Constructor for testing in SqlQueries.java
+    public Bruker(int stillingsId, int avdelingId, int telefonNr, int stillingsProsent, double timelonn,
+                  boolean admin, String fornavn, String etternavn, String epost, String plaintextPassord) {
+        this.stillingsId = stillingsId;
+        this.telefonNr = telefonNr;
+        this.stillingsProsent = stillingsProsent;
+        this.timelonn = timelonn;
+        this.admin = admin;
+        this.fornavn = fornavn;
+        this.etternavn = etternavn;
+        this.epost = epost;
+        this.avdelingId = avdelingId;
+        this.plaintextPassord = plaintextPassord;
+    }
+
+
     public int getBrukerId() {
         return brukerId;
     }
