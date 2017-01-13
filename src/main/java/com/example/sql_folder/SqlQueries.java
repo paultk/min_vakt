@@ -425,18 +425,6 @@ public class SqlQueries extends DBConnection {
         return false;
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
     public boolean updateVakt(Vakt vakt) {
         try {
             String updateSql = "UPDATE vakt SET vaktansvarlig_id = ?, avdeling_id = ?, fra_tid = ?, til_tid = ?, ant_pers = ? WHERE vakt_id = ?";
@@ -560,6 +548,49 @@ public class SqlQueries extends DBConnection {
     *
     */
 
+    public Passord selectPassord(int id) {
+		try {
+			selectQuery = connection.prepareStatement("SELECT * FROM passord WHERE passord_id = ?");
+			selectQuery.setInt(1, id);
+			ResultSet res = selectQuery.executeQuery();
+			if (res.next()) {
+				Passord ret = new Passord(res.getInt("passord_id"), res.getString("salt"), res.getString("hash"));
+				return ret;
+			}
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	public boolean insertPassord(Passord passord) {
+		try {
+			insertQuery = connection.prepareStatement("INSERT INTO passord (hash, salt) " +
+					"VALUES (?, ?);");
+			insertQuery.setString(1, passord.getHash());
+			insertQuery.setString(2, passord.getSalt());
+			insertQuery.executeUpdate();
+			return true;
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+
+	public boolean deletePassord(int id) {
+		try {
+			deleteQuery = connection.prepareStatement("DELETE FROM passord WHERE passord_id = ?");
+			deleteQuery.setInt(1, id);
+			deleteQuery.executeUpdate();
+			return true;
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
 
 
     /*
@@ -567,7 +598,6 @@ public class SqlQueries extends DBConnection {
     * FRAVAER
     *
     */
-
 
     public Fravaer selectFravaer(int brukerId) {
 
@@ -863,16 +893,12 @@ public class SqlQueries extends DBConnection {
     public static void main(String[] args) {
 		SqlQueries query = new SqlQueries();
 
-		/*Vakt vakt = query.selectVakt(1);
+		Vakt vakt = query.selectVakt(1);
 		vakt.setAntPers(50);
 		query.updateVakt(vakt);
 
 		vakt.setAntPers(7);
 		vakt.setVaktansvarligId(2);
 		query.insertVakt(vakt);
-            */
-		System.out.println(query.selectFravaer(2));
-		Fravaer fravaer = query.selectFravaer(2);
-		System.out.println(query.deleteFravaer(fravaer));
 	}
 }

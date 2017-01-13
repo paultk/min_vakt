@@ -21,7 +21,7 @@ public class StillingController {
         return query.selectStilling(id);
     }
 
-    @RequestMapping(value="/stilling/delete", method=RequestMethod.DELETE)
+    @RequestMapping(value="/stilling/delete", method=RequestMethod.POST)
     public boolean deleteStilling(@RequestBody Stilling stilling) {
         return query.deleteStilling(stilling.getStillingId());
     }
@@ -31,7 +31,7 @@ public class StillingController {
         return query.insertStilling(stilling);
     }
 
-    @RequestMapping(value="/stilling/update", method=RequestMethod.PUT)
+    @RequestMapping(value="/stilling/update", method=RequestMethod.POST)
     public boolean updateStilling(@RequestBody Stilling stilling){
         return query.updateStilling(stilling);
     }
