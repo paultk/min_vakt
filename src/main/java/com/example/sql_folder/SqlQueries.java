@@ -1,6 +1,7 @@
 package com.example.sql_folder;
 import com.example.database_classes.*;
 import com.sun.corba.se.spi.orbutil.fsm.Guard;
+import com.sun.javaws.exceptions.InvalidArgumentException;
 
 import java.sql.*;
 import java.time.LocalDateTime;
@@ -203,22 +204,13 @@ public class SqlQueries extends DBConnection {
             String hash = bruker.getHash();
 		    String salt = bruker.getSalt();
 
-            System.out.println("hash: " + hash + "\nsalt: " + salt);
-            System.out.println(hash.length());
-            String passordSql = "INSERT INTO passord(hash, salt) VALUES(?,?);";
-		    PreparedStatement passordQuery = connection.prepareStatement(passordSql);
-		    passordQuery.setString(1, hash);
-		    passordQuery.setString(2, salt);
-		    passordQuery.execute();
-
-		    String pOrdIdSql = "SELECT passord_id FROM passord WHERE hash = ? AND salt = ?";
-		    PreparedStatement pOrdIdQuery = connection.prepareStatement(pOrdIdSql);
-            pOrdIdQuery.setString(1, hash);
-            pOrdIdQuery.setString(2, salt);
-            ResultSet res = pOrdIdQuery.executeQuery();
-            res.next();
-            int passordId = res.getInt("passord_id");
-            bruker.setPassordId(passordId);
+		    Passord passord = new Passord(salt, hash);
+		    if (insertPassord(passord)) {
+                int passordId = selectPassordId(hash, salt);
+                bruker.setPassordId(passordId);
+            } else {
+                return false;
+            }
 
 			insertQuery = connection.prepareStatement("INSERT INTO bruker (passord_id, " +
 					"stilling_id, avdeling_id, fornavn, etternavn, timelonn, telefonnr, " +
@@ -236,10 +228,11 @@ public class SqlQueries extends DBConnection {
 			insertQuery.setBoolean(10, bruker.isAdmin());
 			insertQuery.executeUpdate();
 			return true;
-		}
-		catch (Exception e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
-		}
+		} catch (IllegalArgumentException e) {
+		    throw e;
+        }
 		return false;
     }
 	public boolean deleteBruker(int id) {
@@ -572,6 +565,22 @@ public class SqlQueries extends DBConnection {
     * PASSORD
     *
     */
+
+    public int selectPassordId(String hash, String salt) {
+        try {
+            String selectSql = "SELECT passord_id FROM passord WHERE hash = ? AND salt = ?";
+            selectQuery = connection.prepareStatement(selectSql);
+            selectQuery.setString(1, hash);
+            selectQuery.setString(2, salt);
+            ResultSet res = selectQuery.executeQuery();
+            if (res.next()) {
+                return res.getInt("passord_id");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return -1;
+    }
 
     public Passord selectPassord(int id) {
 		try {
@@ -980,6 +989,12 @@ public class SqlQueries extends DBConnection {
 		query.insertBruker(bruker1);
 		DBConnection.afterTest();
 //		System.out.println(Arrays.toString(query.selectOvertider()));
+
+		/*Bruker bruker1 = new Bruker(2, 2, 90133787, 100, 300, false, "tb1Fornavn", "tb1Etternavn", "tb1@stolav.no", "abcDEF!#");
+        query.insertBruker(bruker1);*/
+        /*Bruker bruker1 = new Bruker(2, 2, 90133787, 100, 300, false, "tb1Fornavn", "tb1Etternavn", "tb1@stolav.no", "abcDEF!#");
+        query.insertBruker(bruker1);*/
+		System.out.println(Arrays.toString(query.selectOvertider()));
 
 	}
 }
