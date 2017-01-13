@@ -1,6 +1,7 @@
 package com.example.database_classes;
 
 import com.example.security.PasswordEncoderGenerator;
+import com.sun.javaws.exceptions.InvalidArgumentException;
 
 /**
  * Created by paul on 10.01.17.
@@ -14,6 +15,7 @@ public class Bruker {
     private String plaintextPassord;
     private String hash;
     private String salt;
+    private static final String INVALID_PASSWORD_FORMAT = "Invalid password format: passwords must be at least 8 characters long, containing at least one lowercase character, one uppercase character, and two special characters (@#$%^&+=).";
 
     public Bruker(int brukerId, int passordId, int stillingsId, int avdelingId, int telefonNr, int stillingsProsent, double timelonn,
                   boolean admin, String fornavn, String etternavn, String epost, String plaintextPassord) {
@@ -52,7 +54,7 @@ public class Bruker {
     // Constructor for testing in SqlQueries.java
     public Bruker(int stillingsId, int avdelingId, int telefonNr, int stillingsProsent, double timelonn,
                   boolean admin, String fornavn, String etternavn, String epost, String plaintextPassord) {
-        if (!PasswordEncoderGenerator.checkPasswordValidity(plaintextPassord)) throw new IllegalArgumentException("Invalid password format: passwords must be at least 8 characters long, containing at least one lowercase character, one uppercase character, and two special characters (@#$%^&+=).");
+        if (!PasswordEncoderGenerator.checkPasswordValidity(plaintextPassord)) throw new IllegalArgumentException(INVALID_PASSWORD_FORMAT);
         this.stillingsId = stillingsId;
         this.telefonNr = telefonNr;
         this.stillingsProsent = stillingsProsent;
@@ -64,7 +66,6 @@ public class Bruker {
         this.avdelingId = avdelingId;
         this.plaintextPassord = plaintextPassord;
     }
-
 
     public int getBrukerId() {
         return brukerId;
@@ -154,8 +155,10 @@ public class Bruker {
         this.epost = epost;
     }
 
-    public void setPassord(String newPassord) {
-        plaintextPassord = newPassord;
+    public void setPlaintextPassord(String plaintextPassord) {
+        if (!PasswordEncoderGenerator.checkPasswordValidity(plaintextPassord)) throw new IllegalArgumentException(INVALID_PASSWORD_FORMAT);
+        this.plaintextPassord = plaintextPassord;
+        hashPassord();
     }
 
     public String getHash() {
@@ -173,26 +176,6 @@ public class Bruker {
 
         salt = passwordEncoder.bytesToHex(saltBytes);
         hash = passwordEncoder.bytesToHex(hashBytes);
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Bruker bruker = (Bruker) o;
-
-        if (brukerId != bruker.brukerId) return false;
-        if (passordId != bruker.passordId) return false;
-        if (stillingsId != bruker.stillingsId) return false;
-        if (avdelingId != bruker.avdelingId) return false;
-        if (telefonNr != bruker.telefonNr) return false;
-        if (stillingsProsent != bruker.stillingsProsent) return false;
-        if (Double.compare(bruker.timelonn, timelonn) != 0) return false;
-        if (admin != bruker.admin) return false;
-        if (fornavn != null ? !fornavn.equals(bruker.fornavn) : bruker.fornavn != null) return false;
-        if (etternavn != null ? !etternavn.equals(bruker.etternavn) : bruker.etternavn != null) return false;
-        return epost != null ? epost.equals(bruker.epost) : bruker.epost == null;
     }
 
     @Override
