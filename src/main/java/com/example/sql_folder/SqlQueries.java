@@ -951,10 +951,14 @@ public class SqlQueries extends DBConnection {
 
 		Avdeling avdeling1 = query.selectAvdeling(2);
 		Stilling stilling1 = query.selectStilling(2);
-
-		Bruker bruker1 = new Bruker(2, 2, 90133787, 100, 300, false, "tb1Fornavn", "tb1Etternavn", "tb1@stolav.no", "abcDEF!#");
-        query.insertBruker(bruker1);*/
-		System.out.println(Arrays.toString(query.selectOvertider()));
+		*/
+		DBConnection.beforeTest();
+		Bruker bruker1 = new Bruker(2, 2, 90133787, 100, 300, false, "testFornavn", "testEtternavn", "tb1@stolav.no", "abcDEF!#");
+        query.insertBruker(bruker1);
+		query.insertBruker(bruker1);
+		query.insertBruker(bruker1);
+		DBConnection.afterTest();
+//		System.out.println(Arrays.toString(query.selectOvertider()));
 
 	}
 }
