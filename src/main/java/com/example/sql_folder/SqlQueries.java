@@ -200,8 +200,8 @@ public class SqlQueries extends DBConnection {
 
     public boolean insertBruker(Bruker bruker) {
 		try {
-		    bruker.hashPassord();
-		    String hash = bruker.getHash();
+		    bruker.hashPassord();    // TODO: 13/01/17 (Axel): this line will be removed eventually, only useful for testing within the class right now
+            String hash = bruker.getHash();
 		    String salt = bruker.getSalt();
 
             System.out.println("hash: " + hash + "\nsalt: " + salt);
