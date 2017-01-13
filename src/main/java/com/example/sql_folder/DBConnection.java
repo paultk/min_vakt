@@ -6,11 +6,30 @@ import java.sql.*;
  * Created by Jens on 11-Jan-17.
  */
 public class DBConnection {
-
+	private static Savepoint savepoint;
 	public static Connection conn;
 
 	public DBConnection() {
 		connect();
+	}
+
+	public static void beforeTest() {
+		try {
+			DBConnection.conn.setAutoCommit(false);
+			savepoint = DBConnection.conn.setSavepoint();
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	public static void afterTest() {
+		try {
+			DBConnection.conn.rollback(savepoint);
+			DBConnection.conn.setAutoCommit(true);
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	static boolean connect() {

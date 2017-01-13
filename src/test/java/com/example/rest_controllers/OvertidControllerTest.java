@@ -18,13 +18,7 @@ public class OvertidControllerTest {
 	OvertidController controller = new OvertidController();
 	@Before
 	public void first() {
-		try {
-			DBConnection.conn.setAutoCommit(false);
-			savepoint = DBConnection.conn.setSavepoint();
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-		}
+		DBConnection.beforeTest();
 	}
 	@Test
 	public void overtidControllerTest() throws Exception {
@@ -35,12 +29,6 @@ public class OvertidControllerTest {
 	}
 	@After
 	public void after() {
-		try {
-			DBConnection.conn.rollback(savepoint);
-			DBConnection.conn.setAutoCommit(true);
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-		}
+		DBConnection.afterTest();
 	}
 }
