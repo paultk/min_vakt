@@ -1,5 +1,12 @@
 package com.example.database_classes;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.time.LocalDateTime;
 
 /**
@@ -8,8 +15,14 @@ import java.time.LocalDateTime;
 public class Fravaer {
 
     private int brukerId, vaktId;
+
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+    @JsonFormat(pattern = "YYYY-MM-dd HH:mm:ss")
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
     private LocalDateTime fraTid;
     private LocalDateTime tilTid;
+
     private String kommentar;
 
     public Fravaer(int brukerId, int vaktId, LocalDateTime fraTid, LocalDateTime tilTid, String kommentar) {
