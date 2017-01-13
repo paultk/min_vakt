@@ -900,5 +900,9 @@ public class SqlQueries extends DBConnection {
 		vakt.setAntPers(7);
 		vakt.setVaktansvarligId(2);
 		query.insertVakt(vakt);
+
+		System.out.println(query.selectFravaer(1));
+		Fravaer fravaer = query.selectFravaer(1);
+		System.out.println(query.deleteFravaer(fravaer));
 	}
 }

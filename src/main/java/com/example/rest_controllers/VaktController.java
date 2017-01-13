@@ -1,16 +1,9 @@
 package com.example.rest_controllers;
 
-import com.example.sql_folder.SqlQueries;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
-import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
-import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.web.bind.annotation.*;
-import com.example.database_classes.Vakt;
 import com.example.database_classes.Bruker;
-
-import javax.servlet.http.HttpServletResponse;
+import com.example.database_classes.Vakt;
+import com.example.sql_folder.SqlQueries;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * Created by Håkon on 12.01.2017.
