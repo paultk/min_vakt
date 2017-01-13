@@ -117,6 +117,26 @@ public class Bruker {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Bruker bruker = (Bruker) o;
+
+        if (brukerId != bruker.brukerId) return false;
+        if (passordId != bruker.passordId) return false;
+        if (stillingsId != bruker.stillingsId) return false;
+        if (avdelingId != bruker.avdelingId) return false;
+        if (telefonNr != bruker.telefonNr) return false;
+        if (stillingsProsent != bruker.stillingsProsent) return false;
+        if (Double.compare(bruker.timelonn, timelonn) != 0) return false;
+        if (admin != bruker.admin) return false;
+        if (fornavn != null ? !fornavn.equals(bruker.fornavn) : bruker.fornavn != null) return false;
+        if (etternavn != null ? !etternavn.equals(bruker.etternavn) : bruker.etternavn != null) return false;
+        return epost != null ? epost.equals(bruker.epost) : bruker.epost == null;
+    }
+
+    @Override
     public String toString() {
         return "Bruker{" +
                 "brukerId=" + brukerId +
