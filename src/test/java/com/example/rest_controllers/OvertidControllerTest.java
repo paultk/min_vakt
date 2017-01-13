@@ -16,16 +16,16 @@ import static org.junit.Assert.*;
 public class OvertidControllerTest {
 	Savepoint savepoint;
 	OvertidController controller = new OvertidController();
-	@Before
-	public void first() {
-		DBConnection.beforeTest();
-	}
 	@Test
 	public void overtidControllerTest() throws Exception {
 		Overtid[] overtider = controller.getOvertider();
 		assertNotNull(overtider);
 		assertTrue("Kan ikke slette overtid fra DB", controller.deleteOvertid(overtider[overtider.length - 1]));
 		assertTrue("Kan ikke legge til overtid i DB", controller.addOvertid(overtider[overtider.length - 1]));
+	}
+	@Before
+	public void first() {
+		DBConnection.beforeTest();
 	}
 	@After
 	public void after() {
