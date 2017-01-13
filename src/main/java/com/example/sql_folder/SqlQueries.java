@@ -175,8 +175,8 @@ public class SqlQueries extends DBConnection {
 					"telefonnr =  ?,\n" +
 					"epost = ?,\n" +
 					"stillingsprosent =  ?,\n" +
-					"admin =  ?,\n" +
-                    "hash = ? WHERE bruker_id = ?;");
+					"admin =  ?\n" +
+                    " WHERE bruker_id = ?;");
 			updateQuery.setInt(1, bruker.getPassordId());
 			updateQuery.setInt(2, bruker.getStillingsId());
 			updateQuery.setInt(3, bruker.getAvdelingId());
@@ -188,7 +188,6 @@ public class SqlQueries extends DBConnection {
 			updateQuery.setInt(9, bruker.getStillingsProsent());
 			updateQuery.setBoolean(10, bruker.isAdmin());
 			updateQuery.setInt(11, bruker.getBrukerId());
-			updateQuery.setString(12, bruker.getHash());
 			updateQuery.executeUpdate();
 			return true;
 		}
