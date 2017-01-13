@@ -31,7 +31,12 @@ public class BrukerController {
 
 	@RequestMapping(value="/bruker/add", method=RequestMethod.POST)
 	public boolean addBruker(@RequestBody Bruker bruker) {
-		return query.insertBruker(bruker);
+		try {
+            return query.insertBruker(bruker);
+        } catch (IllegalArgumentException e) {
+		    e.printStackTrace();
+        }
+        return false;
 	}
 
 	@RequestMapping(value="/bruker/update", method=RequestMethod.POST)
