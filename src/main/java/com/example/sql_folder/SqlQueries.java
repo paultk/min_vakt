@@ -205,15 +205,23 @@ public class SqlQueries extends DBConnection {
 		    String salt = bruker.getSalt();
 
 		    String passordSql = "INSERT INTO passord(hash, salt) VALUES(?,?);";
-
 		    PreparedStatement passordQuery = connection.prepareStatement(passordSql);
 		    passordQuery.setString(1, hash);
 		    passordQuery.setString(2, salt);
+		    passordQuery.execute();
+
+		    String pOrdIdSql = "SELECT passord_id FROM passord WHERE hash = ? salt = ?";
+		    PreparedStatement pOrdIdQuery = connection.prepareStatement(pOrdIdSql);
+            pOrdIdQuery.setString(1, hash);
+            pOrdIdQuery.setString(2, salt);
+            ResultSet res = pOrdIdQuery.executeQuery();
+            int passordId = res.getInt("passord_id");
+            bruker.setPassordId(passordId);
 
 			insertQuery = connection.prepareStatement("INSERT INTO bruker (passord_id, " +
 					"stilling_id, avdeling_id, fornavn, etternavn, timelonn, telefonnr, " +
-					"epost, stillingsprosent, admin, hash) " +
-					"VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);");
+					"epost, stillingsprosent, admin) " +
+					"VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);");
 			insertQuery.setInt(1, bruker.getPassordId());
 			insertQuery.setInt(2, bruker.getStillingsId());
 			insertQuery.setInt(3, bruker.getAvdelingId());
@@ -224,7 +232,6 @@ public class SqlQueries extends DBConnection {
 			insertQuery.setString(8, bruker.getEpost());
 			insertQuery.setInt(9, bruker.getStillingsProsent());
 			insertQuery.setBoolean(10, bruker.isAdmin());
-			insertQuery.setString(11, bruker.getHash());
 			insertQuery.executeUpdate();
 			return true;
 		}
