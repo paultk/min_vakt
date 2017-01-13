@@ -33,6 +33,21 @@ public class Bruker {
         this.plaintextPassord = plaintextPassord;
     }
 
+    public Bruker(int passordId, int stillingsId, int avdelingId, int telefonNr, int stillingsProsent, double timelonn,
+                  boolean admin, String fornavn, String etternavn, String epost, String plaintextPassord) {
+        this.passordId = passordId;
+        this.stillingsId = stillingsId;
+        this.avdelingId = avdelingId;
+        this.telefonNr = telefonNr;
+        this.stillingsProsent = stillingsProsent;
+        this.timelonn = timelonn;
+        this.admin = admin;
+        this.fornavn = fornavn;
+        this.etternavn = etternavn;
+        this.epost = epost;
+        this.plaintextPassord = plaintextPassord;
+    }
+
     public Bruker(int brukerId, int passordId, int stillingsId, int avdelingId, int telefonNr, int stillingsProsent, double timelonn,
                   boolean admin, String fornavn, String etternavn, String epost) {
         this.brukerId = brukerId;
