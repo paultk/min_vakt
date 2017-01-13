@@ -171,7 +171,6 @@ public class Bruker {
     }
 
     public void setPlaintextPassord(String plaintextPassord) {
-        if (!PasswordEncoderGenerator.checkPasswordValidity(plaintextPassord)) throw new IllegalArgumentException(INVALID_PASSWORD_FORMAT);
         this.plaintextPassord = plaintextPassord;
         hashPassord();
     }
@@ -184,7 +183,8 @@ public class Bruker {
         return salt;
     }
 
-    public void hashPassord() {
+    public void hashPassord() throws IllegalArgumentException {
+        if (!PasswordEncoderGenerator.checkPasswordValidity(plaintextPassord)) throw new IllegalArgumentException(INVALID_PASSWORD_FORMAT);
         PasswordEncoderGenerator passwordEncoder = new PasswordEncoderGenerator();
         byte[] saltBytes = passwordEncoder.generateSalt();
         byte[] hashBytes = passwordEncoder.generateHash(plaintextPassord, saltBytes);

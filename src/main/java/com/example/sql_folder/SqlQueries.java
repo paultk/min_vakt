@@ -1,6 +1,7 @@
 package com.example.sql_folder;
 import com.example.database_classes.*;
 import com.sun.corba.se.spi.orbutil.fsm.Guard;
+import com.sun.javaws.exceptions.InvalidArgumentException;
 
 import java.sql.*;
 import java.time.LocalDateTime;
@@ -227,10 +228,11 @@ public class SqlQueries extends DBConnection {
 			insertQuery.setBoolean(10, bruker.isAdmin());
 			insertQuery.executeUpdate();
 			return true;
-		}
-		catch (Exception e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
-		}
+		} catch (IllegalArgumentException e) {
+		    throw e;
+        }
 		return false;
     }
 	public boolean deleteBruker(int id) {
