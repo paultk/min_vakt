@@ -29,7 +29,7 @@ public class VaktController {
         return query.selectVakter(bruker.getBrukerId());
     }
 
-    @RequestMapping("/vakt/alle")
+    @RequestMapping("/vakt/all")
     public Vakt[] getAllVakter() {
         return query.selectAllVakter();
     }

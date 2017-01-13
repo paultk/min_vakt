@@ -1,10 +1,7 @@
 package com.example.security;
 
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
-import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.security.spec.InvalidKeySpecException;
@@ -18,15 +15,20 @@ public class PasswordEncoderGenerator {
 
     private static final int ITERATIONS = 10000;
     private static final int KEY_LENGTH = 256;
+    private static final String REGEX_PATTERN = "^(?=.*[a-z])(?=.*[A-Z])(?=\\S+$)(?=.{2,}[@#$%^&+=]).{8,}$"; // at least one lowercase character, at least one uppercase character, no whitespace, at least 2 special characters, at least 8 total characters
 
-    public byte[] generateSalt() {
+    public static byte[] generateSalt() {
         SecureRandom random = new SecureRandom();
         byte[] salt = new byte[16];
         random.nextBytes(salt);
         return salt;
     }
 
-    public byte[] generateHash(String plaintextPassword, byte[] salt) {
+    public static boolean checkPasswordValidity(String password) {
+        return Pattern.matches(REGEX_PATTERN, password);
+    }
+
+    public static byte[] generateHash(String plaintextPassword, byte[] salt) {
         char[] password = plaintextPassword.toCharArray();
         PBEKeySpec spec = new PBEKeySpec(password, salt, ITERATIONS, KEY_LENGTH);
         Arrays.fill(password, Character.MIN_VALUE);
@@ -40,7 +42,7 @@ public class PasswordEncoderGenerator {
         }
     }
 
-    public boolean checkPasswordMatch(String plaintextPassword, byte[] salt, byte[] expectedHash) {
+    public static boolean checkPasswordMatch(String plaintextPassword, byte[] salt, byte[] expectedHash) {
         char[] password = plaintextPassword.toCharArray();
         byte[] pwdHash = generateHash(plaintextPassword, salt);
         Arrays.fill(password, Character.MIN_VALUE);
@@ -51,12 +53,7 @@ public class PasswordEncoderGenerator {
         return true;
     }
 
-    public String generatePassword() {
-        return null;
+    public static String generatePassword() {
+        return null; // TODO: 13/01/17 (Axel): is this necessary? Consider. 
     }
-
-
-
-
-
 }
