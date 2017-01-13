@@ -1,22 +1,28 @@
 package com.example.database_classes;
 
+import java.time.LocalDateTime;
+
 /**
  * Created by paul on 10.01.17.
  */
 public class Fravaer {
 
     private int brukerId, vaktId;
-    private double antTimer;
+    private LocalDateTime fraTid;
+    private LocalDateTime tilTid;
     private String kommentar;
 
-    public Fravaer(int brukerId, int vaktId, double antTimer, String kommentar) {
+    public Fravaer(int brukerId, int vaktId, LocalDateTime fraTid, LocalDateTime tilTid, String kommentar) {
         this.brukerId = brukerId;
         this.vaktId = vaktId;
-        this.antTimer = antTimer;
+        this.fraTid = fraTid;
+        this.tilTid = tilTid;
         this.kommentar = kommentar;
 
+
     }
-    public Fravaer(){}
+
+    public Fravaer() {}
 
     public int getBrukerId() {
         return brukerId;
@@ -34,12 +40,20 @@ public class Fravaer {
         this.vaktId = vaktId;
     }
 
-    public double getAntTimer() {
-        return antTimer;
+    public LocalDateTime getFraTid() {
+        return fraTid;
     }
 
-    public void setAntTimer(double antTimer) {
-        this.antTimer = antTimer;
+    public void setFraTid(LocalDateTime fraTid) {
+        this.fraTid = fraTid;
+    }
+
+    public LocalDateTime getTilTid() {
+        return tilTid;
+    }
+
+    public void setTilTid(LocalDateTime tilTid) {
+        this.tilTid = tilTid;
     }
 
     public String getKommentar() {
@@ -52,6 +66,12 @@ public class Fravaer {
 
     @Override
     public String toString() {
-        return "Bruker ID: " + brukerId + "\nVaktId: " + vaktId + "\nAntall timer: " + antTimer + "\nKommentar: " + kommentar;
+        return "Fravaer{" +
+                "brukerId=" + brukerId +
+                ", vaktId=" + vaktId +
+                ", fraTid=" + fraTid +
+                ", tilTid=" + tilTid +
+                ", kommentar='" + kommentar + '\'' +
+                '}';
     }
 }

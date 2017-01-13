@@ -4,7 +4,6 @@ import com.example.database_classes.*;
 import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 /**
  * Created by axelkvistad on 10/01/17.
@@ -426,6 +425,18 @@ public class SqlQueries extends DBConnection {
         return false;
     }
 
+
+
+
+
+
+
+
+
+
+
+
+
     public boolean updateVakt(Vakt vakt) {
         try {
             String updateSql = "UPDATE vakt SET vaktansvarlig_id = ?, avdeling_id = ?, fra_tid = ?, til_tid = ?, ant_pers = ? WHERE vakt_id = ?";
@@ -557,37 +568,44 @@ public class SqlQueries extends DBConnection {
     *
     */
 
+
     public Fravaer selectFravaer(int brukerId) {
 
         try {
-            String selectSql = "SELECT vakt_id, ant_timer, kommentar FROM fravaer WHERE bruker_id = ?";
+            String selectSql = "SELECT * FROM fravaer WHERE bruker_id = ?";
             selectQuery = connection.prepareStatement(selectSql);
             selectQuery.setInt(1, brukerId);
             ResultSet res = selectQuery.executeQuery();
 
             if (!res.next()) return null;
-
             int vaktId = res.getInt("vakt_id");
-            double antTimer = res.getDouble("ant_timer");
+            LocalDateTime fraTid = res.getTimestamp("fra_tid").toLocalDateTime();
+            LocalDateTime tilTid = res.getTimestamp("til_tid").toLocalDateTime();
             String kommentar = res.getString("kommentar");
 
+            return new Fravaer(brukerId, vaktId, fraTid, tilTid, kommentar);
 
-            return new Fravaer(brukerId, vaktId, antTimer, kommentar);
 
-        } catch (SQLException sqlE) {
-            sqlE.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
         return null;
     }
 
     public boolean insertFravaer(Fravaer newFravaer) {
         try {
-            String insertSql = "INSERT INTO fravaer(vakt_id,ant_timer, kommentar) VALUES(?,?,?)";
+            String insertSql = "INSERT INTO fravaer(bruker_id, vakt_id,fra_tid,til_tid, kommentar) VALUES(?,?,?,?,?)";
             insertQuery = connection.prepareStatement(insertSql);
 
-            insertQuery.setInt(1, newFravaer.getVaktId());
-            insertQuery.setDouble(2, newFravaer.getAntTimer());
-            insertQuery.setString(3, newFravaer.getKommentar());
+            // Oversetter LocalDateTime til Timestamp:
+            Timestamp fraTid = Timestamp.valueOf(newFravaer.getFraTid());
+            Timestamp tilTid = Timestamp.valueOf(newFravaer.getTilTid());
+
+            insertQuery.setInt(1,newFravaer.getBrukerId());
+            insertQuery.setInt(2, newFravaer.getVaktId());
+            insertQuery.setTimestamp(3, fraTid);
+            insertQuery.setTimestamp(4, tilTid);
+            insertQuery.setString(5, newFravaer.getKommentar());
             insertQuery.execute();
             return true;
 
@@ -599,11 +617,19 @@ public class SqlQueries extends DBConnection {
 
     public boolean updateFravaer(Fravaer fravaer) {
         try {
-            String updateSql = "UPDATE fravaer SET ant_timer = ?, kommentar = ? WHERE bruker_id = ?";
+            String updateSql = "UPDATE fravaer SET fra_tid =  ?,til_tid =  ?,kommentar =  ? WHERE  bruker_id = ? AND  vakt_id = ?;";
+
             updateQuery = connection.prepareStatement(updateSql);
 
-            updateQuery.setDouble(1, fravaer.getAntTimer());
-            updateQuery.setString(2, fravaer.getKommentar());
+            // Oversetter LocalDateTime til Timestamp:
+            Timestamp fraTid = Timestamp.valueOf(fravaer.getFraTid());
+            Timestamp tilTid = Timestamp.valueOf(fravaer.getTilTid());
+
+            updateQuery.setTimestamp(1, fraTid);
+            updateQuery.setTimestamp(2, tilTid);
+            updateQuery.setString(3, fravaer.getKommentar());
+            updateQuery.setInt(4,fravaer.getBrukerId());
+            updateQuery.setInt(5, fravaer.getVaktId());
 
             if (updateQuery.executeUpdate() == 1) {
                 return true;
@@ -614,11 +640,11 @@ public class SqlQueries extends DBConnection {
         return false;
     }
 
-    public boolean deleteFravaer(int brukerId) {
+    public boolean deleteFravaer(Fravaer fravaer) {
         try {
             String deleteSql = "DELETE FROM fravaer WHERE bruker_id = ?";
             deleteQuery = connection.prepareStatement(deleteSql);
-            deleteQuery.setInt(1, brukerId);
+            deleteQuery.setInt(1, fravaer.getBrukerId());
             deleteQuery.executeUpdate();
 
             return true;
@@ -628,6 +654,31 @@ public class SqlQueries extends DBConnection {
         }
         return false;
     }
+
+    public Fravaer[] selectFravaer() {
+        try {
+            selectQuery = connection.prepareStatement("SELECT * FROM fravaer");
+            ResultSet res = selectQuery.executeQuery();
+            ArrayList<Fravaer> fravaer = new ArrayList<>();
+            while (res.next()) {
+                Fravaer frv = new Fravaer(res.getInt("bruker_id"), res.getInt("vakt_id"),
+                        res.getTimestamp("fra_tid").toLocalDateTime(), res.getTimestamp("til_tid").toLocalDateTime(), res.getString("kommentar"));
+                fravaer.add(frv);
+            }
+            SqlCleanup.closeResSet(res);
+            Fravaer[] ret = new Fravaer[fravaer.size()];
+            return fravaer.toArray(ret);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+
+
+
+
 
     /*
     *
@@ -812,12 +863,16 @@ public class SqlQueries extends DBConnection {
     public static void main(String[] args) {
 		SqlQueries query = new SqlQueries();
 
-		Vakt vakt = query.selectVakt(1);
+		/*Vakt vakt = query.selectVakt(1);
 		vakt.setAntPers(50);
 		query.updateVakt(vakt);
 
 		vakt.setAntPers(7);
 		vakt.setVaktansvarligId(2);
 		query.insertVakt(vakt);
+            */
+		System.out.println(query.selectFravaer(2));
+		Fravaer fravaer = query.selectFravaer(2);
+		System.out.println(query.deleteFravaer(fravaer));
 	}
 }

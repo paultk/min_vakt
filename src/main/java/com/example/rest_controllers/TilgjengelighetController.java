@@ -1,4 +1,6 @@
 package com.example.rest_controllers;
+
+import org.springframework.web.bind.annotation.RestController;
 import com.example.sql_folder.SqlQueries;
 import org.springframework.web.bind.annotation.*;
 import com.example.database_classes.Tilgjengelighet;

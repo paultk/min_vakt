@@ -37,7 +37,8 @@ public class Vakt {
     }
 
     /**
-     * Konstruktør for å skape et Vaktobjekt hentet fra databasen
+     * Konstruktør f
+     * or å skape et Vaktobjekt hentet fra databasen
      *
      * @param vaktansvarligId
      * @param avdelingId
