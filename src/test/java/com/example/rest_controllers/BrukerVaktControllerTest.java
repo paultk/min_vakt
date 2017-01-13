@@ -13,13 +13,9 @@ public class BrukerVaktControllerTest {
 	BrukerVaktController controller = new BrukerVaktController();
 	@Test
 	public void brukerVaktControllerTest() throws Exception {
-		try {
-			controller.deleteBrukerVakt(new BrukerVakt(1, 1));
-		}
-		catch (Exception e) {}
-		assertTrue("Can't add brukervakt to DB", controller.addBrukerVakt(new BrukerVakt(1, 1)));
 		BrukerVakt[] brukervakter = controller.getBrukerVakter();
 		assertNotNull("Can't get brukervakter from DB", brukervakter);
 		assertTrue("Can't delete brukervakt from DB", controller.deleteBrukerVakt(brukervakter[brukervakter.length - 1]));
+		assertTrue("Can't add to DB", controller.addBrukerVakt(brukervakter[brukervakter.length - 1]));
 	}
 }

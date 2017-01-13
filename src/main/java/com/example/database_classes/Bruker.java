@@ -31,6 +31,21 @@ public class Bruker {
         this.plaintextPassord = plaintextPassord;
     }
 
+    public Bruker(int brukerId, int passordId, int stillingsId, int avdelingId, int telefonNr, int stillingsProsent, double timelonn,
+                  boolean admin, String fornavn, String etternavn, String epost) {
+        this.brukerId = brukerId;
+        this.passordId = passordId;
+        this.stillingsId = stillingsId;
+        this.telefonNr = telefonNr;
+        this.stillingsProsent = stillingsProsent;
+        this.timelonn = timelonn;
+        this.admin = admin;
+        this.fornavn = fornavn;
+        this.etternavn = etternavn;
+        this.epost = epost;
+        this.avdelingId = avdelingId;
+    }
+
     //Empty constructor for Spring REST
     public Bruker(){}
 

@@ -122,8 +122,7 @@ public class SqlQueries extends DBConnection {
                         res.getBoolean("admin"),
                         res.getString("fornavn"),
                         res.getString("etternavn"),
-                        res.getString("epost"),
-				        res.getString("hash"));
+                        res.getString("epost"));
             }
             SqlCleanup.closeResSet(res);
         }
@@ -150,8 +149,7 @@ public class SqlQueries extends DBConnection {
 						res.getBoolean("admin"),
 						res.getString("fornavn"),
 						res.getString("etternavn"),
-						res.getString("epost"),
-                        res.getString("hash"));
+						res.getString("epost"));
 				brukere.add(brk);
 			}
 			SqlCleanup.closeResSet(res);
