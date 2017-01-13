@@ -5,9 +5,12 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 import com.example.database_classes.Vakt;
 import com.example.database_classes.Bruker;
+
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * Created by Håkon on 12.01.2017.
@@ -17,9 +20,7 @@ import com.example.database_classes.Bruker;
 public class VaktController {
     SqlQueries query = new SqlQueries();
     @RequestMapping("/vakt/{id}")
-    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     public Vakt getVakt(@PathVariable("id") Integer id) {
-        Vakt ret = query.selectVakt(id);
         return query.selectVakt(id);
     }
 
@@ -39,7 +40,6 @@ public class VaktController {
     }
 
     @RequestMapping(value="/vakt/add", method=RequestMethod.POST)
-    @JsonSerialize(using = LocalDateTimeSerializer.class)
     public boolean insertVakt(@RequestBody Vakt vakt) {
         return query.insertVakt(vakt);
     }
