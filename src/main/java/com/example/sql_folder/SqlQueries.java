@@ -589,6 +589,28 @@ public class SqlQueries extends DBConnection {
 		return null;
 	}
 
+	public Passord[] selectPassordene() {
+		try {
+			selectQuery = connection.prepareStatement("SELECT * FROM passord");
+			ResultSet res = selectQuery.executeQuery();
+			ArrayList<Passord> passord = new ArrayList<>();
+			while (res.next()) {
+				Passord pass = new Passord(
+						res.getInt("passord_id"),
+						res.getString("salt"),
+						res.getString("hash"));
+				passord.add(pass);
+			}
+			SqlCleanup.closeResSet(res);
+			Passord[] ret = new Passord[passord.size()];
+			return passord.toArray(ret);
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
 	public boolean insertPassord(Passord passord) {
 		try {
 			insertQuery = connection.prepareStatement("INSERT INTO passord (hash, salt) " +

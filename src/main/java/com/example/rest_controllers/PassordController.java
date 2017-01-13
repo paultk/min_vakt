@@ -17,6 +17,10 @@ public class PassordController {
 	public Passord getPassord(@PathVariable ("id") int id) {
 		return query.selectPassord(id);
 	}
+	@RequestMapping("passord/alle")
+	public Passord[] getPassordene() {
+		return query.selectPassordene();
+	}
 	@RequestMapping(value="/passord/add")
 	public boolean addPassord(@RequestBody Passord passord) {
 		return query.insertPassord(passord);
