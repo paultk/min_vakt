@@ -37,6 +37,7 @@ public class Bruker {
     // Constructor for testing in SqlQueries.java
     public Bruker(int stillingsId, int avdelingId, int telefonNr, int stillingsProsent, double timelonn,
                   boolean admin, String fornavn, String etternavn, String epost, String plaintextPassord) {
+        if (!PasswordEncoderGenerator.checkPasswordValidity(plaintextPassord)) throw new IllegalArgumentException("Invalid password format: passwords must be at least 8 characters long, containing at least one lowercase character, one uppercase character, and two special characters (@#$%^&+=).");
         this.stillingsId = stillingsId;
         this.telefonNr = telefonNr;
         this.stillingsProsent = stillingsProsent;
