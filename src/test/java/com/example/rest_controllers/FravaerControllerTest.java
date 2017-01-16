@@ -15,29 +15,21 @@ public class FravaerControllerTest {
     FravaerController controller = new FravaerController();
     DateTimeFormatter aDateTimeFormatter = DateTimeFormatter.ofPattern("y M d H m s");
     LocalDateTime m = LocalDateTime.parse("2010 12 18 14 30 40", aDateTimeFormatter);
-    Fravaer fravaer = new Fravaer(4, 1, m, m, "Nja");
-    Fravaer updateFravaer = new Fravaer(3, 1, m, m, "Korleis");
+    Fravaer fravaer = new Fravaer(4, 3, m, m, "Bom");
+    Fravaer updateFravaer = new Fravaer(4, 3, m, m, "Kvarfir");
 
 
     @Test
-    public void getFravaer() throws Exception {
-        Assert.assertNotNull(controller.getFravaer(1)); // We must chose a object already registered in the database
-
+    public void fravaerControllerTest() throws Exception {
+        Assert.assertTrue("Can't add fravaer to database", controller.insertFravaer(fravaer));
+        Assert.assertNotNull("Can't get vakter from database", controller.updateFravaer(updateFravaer));
+        Assert.assertNotNull("Can't get single vakt from DB", controller.getFravaer(4));
+        Assert.assertTrue("Can't delete vakt from DB", controller.deleteFravaer(controller.getFravaer(4)));
     }
 
-    @Test
-    public void deleteFravaer() throws Exception {
-        Assert.assertTrue(controller.deleteFravaer(controller.getFravaer(2)));
-    }
 
-    @Test
-    public void insertFravaer() throws Exception {
-        Assert.assertTrue(controller.insertFravaer(fravaer));
-    }
 
-    @Test
-    public void updateFravaer() throws Exception {
-        Assert.assertTrue(controller.updateFravaer(updateFravaer));
-    }
+
+
 
 }

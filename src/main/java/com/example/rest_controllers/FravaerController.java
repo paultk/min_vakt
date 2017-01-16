@@ -29,8 +29,19 @@ public class FravaerController {
     }
 
     @RequestMapping(value="/fravaer/update", method=RequestMethod.POST)
-    public boolean updateFravaer(@RequestBody Fravaer fravaer){
+    public boolean updateFravaer(@RequestBody Fravaer fravaer) {
         return query.updateFravaer(fravaer);
+    }
+
+    @RequestMapping("/fravaer/all")
+    public Fravaer[] getAllFravaer() {
+        return query.selectAllFravaer();
+    }
+
+
+    @RequestMapping(value="/fravaer/vakt/{vId}") // ikke fungerende
+    public Fravaer[] getFravaerFromVaktId(@PathVariable ("vId") Integer vId){
+        return query.selectFravaerFromVaktId(vId);
 
     }
 }

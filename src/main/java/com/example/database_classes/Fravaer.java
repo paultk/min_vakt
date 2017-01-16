@@ -23,6 +23,7 @@ public class Fravaer {
     private LocalDateTime fraTid, tilTid;
     private String kommentar;
 
+
     public Fravaer(int brukerId, int vaktId, LocalDateTime fraTid, LocalDateTime tilTid, String kommentar) {
         this.brukerId = brukerId;
         this.vaktId = vaktId;

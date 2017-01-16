@@ -1,7 +1,5 @@
 package com.example.sql_folder;
 import com.example.database_classes.*;
-import com.sun.corba.se.spi.orbutil.fsm.Guard;
-import com.sun.javaws.exceptions.InvalidArgumentException;
 
 import java.sql.*;
 import java.time.LocalDateTime;
@@ -741,25 +739,56 @@ public class SqlQueries extends DBConnection {
         return false;
     }
 
-    public Fravaer[] selectFravaer() {
-        try {
-            selectQuery = connection.prepareStatement("SELECT * FROM fravaer");
-            ResultSet res = selectQuery.executeQuery();
-            ArrayList<Fravaer> fravaer = new ArrayList<>();
-            while (res.next()) {
-                Fravaer frv = new Fravaer(res.getInt("bruker_id"), res.getInt("vakt_id"),
-                        res.getTimestamp("fra_tid").toLocalDateTime(), res.getTimestamp("til_tid").toLocalDateTime(), res.getString("kommentar"));
-                fravaer.add(frv);
+    public Fravaer[] selectAllFravaer() {
+            ResultSet res = null;
+            try {
+                ArrayList<Fravaer> allFravaer = new ArrayList<>();
+                String selectSql = "SELECT * FROM fravaer";
+                selectQuery = connection.prepareStatement(selectSql);
+                res = selectQuery.executeQuery();
+
+                while (res.next()) {
+                    allFravaer.add(new Fravaer(
+                            res.getInt("bruker_id"),
+                            res.getInt("vakt_id"),
+                            res.getTimestamp("fra_tid").toLocalDateTime(),
+                            res.getTimestamp("til_tid").toLocalDateTime(),
+                            res.getString("kommentar")
+                    ));
+                }
+                return allFravaer.toArray(new Fravaer[allFravaer.size()]);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                SqlCleanup.closeEverything(res, selectQuery, connection);
             }
-            SqlCleanup.closeResSet(res);
-            Fravaer[] ret = new Fravaer[fravaer.size()];
-            return fravaer.toArray(ret);
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
+            return null;
+        } // ikke testet
+
+	public Fravaer[] selectFravaerFromVaktId(int vaktId) {
+		try {
+			selectQuery = connection.prepareStatement("SELECT * FROM fravaer WHERE vakt_id IN " +
+					"(SELECT vakt_id FROM vakt WHERE vakt_id = ?)");
+			selectQuery.setInt(1, vaktId);
+			ResultSet res = selectQuery.executeQuery();
+			ArrayList<Fravaer> fravaer = new ArrayList<>();
+			while (res.next()) {
+				Fravaer frv = new Fravaer(
+						res.getInt("bruker_id"),
+						res.getInt("vakt_id"),
+						res.getTimestamp("fra_tid").toLocalDateTime(),
+						res.getTimestamp("til_tid").toLocalDateTime(),
+						res.getString("kommentar"));
+				fravaer.add(frv);
+			}
+			SqlCleanup.closeResSet(res);
+			return fravaer.toArray(new Fravaer[fravaer.size()]);
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	} // ikke testet
 
 
 
