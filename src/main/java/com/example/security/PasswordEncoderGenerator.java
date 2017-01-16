@@ -15,7 +15,7 @@ public class PasswordEncoderGenerator {
 
     private static final int ITERATIONS = 10000;
     private static final int KEY_LENGTH = 256;
-    private static final String REGEX_PATTERN = "^(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=].*[@#$%^&+=])(?=\\S+$).{8,}$"; // at least one lowercase character, at least one uppercase character, no whitespace, at least 2 special characters, at least 8 total characters
+    private static final String REGEX_PATTERN = "^(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%!^&+=].*[@#$%!^&+=])(?=\\S+$).{8,}$"; // at least one lowercase character, at least one uppercase character, no whitespace, at least 2 special characters, at least 8 total characters
     private static final char[] HEX_ARRAY = "0123456789ABCDEF".toCharArray();
 
     public static byte[] generateSalt() {
@@ -87,7 +87,7 @@ public class PasswordEncoderGenerator {
         byte[] hashTest = hexStringToByteArray(hashHex);
         byte[] saltTest = hexStringToByteArray(saltHex);
 
-        String testPassword2 = "@@Aa1234";
+        String testPassword2 = "!!Aa1234";
         System.out.println(checkPasswordValidity(testPassword2));
         System.out.println(checkPasswordMatch(testPassword, saltTest, hashTest));
 
