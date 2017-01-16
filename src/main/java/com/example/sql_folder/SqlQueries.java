@@ -543,12 +543,13 @@ public class SqlQueries extends DBConnection {
 
     }
 
-    public boolean deleteStilling(int id){
+    public boolean deleteStilling(Stilling stilling){
         try {
 
             String sql = "DELETE FROM stilling WHERE stilling_id = ?";
             PreparedStatement deleteQuery = connection.prepareStatement(sql);
-            deleteQuery.setInt(1,id);
+
+            deleteQuery.setInt(1,stilling.getStillingId());
             if (deleteQuery.executeUpdate() == 1) {
                 return true;
             }
@@ -912,15 +913,15 @@ public class SqlQueries extends DBConnection {
     public boolean insertTilgjengelighet(Tilgjengelighet newTilgjengelighet){
 
         try {
-            String sql = "INSERT INTO tilgjengelighet(fra_tid, til_tid) VALUES(?,?);";
+            String sql = "INSERT INTO tilgjengelighet(bruker_id, fra_tid, til_tid) VALUES(?,?,?);";
             insertQuery = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            insertQuery.setTimestamp(1, Timestamp.valueOf(newTilgjengelighet.getFraTid()));
-            insertQuery.setTimestamp(2, Timestamp.valueOf(newTilgjengelighet.getTilTid()));
+            insertQuery.setInt(1, newTilgjengelighet.getUserId());
+            insertQuery.setTimestamp(2, Timestamp.valueOf(newTilgjengelighet.getFraTid()));
+            insertQuery.setTimestamp(3, Timestamp.valueOf(newTilgjengelighet.getTilTid()));
             insertQuery.execute();
 
             ResultSet res = insertQuery.getGeneratedKeys();
             res.next();
-            newTilgjengelighet.setUserId(res.getInt(1));
             return true;
 
         } catch (SQLException e) {

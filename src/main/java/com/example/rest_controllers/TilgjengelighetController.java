@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import com.example.database_classes.Tilgjengelighet;
 
 /**
- * Created by Håkon on 12.01.2017.
+ * Created by Håkon on 12.01.2017.g_scrum06@mysql.stud.iie.ntnu.no
  */
 
 
