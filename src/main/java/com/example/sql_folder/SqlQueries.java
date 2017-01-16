@@ -4,7 +4,6 @@ import com.example.database_classes.*;
 import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 /**
  * Created by axelkvistad on 10/01/17.

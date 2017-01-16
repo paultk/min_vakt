@@ -39,10 +39,14 @@ public class FravaerController {
     }
 
 
-    @RequestMapping(value="/fravaer/vakt/{vId}") // ikke fungerende
-    public Fravaer[] getFravaerFromVaktId(@PathVariable ("vId") Integer vId){
-        return query.selectFravaerFromVaktId(vId);
+    @RequestMapping(value="/fravaer/bruker/{Id}")  // ikke laget test for
+    public Fravaer[] getFravaerFromBrukerId(@PathVariable ("Id") Integer Id){
+        return query.selectFravaerFromBrukerId(Id);
+    }
 
+    @RequestMapping(value="/fravaer/vakt/{Id}")
+    public Fravaer[] getFravaerFromVaktId(@PathVariable ("Id") Integer vId){
+        return query.selectFravaerFromVaktId(vId);
     }
 }
 
