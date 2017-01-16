@@ -799,7 +799,7 @@ public class SqlQueries extends DBConnection {
                 SqlCleanup.closeEverything(res, selectQuery, connection);
             }
             return null;
-        } // ikke testet
+        }
 
 	public Fravaer[] selectFravaerFromVaktId(int vaktId) {
 		try {
@@ -824,8 +824,32 @@ public class SqlQueries extends DBConnection {
 			e.printStackTrace();
 		}
 		return null;
-	} // ikke testet
+	}
 
+    public Fravaer[] selectFravaerFromBrukerId(int brukerId) {
+        try {
+            selectQuery = connection.prepareStatement("SELECT * FROM fravaer WHERE bruker_id IN " +
+                    "(SELECT bruker_id FROM bruker WHERE bruker_id = ?)");
+            selectQuery.setInt(1, brukerId);
+            ResultSet res = selectQuery.executeQuery();
+            ArrayList<Fravaer> fravaer = new ArrayList<>();
+            while (res.next()) {
+                Fravaer frv = new Fravaer(
+                        res.getInt("bruker_id"),
+                        res.getInt("vakt_id"),
+                        res.getTimestamp("fra_tid").toLocalDateTime(),
+                        res.getTimestamp("til_tid").toLocalDateTime(),
+                        res.getString("kommentar"));
+                fravaer.add(frv);
+            }
+            SqlCleanup.closeResSet(res);
+            return fravaer.toArray(new Fravaer[fravaer.size()]);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
 
 
