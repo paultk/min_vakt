@@ -205,7 +205,12 @@ public class SqlQueries extends DBConnection {
 		    Passord passord = new Passord(salt, hash);
 		    if (insertPassord(passord)) {
                 int passordId = selectPassordId(hash, salt);
-                bruker.setPassordId(passordId);
+                if (passordId != -1) {
+                    bruker.setPassordId(passordId);
+                } else {
+                    System.out.println("passordId = -1, error in selectPassordId()");
+                    return false;
+                }
             } else {
                 return false;
             }
@@ -327,11 +332,41 @@ public class SqlQueries extends DBConnection {
 			SqlCleanup.closeResSet(res);
 			return brukere.toArray(new Bruker[brukere.size()]);
 		}
-		catch (Exception e) {
+		catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return null;
 	}
+
+	public Bruker[] selectBrukereFromAvdelingId(int avdelingId) {
+	    try {
+	        String selectSql = "SELECT * FROM bruker WHERE avdeling_id = ?";
+	        selectQuery = connection.prepareStatement(selectSql);
+	        selectQuery.setInt(1, avdelingId);
+	        ResultSet res = selectQuery.executeQuery();
+	        ArrayList<Bruker> brukere = new ArrayList<>();
+	        while (res.next()) {
+	            brukere.add(new Bruker(
+                        res.getInt("bruker_id"),
+                        res.getInt("passord_id"),
+                        res.getInt("stilling_id"),
+                        res.getInt("avdeling_id"),
+                        res.getInt("telefonnr"),
+                        res.getInt("stillingsprosent"),
+                        res.getDouble("timelonn"),
+                        res.getBoolean("admin"),
+                        res.getString("fornavn"),
+                        res.getString("etternavn"),
+                        res.getString("epost"),
+                        res.getString("hash")));
+            }
+            SqlCleanup.closeResSet(res);
+	        return brukere.toArray(new Bruker[brukere.size()]);
+        } catch (SQLException e) {
+	        e.printStackTrace();
+        }
+        return null;
+    }
 
     /*
     *

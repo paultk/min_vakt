@@ -18,6 +18,8 @@ public class Passord {
         this.hash = hash;
     }
 
+    public Passord(){}
+
     public int getId(){
         return id;
     }

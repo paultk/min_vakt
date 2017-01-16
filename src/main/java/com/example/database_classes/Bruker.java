@@ -1,7 +1,7 @@
 package com.example.database_classes;
 
 import com.example.security.PasswordEncoderGenerator;
-import com.sun.javaws.exceptions.InvalidArgumentException;
+
 
 /**
  * Created by paul on 10.01.17.
@@ -15,7 +15,7 @@ public class Bruker {
     private String plaintextPassord;
     private String hash;
     private String salt;
-    private static final String INVALID_PASSWORD_FORMAT = "Invalid password format: passwords must be at least 8 characters long, containing at least one lowercase character, one uppercase character, and two special characters (@#$%^&+=).";
+    private static final String INVALID_PASSWORD_FORMAT = "Invalid password format: passwords must be at least 8 characters long, containing at least one lowercase character, one uppercase character, and two special characters (@#$%!^&+=).";
 
     public Bruker(int brukerId, int passordId, int stillingsId, int avdelingId, int telefonNr, int stillingsProsent, double timelonn,
                   boolean admin, String fornavn, String etternavn, String epost, String plaintextPassord) {
@@ -82,34 +82,74 @@ public class Bruker {
         this.plaintextPassord = plaintextPassord;
     }
 
+    /**
+     * Returns user ID
+     *
+     * @return brukerId
+     */
     public int getBrukerId() {
         return brukerId;
     }
 
+    /**
+     * Sets user ID
+     *
+     * @param brukerId user ID
+     */
     public void setBrukerId(int brukerId) {
         this.brukerId = brukerId;
     }
 
+    /**
+     * Returns password ID
+     *
+     * @return passordId
+     */
     public int getPassordId() {
         return passordId;
     }
 
+    /**
+     * Sets password ID
+     *
+     * @param passordId password ID
+     */
     public void setPassordId(int passordId) {
         this.passordId = passordId;
     }
 
+    /**
+     * Returns position ID
+     *
+     * @return stillingsId
+     */
     public int getStillingsId() {
         return stillingsId;
     }
 
+    /**
+     * Sets position ID
+     *
+     * @param stillingsId position ID
+     */
     public void setStillingsId(int stillingsId) {
         this.stillingsId = stillingsId;
     }
 
+    /**
+     * Returns department ID
+     *
+     * @return avdelingId
+     */
     public int getAvdelingId() {
         return avdelingId;
     }
 
+    /**
+     * Sets department ID
+     *
+     * @param avdelingId department ID
+     */
     public void setAvdelingId(int avdelingId) {
         this.avdelingId = avdelingId;
     }
