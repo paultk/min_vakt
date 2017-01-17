@@ -110,6 +110,13 @@ public class Vakt {
 
     @Override
     public String toString() {
-        return "VaktId: " + vaktId + "\n";
+        return "Vakt{" +
+                "vaktId=" + vaktId +
+                ", vaktansvarligId=" + vaktansvarligId +
+                ", avdelingId=" + avdelingId +
+                ", antPers=" + antPers +
+                ", fraTid=" + fraTid +
+                ", tilTid=" + tilTid +
+                '}';
     }
 }

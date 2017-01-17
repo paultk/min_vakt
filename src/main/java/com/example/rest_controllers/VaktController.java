@@ -1,5 +1,6 @@
 package com.example.rest_controllers;
 
+import com.example.database_classes.Avdeling;
 import com.example.database_classes.Bruker;
 import com.example.database_classes.Vakt;
 import com.example.sql_folder.SqlQueries;
@@ -17,8 +18,13 @@ public class VaktController {
         return query.selectVakt(id);
     }
 
-    @RequestMapping("/vakt/bruker")    // TODO: 12/01/17 (Axel): fiks denne pathen
-    public Vakt[] getVakter(Bruker bruker) {
+    @RequestMapping(value="/vakt/avdeling", method = RequestMethod.POST)
+    public Vakt[]getVakterAvdeling(@RequestBody Avdeling avdeling) {
+        return query.selectVakterAvdeling(avdeling.getAvdelingId());
+    }
+
+    @RequestMapping(value="/vakt/bruker", method = RequestMethod.POST)    // TODO: 12/01/17 (Axel): fiks denne pathen
+    public Vakt[] getVakter(@RequestBody Bruker bruker) {
         return query.selectVakter(bruker.getBrukerId());
     }
 
@@ -27,7 +33,7 @@ public class VaktController {
         return query.selectAllVakter();
     }
 
-    @RequestMapping(value="/vakt/delete", method= RequestMethod.DELETE)
+    @RequestMapping(value="/vakt/delete", method= RequestMethod.POST)
     public boolean deleteVakt(@RequestBody Vakt vakt) {
         return query.deleteVakt(vakt);
     }
@@ -37,7 +43,7 @@ public class VaktController {
         return query.insertVakt(vakt);
     }
 
-    @RequestMapping(value="/vakt/update", method=RequestMethod.PUT)
+    @RequestMapping(value="/vakt/update", method=RequestMethod.POST)
     public boolean updateVakt(@RequestBody Vakt vakt){
         return query.updateVakt(vakt);
     }

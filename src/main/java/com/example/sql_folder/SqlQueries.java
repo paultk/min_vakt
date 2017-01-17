@@ -4,6 +4,7 @@ import com.example.database_classes.*;
 import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * Created by axelkvistad on 10/01/17.
@@ -517,6 +518,31 @@ public class SqlQueries extends DBConnection {
         return false;
     }
 
+    public Vakt[] selectVakterAvdeling(int avdelingId) {
+		try {
+			selectQuery = connection.prepareStatement("SELECT * FROM vakt WHERE avdeling_id = ?");
+			selectQuery.setInt(1, avdelingId);
+			ResultSet res = selectQuery.executeQuery();
+			ArrayList<Vakt> vakter = new ArrayList<>();
+			while (res.next()) {
+				Vakt vakt = new Vakt(
+						res.getInt("vakt_id"),
+						res.getInt("vaktansvarlig_id"),
+						res.getInt("avdeling_id"),
+						res.getTimestamp("fra_tid").toLocalDateTime(),
+						res.getTimestamp("til_tid").toLocalDateTime(),
+						res.getInt("ant_pers")
+				);
+				vakter.add(vakt);
+			}
+			SqlCleanup.closeResSet(res);
+			return vakter.toArray(new Vakt[vakter.size()]);
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
     /*
     *
     * STILLING
@@ -1059,32 +1085,7 @@ public class SqlQueries extends DBConnection {
     public static void main(String[] args) {
 		SqlQueries query = new SqlQueries();
 
-		/*Vakt vakt = query.selectVakt(1);
-		vakt.setAntPers(50);
-		query.updateVakt(vakt);
+		System.out.println(Arrays.toString(query.selectVakterAvdeling(1)));
 
-		vakt.setAntPers(7);
-		vakt.setVaktansvarligId(2);
-		query.insertVakt(vakt);
-
-		Avdeling avdeling1 = query.selectAvdeling(2);
-		Stilling stilling1 = query.selectStilling(2);
-		/**//*
-		DBConnection.beforeTest();
-		Bruker bruker1 = new Bruker(2, 2, 90133787, 100, 300, false, "testFornavn", "testEtternavn", "tb1@stolav.no", "abcDEF!#");
-        query.insertBruker(bruker1);
-		query.insertBruker(bruker1);
-		query.insertBruker(bruker1);
-		DBConnection.afterTest();
-//		System.out.println(Arrays.toString(query.selectOvertider()));
-
-		*//**//*Bruker bruker1 = new Bruker(2, 2, 90133787, 100, 300, false, "tb1Fornavn", "tb1Etternavn", "tb1@stolav.no", "abcDEF!#");
-        query.insertBruker(bruker1);*//**//*
-        *//**//*;*//**//*
-		System.out.println(Arrays.toString(query.selectOvertider()));*/
-
-        //Bruker bruker1 = new Bruker(2, 2, 90133787, 100, 300, false, "tb1Fornavn", "tb1Etternavn", "tb1@stolav.no", "abcDEF!#");
-        //Bruker bruker1 = new Bruker(2, 2, 90133787, 100, 300, false, "tb1Fornavn", "tb1Etternavn", "tb1@stolav.no", "dårligpassord");
-        //query.insertBruker(bruker1);
 	}
 }

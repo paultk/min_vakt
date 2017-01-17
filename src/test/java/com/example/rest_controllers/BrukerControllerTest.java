@@ -14,7 +14,7 @@ import static org.junit.Assert.*;
  */
 public class BrukerControllerTest {
 	private BrukerController controller = new BrukerController();
-	Bruker bruker = new Bruker(1, 1, 1, 1, 1, 1, 1, true, "test", "test", "test", "test");
+	Bruker bruker = new Bruker(1, 1, 1, 1, 1, 1, 1, true, "test", "test", "test", "#@Aa1234");
 
 	@Test
 	public void brukerControllerTest() throws Exception {
