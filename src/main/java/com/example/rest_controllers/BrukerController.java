@@ -41,4 +41,9 @@ public class BrukerController {
 		return query.updateBruker(bruker);
 	}
 
+	public static void main(String[] args) {
+		BrukerController controller = new BrukerController();
+		System.out.println(controller.addBruker(new Bruker(1, 0, 1, 1, 12345678, 100, 100, true, "admin", "admin", "admin", "Admin@@@")));
+	}
+
 }

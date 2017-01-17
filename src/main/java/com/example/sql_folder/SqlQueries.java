@@ -1,5 +1,6 @@
 package com.example.sql_folder;
 import com.example.database_classes.*;
+import com.example.rest_controllers.BrukerController;
 
 import java.sql.*;
 import java.time.LocalDateTime;
@@ -106,6 +107,32 @@ public class SqlQueries extends DBConnection {
     *
     */
 
+    public Bruker selectBruker(String epost) {
+		try {
+			selectQuery = connection.prepareStatement("SELECT * FROM bruker WHERE epost = ?");
+			selectQuery.setString(1, epost);
+			ResultSet res = selectQuery.executeQuery();
+			if (res.next()) {
+				return new Bruker(
+						res.getInt("bruker_id"),
+						res.getInt("passord_id"),
+						res.getInt("stilling_id"),
+						res.getInt("avdeling_id"),
+						res.getInt("telefonnr"),
+						res.getInt("stillingsprosent"),
+						res.getDouble("timelonn"),
+						res.getBoolean("admin"),
+						res.getString("fornavn"),
+						res.getString("etternavn"),
+						res.getString("epost"));
+			}
+			SqlCleanup.closeResSet(res);
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
     public Bruker selectBruker(int brukerId) {
         try {
             selectQuery = connection.prepareStatement("SELECT * FROM bruker WHERE bruker_id = ?");
@@ -657,6 +684,23 @@ public class SqlQueries extends DBConnection {
 		return null;
 	}
 
+	public Passord selectPassord(Bruker bruker) {
+		try {
+			selectQuery = connection.prepareStatement("SELECT * FROM passord WHERE passord_id = ?");
+			selectQuery.setInt(1, bruker.getPassordId());
+			ResultSet res = selectQuery.executeQuery();
+			if (res.next()) {
+				Passord ret = new Passord(res.getInt("passord_id"), res.getString("salt"), res.getString("hash"));
+				return ret;
+			}
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+
 	public Passord[] selectPassordene() {
 		try {
 			selectQuery = connection.prepareStatement("SELECT * FROM passord");
@@ -1084,8 +1128,8 @@ public class SqlQueries extends DBConnection {
 
     public static void main(String[] args) {
 		SqlQueries query = new SqlQueries();
-
-		System.out.println(Arrays.toString(query.selectVakterAvdeling(1)));
+//		System.out.println();
+//		System.out.println(Arrays.toString(query.selectVakterAvdeling(1)));
 
 	}
 }

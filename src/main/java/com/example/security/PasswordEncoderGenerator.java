@@ -1,7 +1,10 @@
 package com.example.security;
 
+import com.example.database_classes.Passord;
+
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
+import java.lang.reflect.Array;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.security.spec.InvalidKeySpecException;
@@ -42,7 +45,9 @@ public class PasswordEncoderGenerator {
             spec.clearPassword();
         }
     }
-
+    public static boolean checkPasswordMatch(String ptPassord, Passord passord) {
+        return checkPasswordMatch(ptPassord, hexStringToByteArray(passord.getSalt()), hexStringToByteArray(passord.getHash()));
+    }
     public static boolean checkPasswordMatch(String plaintextPassword, byte[] salt, byte[] expectedHash) {
         char[] password = plaintextPassword.toCharArray();
         byte[] pwdHash = generateHash(plaintextPassword, salt);
