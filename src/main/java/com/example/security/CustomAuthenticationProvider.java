@@ -17,11 +17,11 @@ import java.util.ArrayList;
  */
 public class CustomAuthenticationProvider implements AuthenticationProvider {
 	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-//		System.out.println("Authenticating");
+		System.out.println("Authenticating");
 		SqlQueries query = new SqlQueries();
 		String username = authentication.getName();
 		String pass = (String)authentication.getCredentials();
-//		System.out.println(username + " " + pass);
+		System.out.println(username + " " + pass);
 		Bruker bruker = query.selectBruker(username);
 		Passord passord = query.selectPassord(bruker);
 		if (PasswordEncoderGenerator.checkPasswordMatch(pass, passord)) {
@@ -29,18 +29,18 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 				SimpleGrantedAuthority auth = new SimpleGrantedAuthority("ADMIN");
 				ArrayList<SimpleGrantedAuthority> authority = new ArrayList<>();
 				authority.add(auth);
-//				System.out.println("Authenticated!");
+				System.out.println("Authenticated!");
 				return new UsernamePasswordAuthenticationToken(username, pass, authority);
 			}
 			else if (!bruker.isAdmin()) {
 				SimpleGrantedAuthority auth = new SimpleGrantedAuthority("USER");
 				ArrayList<SimpleGrantedAuthority> authority = new ArrayList<>();
 				authority.add(auth);
-//				System.out.println("Authenticated!");
+				System.out.println("Authenticated!");
 				return new UsernamePasswordAuthenticationToken(username, pass, authority);
 			}
 		}
-//		System.out.println("Not authenticated");
+		System.out.println("Not authenticated");
 		throw new BadCredentialsException("Invalid user name or password");
 	}
 	public boolean supports(Class<?> arg0) {

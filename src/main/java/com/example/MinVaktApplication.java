@@ -13,8 +13,11 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -30,23 +33,6 @@ public class MinVaktApplication {
 		SpringApplication.run(MinVaktApplication.class, args);
 	}
 
-	@RequestMapping("/user")
-	public Principal user(Principal user) {
-		return user;
-	}
-	@RequestMapping("/login")
-
-	@Configuration
-	public class MvcConfig extends WebMvcConfigurerAdapter {
-		@Override
-		public void addViewControllers(ViewControllerRegistry registry) {
-			registry.addViewController("/").setViewName("home");
-			registry.addViewController("/login").setViewName("login");
-			registry.addViewController("/hello").setViewName("hello");
-
-		}
-	}
-
 	@Configuration
 	@EnableWebSecurity
 	public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
@@ -54,15 +40,19 @@ public class MinVaktApplication {
 		protected void configure(HttpSecurity http) throws Exception {
 			http
 					.authorizeRequests()
-//						.antMatchers("/", "/hello").permitAll() //Paths som ikke krever auth
+						.antMatchers("/").permitAll() //Paths som ikke krever auth
 						.anyRequest().authenticated()
 						.and()
 					.formLogin()
-						.loginPage("/login")	//Adresse til loginpage?
+						.loginPage("/login")	//Adresse til loginpage
 						.permitAll()
 						.and()
 					.logout()
-						.permitAll();
+						.permitAll()
+						.and()
+					.csrf()
+						.disable();
+			//TODO enable csrf protection!
 		}
 
 		@Autowired
