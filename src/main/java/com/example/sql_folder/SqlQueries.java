@@ -1,11 +1,9 @@
 package com.example.sql_folder;
 import com.example.database_classes.*;
-import com.example.rest_controllers.BrukerController;
 
 import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 /**
  * Created by axelkvistad on 10/01/17.
@@ -451,6 +449,37 @@ public class SqlQueries extends DBConnection {
         return vakter.toArray(new Vakt[vakter.size()]);
     }
 
+    public Vakt[] selectAllVakterDate(LocalDateTime fratid, LocalDateTime tiltid) {
+        ResultSet res = null;
+        ArrayList<Vakt> vakter = new ArrayList<>();
+
+
+    try {
+        String selectSql = "SELECT * FROM vakt WHERE fra_tid > ? AND til_tid < ?";
+        selectQuery = connection.prepareStatement(selectSql);
+        selectQuery.setTimestamp(1, Timestamp.valueOf(fratid));
+        selectQuery.setTimestamp(2, Timestamp.valueOf(tiltid));
+        System.out.println(Timestamp.valueOf(fratid));
+        System.out.println(Timestamp.valueOf(tiltid));
+
+        res = selectQuery.executeQuery();
+        while (res.next()) {
+            vakter.add(new Vakt(
+                    res.getInt("vakt_id"),
+                    res.getInt("vaktansvarlig_id"),
+                    res.getInt("avdeling_id"),
+                    res.getTimestamp("fra_tid").toLocalDateTime(),
+                    res.getTimestamp("til_tid").toLocalDateTime(),
+                    res.getInt("ant_pers")));
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    } finally {
+        SqlCleanup.closeEverything(res, selectQuery, connection);
+    }
+        return vakter.toArray(new Vakt[vakter.size()]);
+}
+
     public Vakt[] selectAllVakter() {
     	ResultSet res = null;
     	try {
@@ -477,6 +506,7 @@ public class SqlQueries extends DBConnection {
 		}
 		return null;
 	}
+
 
     public boolean insertVakt(Vakt newVakt) {
         try {
@@ -932,7 +962,7 @@ public class SqlQueries extends DBConnection {
 
     public Overtid selectOvertid(int overtidId) {
         try {
-            String selectSql = "SELECT bruker_id, ant_timer, dato, kommentar FROM overtid WHERE overtid_id = ?";
+            String selectSql = "SELECT bruker_id, ant_timer, vakt_id, kommentar FROM overtid WHERE overtid_id = ?";
             selectQuery = connection.prepareStatement(selectSql);
 			selectQuery.setInt(1, overtidId);
             ResultSet res = selectQuery.executeQuery();
@@ -941,10 +971,10 @@ public class SqlQueries extends DBConnection {
 
             int brukerId = res.getInt("bruker_id");
             double antTimer = res.getDouble("ant_timer");
-            Date dato = res.getDate("dato");
+            int vaktId = res.getInt("vakt_id");
             String kommentar = res.getString("kommentar");
 
-            return new Overtid(overtidId, brukerId, antTimer, dato, kommentar);
+            return new Overtid(overtidId, brukerId, antTimer, vaktId, kommentar);
 
 
         } catch (SQLException e) {
@@ -963,7 +993,7 @@ public class SqlQueries extends DBConnection {
 						res.getInt("overtid_id"),
 						res.getInt("bruker_id"),
 						res.getDouble("ant_timer"),
-						res.getDate("dato"),
+						res.getInt("vakt_id"),
 						res.getString("kommentar"));
 				overtider.add(ny);
 			}
@@ -977,11 +1007,11 @@ public class SqlQueries extends DBConnection {
 
     public boolean insertOvertid(Overtid newOvertid) {
         try {
-            String insertSql = "INSERT INTO overtid(bruker_id, ant_timer, dato, kommentar) VALUES(?,?,?,?)";
+            String insertSql = "INSERT INTO overtid(bruker_id, ant_timer, vakt_id, kommentar) VALUES(?,?,?,?)";
             insertQuery = connection.prepareStatement(insertSql);
             insertQuery.setInt(1, newOvertid.getBrukerId());
             insertQuery.setDouble(2, newOvertid.getAntTimer());
-            insertQuery.setDate(3, newOvertid.getDato());
+            insertQuery.setInt(3, newOvertid.getVaktId());
             insertQuery.setString(4, newOvertid.getKommentar());
 
             insertQuery.execute();
@@ -995,13 +1025,13 @@ public class SqlQueries extends DBConnection {
 
     public boolean updateOvertid(Overtid overtid) {
         try {
-            String updateSql = "UPDATE overtid SET bruker_id = ?, ant_timer = ?, dato = ?, kommentar = ? WHERE overtid_id = ?";
+            String updateSql = "UPDATE overtid SET bruker_id = ?, ant_timer = ?, vakt_id = ?, kommentar = ? WHERE overtid_id = ?";
             updateQuery = connection.prepareStatement(updateSql);
 
 
             updateQuery.setInt(1, overtid.getBrukerId());
             updateQuery.setDouble(2, overtid.getAntTimer());
-            updateQuery.setDate(3, overtid.getDato());
+            updateQuery.setInt(3, overtid.getVaktId());
             updateQuery.setString(4, overtid.getKommentar());
 			updateQuery.setInt(5, overtid.getOvertidId());
 

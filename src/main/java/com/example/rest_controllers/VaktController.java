@@ -6,6 +6,9 @@ import com.example.database_classes.Vakt;
 import com.example.sql_folder.SqlQueries;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 /**
  * Created by Håkon on 12.01.2017.
  */
@@ -16,6 +19,18 @@ public class VaktController {
     @RequestMapping("/vakt/{id}")
     public Vakt getVakt(@PathVariable("id") Integer id) {
         return query.selectVakt(id);
+    }
+
+    @RequestMapping("/vakt/all/{fratid}/{tiltid}")
+    public Vakt[] getAllVaktDato(@PathVariable("fratid") String fratid, @PathVariable("tiltid") String tiltid) {
+
+        DateTimeFormatter aDateTimeFormatter = DateTimeFormatter.ISO_DATE_TIME;
+        LocalDateTime fra = LocalDateTime.parse(fratid, aDateTimeFormatter);
+        LocalDateTime til = LocalDateTime.parse(tiltid, aDateTimeFormatter);
+
+        System.out.println("asdf" + fra.toString());
+
+        return query.selectAllVakterDate(fra, til);
     }
 
     @RequestMapping(value="/vakt/avdeling", method = RequestMethod.POST)
