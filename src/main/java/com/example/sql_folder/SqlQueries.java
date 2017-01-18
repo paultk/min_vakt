@@ -1,11 +1,9 @@
 package com.example.sql_folder;
 import com.example.database_classes.*;
-import com.example.rest_controllers.BrukerController;
 
 import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 /**
  * Created by axelkvistad on 10/01/17.
@@ -451,6 +449,37 @@ public class SqlQueries extends DBConnection {
         return vakter.toArray(new Vakt[vakter.size()]);
     }
 
+    public Vakt[] selectAllVakterDate(LocalDateTime fratid, LocalDateTime tiltid) {
+        ResultSet res = null;
+        ArrayList<Vakt> vakter = new ArrayList<>();
+
+
+    try {
+        String selectSql = "SELECT * FROM vakt WHERE fra_tid > ? AND til_tid < ?";
+        selectQuery = connection.prepareStatement(selectSql);
+        selectQuery.setTimestamp(1, Timestamp.valueOf(fratid));
+        selectQuery.setTimestamp(2, Timestamp.valueOf(tiltid));
+        System.out.println(Timestamp.valueOf(fratid));
+        System.out.println(Timestamp.valueOf(tiltid));
+
+        res = selectQuery.executeQuery();
+        while (res.next()) {
+            vakter.add(new Vakt(
+                    res.getInt("vakt_id"),
+                    res.getInt("vaktansvarlig_id"),
+                    res.getInt("avdeling_id"),
+                    res.getTimestamp("fra_tid").toLocalDateTime(),
+                    res.getTimestamp("til_tid").toLocalDateTime(),
+                    res.getInt("ant_pers")));
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    } finally {
+        SqlCleanup.closeEverything(res, selectQuery, connection);
+    }
+        return vakter.toArray(new Vakt[vakter.size()]);
+}
+
     public Vakt[] selectAllVakter() {
     	ResultSet res = null;
     	try {
@@ -477,6 +506,7 @@ public class SqlQueries extends DBConnection {
 		}
 		return null;
 	}
+
 
     public boolean insertVakt(Vakt newVakt) {
         try {
