@@ -932,7 +932,7 @@ public class SqlQueries extends DBConnection {
 
     public Overtid selectOvertid(int overtidId) {
         try {
-            String selectSql = "SELECT bruker_id, ant_timer, dato, kommentar FROM overtid WHERE overtid_id = ?";
+            String selectSql = "SELECT bruker_id, ant_timer, vakt_id, kommentar FROM overtid WHERE overtid_id = ?";
             selectQuery = connection.prepareStatement(selectSql);
 			selectQuery.setInt(1, overtidId);
             ResultSet res = selectQuery.executeQuery();
@@ -941,10 +941,10 @@ public class SqlQueries extends DBConnection {
 
             int brukerId = res.getInt("bruker_id");
             double antTimer = res.getDouble("ant_timer");
-            Date dato = res.getDate("dato");
+            int vaktId = res.getInt("vakt_id");
             String kommentar = res.getString("kommentar");
 
-            return new Overtid(overtidId, brukerId, antTimer, dato, kommentar);
+            return new Overtid(overtidId, brukerId, antTimer, vaktId, kommentar);
 
 
         } catch (SQLException e) {
@@ -963,7 +963,7 @@ public class SqlQueries extends DBConnection {
 						res.getInt("overtid_id"),
 						res.getInt("bruker_id"),
 						res.getDouble("ant_timer"),
-						res.getDate("dato"),
+						res.getInt("vakt_id"),
 						res.getString("kommentar"));
 				overtider.add(ny);
 			}
@@ -977,11 +977,11 @@ public class SqlQueries extends DBConnection {
 
     public boolean insertOvertid(Overtid newOvertid) {
         try {
-            String insertSql = "INSERT INTO overtid(bruker_id, ant_timer, dato, kommentar) VALUES(?,?,?,?)";
+            String insertSql = "INSERT INTO overtid(bruker_id, ant_timer, vakt_id, kommentar) VALUES(?,?,?,?)";
             insertQuery = connection.prepareStatement(insertSql);
             insertQuery.setInt(1, newOvertid.getBrukerId());
             insertQuery.setDouble(2, newOvertid.getAntTimer());
-            insertQuery.setDate(3, newOvertid.getDato());
+            insertQuery.setInt(3, newOvertid.getVaktId());
             insertQuery.setString(4, newOvertid.getKommentar());
 
             insertQuery.execute();
@@ -995,13 +995,13 @@ public class SqlQueries extends DBConnection {
 
     public boolean updateOvertid(Overtid overtid) {
         try {
-            String updateSql = "UPDATE overtid SET bruker_id = ?, ant_timer = ?, dato = ?, kommentar = ? WHERE overtid_id = ?";
+            String updateSql = "UPDATE overtid SET bruker_id = ?, ant_timer = ?, vakt_id = ?, kommentar = ? WHERE overtid_id = ?";
             updateQuery = connection.prepareStatement(updateSql);
 
 
             updateQuery.setInt(1, overtid.getBrukerId());
             updateQuery.setDouble(2, overtid.getAntTimer());
-            updateQuery.setDate(3, overtid.getDato());
+            updateQuery.setInt(3, overtid.getVaktId());
             updateQuery.setString(4, overtid.getKommentar());
 			updateQuery.setInt(5, overtid.getOvertidId());
 
