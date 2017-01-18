@@ -22,13 +22,11 @@ public class VaktController {
     }
 
     @RequestMapping("/vakt/all/{fratid}/{tiltid}")
-    public Vakt[] getAllVaktDato(@PathVariable("fratid") String fratid, @PathVariable("tiltid") String tiltid) {
+    public Vakt[] getAllVaktDate(@PathVariable("fratid") String fratid, @PathVariable("tiltid") String tiltid) {
 
         DateTimeFormatter aDateTimeFormatter = DateTimeFormatter.ISO_DATE_TIME;
         LocalDateTime fra = LocalDateTime.parse(fratid, aDateTimeFormatter);
         LocalDateTime til = LocalDateTime.parse(tiltid, aDateTimeFormatter);
-
-        System.out.println("asdf" + fra.toString());
 
         return query.selectAllVakterDate(fra, til);
     }

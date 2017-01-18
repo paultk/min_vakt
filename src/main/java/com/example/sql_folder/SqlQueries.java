@@ -1151,6 +1151,34 @@ public class SqlQueries extends DBConnection {
         return false;
     }
 
+	public Tilgjengelighet[] selectAllTilgjengelighetDate(LocalDateTime fratid, LocalDateTime tiltid) {
+		ResultSet res = null;
+		ArrayList<Tilgjengelighet> tilgjengelighet = new ArrayList<>();
+
+
+		try {
+			String selectSql = "SELECT * FROM tilgjengelighet WHERE fra_tid > ? AND til_tid < ?";
+			selectQuery = connection.prepareStatement(selectSql);
+			selectQuery.setTimestamp(1, Timestamp.valueOf(fratid));
+			selectQuery.setTimestamp(2, Timestamp.valueOf(tiltid));
+			System.out.println(Timestamp.valueOf(fratid));
+			System.out.println(Timestamp.valueOf(tiltid));
+
+			res = selectQuery.executeQuery();
+			while (res.next()) {
+				tilgjengelighet.add(new Tilgjengelighet(
+						res.getInt("bruker_id"),
+						res.getTimestamp("fra_tid").toLocalDateTime(),
+						res.getTimestamp("til_tid").toLocalDateTime()));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			SqlCleanup.closeEverything(res, selectQuery, connection);
+		}
+		return tilgjengelighet.toArray(new Tilgjengelighet[tilgjengelighet.size()]);
+	}
+
 
 
 
