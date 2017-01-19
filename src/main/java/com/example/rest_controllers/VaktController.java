@@ -21,7 +21,7 @@ public class VaktController {
     /**
      * Returns Vakt object by ID
      * @param id
-     * @return Vakt with specified ID
+     * @return Vakt
      */
     @RequestMapping("/vakt/{id}")
     public Vakt getVakt(@PathVariable("id") Integer id) {
@@ -29,9 +29,9 @@ public class VaktController {
     }
 
     /**
-     * Returns all Vakt objects that start
+     * Returns all Vakt objects that start at a given date
      * @param date
-     * @return
+     * @return Vakt[]
      */
     @RequestMapping("/vakt/all/{date}")
     public Vakt[] getAllVaktDate(@PathVariable("date") String date) {
@@ -41,6 +41,12 @@ public class VaktController {
         return query.selectAllVakterDate(ldt);
     }
 
+    /**
+     * Returns all Vakt objects that start/end at a given date/time
+     * @param fratid
+     * @param tiltid
+     * @return Vakt[]
+     */
     @RequestMapping("/vakt/all/{fratid}/{tiltid}")
     public Vakt[] getAllVaktDate(@PathVariable("fratid") String fratid, @PathVariable("tiltid") String tiltid) {
 
@@ -51,12 +57,17 @@ public class VaktController {
         return query.selectAllVakterDate(fra, til);
     }
 
+    /**
+     * Returns all Vakt objects at a given department
+     * @param avdeling
+     * @return Vakt[]
+     */
     @RequestMapping(value="/vakt/avdeling", method = RequestMethod.POST)
     public Vakt[]getVakterAvdeling(@RequestBody Avdeling avdeling) {
         return query.selectVakterAvdeling(avdeling.getAvdelingId());
     }
 
-    @RequestMapping(value="/vakt/bruker", method = RequestMethod.POST)    // TODO: 12/01/17 (Axel): fiks denne pathen
+    @RequestMapping(value="/vakt/bruker", method = RequestMethod.POST)
     public Vakt[] getVakter(@RequestBody Bruker bruker) {
         return query.selectVakter(bruker.getBrukerId());
     }

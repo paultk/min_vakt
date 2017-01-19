@@ -1,6 +1,6 @@
 package com.example.database_classes;
 
-import com.example.security.PasswordEncoderGenerator;
+import com.example.security.PasswordSystemManager;
 
 
 /**
@@ -69,7 +69,7 @@ public class Bruker {
     // Constructor for testing in SqlQueries.java
     public Bruker(int stillingsId, int avdelingId, int telefonNr, int stillingsProsent, double timelonn,
                   boolean admin, String fornavn, String etternavn, String epost, String plaintextPassord) {
-        if (!PasswordEncoderGenerator.checkPasswordValidity(plaintextPassord)) throw new IllegalArgumentException(INVALID_PASSWORD_FORMAT);
+        if (!PasswordSystemManager.checkPasswordValidity(plaintextPassord)) throw new IllegalArgumentException(INVALID_PASSWORD_FORMAT);
         this.stillingsId = stillingsId;
         this.telefonNr = telefonNr;
         this.stillingsProsent = stillingsProsent;
@@ -224,8 +224,8 @@ public class Bruker {
     }
 
     public void hashPassord() throws IllegalArgumentException {
-        if (!PasswordEncoderGenerator.checkPasswordValidity(plaintextPassord)) throw new IllegalArgumentException(INVALID_PASSWORD_FORMAT);
-        PasswordEncoderGenerator passwordEncoder = new PasswordEncoderGenerator();
+        if (!PasswordSystemManager.checkPasswordValidity(plaintextPassord)) throw new IllegalArgumentException(INVALID_PASSWORD_FORMAT);
+        PasswordSystemManager passwordEncoder = new PasswordSystemManager();
         byte[] saltBytes = passwordEncoder.generateSalt();
         byte[] hashBytes = passwordEncoder.generateHash(plaintextPassord, saltBytes);
 
