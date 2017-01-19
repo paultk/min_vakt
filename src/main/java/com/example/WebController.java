@@ -3,8 +3,6 @@ package com.example;
 import com.example.database_classes.Authentication;
 import com.example.security.CustomAuthenticationProvider;
 import com.example.security.TokenManager;
-//import org.springframework.security.core.Authentication;
-//import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -50,6 +48,7 @@ public class WebController {
 		System.out.println("POST til login!");
 		CustomAuthenticationProvider cust = new CustomAuthenticationProvider();
 		if (cust.auth(auth)) {
+			System.out.println("Autentisert");
 			return TokenManager.lagToken();
 		}
 		throw new IllegalArgumentException("Wrong user name or password");

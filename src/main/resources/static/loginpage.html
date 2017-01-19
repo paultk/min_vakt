@@ -21,12 +21,13 @@
             data: data,
             contentType: "application/json; charset=utf-8",
             dataType: "text", //return data type
-            complete: function(rec){
-                console.log(rec);
+            success: function(rec){
+                alert(rec);
                 document.cookie = "token=" + rec;
+                window.location.href = "/";
             },
             failure: function(errMsg) {
-                console.log(errMsg);
+                alert("POST call failed: " + errMsg);
             }
         });
     }

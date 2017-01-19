@@ -33,31 +33,5 @@ public class MinVaktApplication {
 		SpringApplication.run(MinVaktApplication.class, args);
 	}
 
-	/*@Configuration
-	@EnableWebSecurity
-	public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-		@Override
-		protected void configure(HttpSecurity http) throws Exception {
-			http
-					.authorizeRequests()
-						.antMatchers("/").permitAll() //Paths som ikke krever auth
-						.anyRequest().authenticated()
-						.and()
-					.formLogin()
-						.loginPage("/login")	//Adresse til loginpage
-						.permitAll()
-						.and()
-					.logout()
-						.permitAll()
-						.and()
-					.csrf()
-						.disable();
-			//TODO enable csrf protection!
-		}
-
-		*//*@Autowired
-		public void registerGlobalAuthentication(AuthenticationManagerBuilder auth) throws Exception {
-			auth.authenticationProvider(new CustomAuthenticationProvider());
-		}*//*
-	}*/
 }
+
