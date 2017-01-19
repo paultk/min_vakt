@@ -1,6 +1,7 @@
 package com.example;
 
 import com.example.database_classes.Authentication;
+import com.example.database_classes.Token;
 import com.example.security.CustomAuthenticationProvider;
 import com.example.security.TokenManager;
 import org.springframework.stereotype.Controller;
@@ -44,12 +45,12 @@ public class WebController {
 	}
 
 	@RequestMapping(value="/login", method = RequestMethod.POST)
-	public String login(@RequestBody Authentication auth) throws UnsupportedEncodingException {
+	public Token login(@RequestBody Authentication auth) throws UnsupportedEncodingException {
 		System.out.println("POST til login!");
 		CustomAuthenticationProvider cust = new CustomAuthenticationProvider();
 		if (cust.auth(auth)) {
 			System.out.println("Autentisert");
-			return TokenManager.lagToken();
+			return new Token();
 		}
 		throw new IllegalArgumentException("Wrong user name or password");
 	}
