@@ -16,7 +16,7 @@ public class CustomAuthenticationProvider {
 		System.out.println(username + " " + pass);
 		Bruker bruker = query.selectBruker(username);
 		Passord passord = query.selectPassord(bruker);
-		if (PasswordEncoderGenerator.checkPasswordMatch(pass, passord)) {
+		if (PasswordSystemManager.checkPasswordMatch(pass, passord)) {
 			return true;
 		}
 		System.out.println("Not authenticated");
