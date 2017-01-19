@@ -449,9 +449,9 @@ public class SqlQueries extends DBConnection {
     }
 
     public Vakt[] selectAllVakterDate(LocalDateTime ldt) {
-		LocalDateTime startOfDay = ldt.withHour(0).withMinute(0).withSecond(0);
-		LocalDateTime endOfDay = ldt.withHour(23).withMinute(59).withSecond(59);
-		return selectAllVakterDate(startOfDay, endOfDay);
+		LocalDateTime startTime = ldt.withHour(0).withMinute(0).withSecond(0);
+		LocalDateTime endTime = ldt.plusDays(2);
+		return selectAllVakterDate(startTime, endTime);
 	}
 
     public Vakt[] selectAllVakterDate(LocalDateTime fratid, LocalDateTime tiltid) {

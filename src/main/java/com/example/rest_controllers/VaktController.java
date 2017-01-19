@@ -17,11 +17,22 @@ import java.time.format.DateTimeFormatter;
 @RestController
 public class VaktController {
     SqlQueries query = new SqlQueries();
+
+    /**
+     * Returns Vakt object by ID
+     * @param id
+     * @return Vakt with specified ID
+     */
     @RequestMapping("/vakt/{id}")
     public Vakt getVakt(@PathVariable("id") Integer id) {
         return query.selectVakt(id);
     }
 
+    /**
+     * Returns all Vakt objects that start
+     * @param date
+     * @return
+     */
     @RequestMapping("/vakt/all/{date}")
     public Vakt[] getAllVaktDate(@PathVariable("date") String date) {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
