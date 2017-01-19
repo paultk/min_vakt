@@ -24,7 +24,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 		System.out.println(username + " " + pass);
 		Bruker bruker = query.selectBruker(username);
 		Passord passord = query.selectPassord(bruker);
-		if (PasswordEncoderGenerator.checkPasswordMatch(pass, passord)) {
+		if (PasswordSystemManager.checkPasswordMatch(pass, passord)) {
 			if (bruker.isAdmin()) {
 				SimpleGrantedAuthority auth = new SimpleGrantedAuthority("ADMIN");
 				ArrayList<SimpleGrantedAuthority> authority = new ArrayList<>();

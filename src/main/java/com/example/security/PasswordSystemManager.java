@@ -14,7 +14,7 @@ import java.util.regex.*;
 /**
  * Created by axelkvistad on 12/01/17.
  */
-public class PasswordEncoderGenerator {
+public class PasswordSystemManager {
 
     private static final int ITERATIONS = 10000;
     private static final int KEY_LENGTH = 256;
