@@ -21,6 +21,11 @@ public class PasswordSystemManager {
     private static final String REGEX_PATTERN = "^(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%!^&+=].*[@#$%!^&+=])(?=\\S+$).{8,}$"; // at least one lowercase character, at least one uppercase character, no whitespace, at least 2 special characters, at least 8 total characters
     private static final char[] HEX_ARRAY = "0123456789ABCDEF".toCharArray();
 
+    /**
+     * generateSalt()
+     * Generates a pseudorandom 16-byte salt
+     * @return byte[] salt
+     */
     public static byte[] generateSalt() {
         SecureRandom random = new SecureRandom();
         byte[] salt = new byte[16];
@@ -28,10 +33,23 @@ public class PasswordSystemManager {
         return salt;
     }
 
+    /**
+     * checkPasswordValidity(String)
+     * Checks if a password satisfies format specifications by matching it with a regex-pattern
+     * @param password
+     * @return boolean (if valid format: true, else: false)
+     */
     public static boolean checkPasswordValidity(String password) {
         return Pattern.matches(REGEX_PATTERN, password);
     }
 
+    /**
+     * generateHash(String, byte[])
+     * Generates a 256-bit hash based on the plaintext password and a pseudorandom salt
+     * @param plaintextPassword
+     * @param salt
+     * @return byte[] (hash)
+     */
     public static byte[] generateHash(String plaintextPassword, byte[] salt) {
         char[] password = plaintextPassword.toCharArray();
         PBEKeySpec spec = new PBEKeySpec(password, salt, ITERATIONS, KEY_LENGTH);
@@ -46,10 +64,26 @@ public class PasswordSystemManager {
         }
     }
 
+    /**
+     * checkPasswordMatch(String, Passord)
+     * Checks that a plaintext password matches a Passord object
+     * @param ptPassord
+     * @param passord
+     * @return boolean (if match: true, else: false)
+     */
     public static boolean checkPasswordMatch(String ptPassord, Passord passord) {
         return checkPasswordMatch(ptPassord, hexStringToByteArray(passord.getSalt()), hexStringToByteArray(passord.getHash()));
     }
 
+    /**
+     * checkPasswordMatch(String, byte[], byte[])
+     * Checks that a plaintext password and salt produces an identical hash to the one expected.
+     * Used for login-validation.
+     * @param plaintextPassword
+     * @param salt
+     * @param expectedHash
+     * @return boolean (if identical hash produced: true, else: false)
+     */
     public static boolean checkPasswordMatch(String plaintextPassword, byte[] salt, byte[] expectedHash) {
         char[] password = plaintextPassword.toCharArray();
         byte[] pwdHash = generateHash(plaintextPassword, salt);
@@ -61,6 +95,12 @@ public class PasswordSystemManager {
         return true;
     }
 
+    /**
+     * bytesToHex(byte[])
+     * Converts a byte array to a hexadecimal String
+     * @param bytes
+     * @return hexadecimal String
+     */
     public static String bytesToHex(byte[] bytes) {
         char[] hexChars = new char[bytes.length * 2];
 
@@ -72,14 +112,20 @@ public class PasswordSystemManager {
         return new String(hexChars);
     }
 
+    /**
+     * hexStringToByteArray(byte[])
+     * Converts a hexadecimal String to a byte array
+     * @param s
+     * @return byte array
+     */
     public static byte[] hexStringToByteArray(String s) {
         int len = s.length();
-        byte[] data = new byte[len / 2];
+        byte[] bytes = new byte[len / 2];
         for (int i = 0; i < len; i += 2) {
-            data[i / 2] = (byte) ((Character.digit(s.charAt(i), 16) << 4)
+            bytes[i / 2] = (byte) ((Character.digit(s.charAt(i), 16) << 4)
                     + Character.digit(s.charAt(i+1), 16));
         }
-        return data;
+        return bytes;
     }
 
     public static void main(String[] args) {
