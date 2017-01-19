@@ -1,12 +1,18 @@
 package com.example;
 
+import com.example.database_classes.Authentication;
 import com.example.security.CustomAuthenticationProvider;
-import org.springframework.security.core.Authentication;
+import com.example.security.TokenManager;
+//import org.springframework.security.core.Authentication;
+//import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 
+import java.io.UnsupportedEncodingException;
 import java.security.Principal;
 
 /**
@@ -14,9 +20,24 @@ import java.security.Principal;
  */
 @Controller
 public class WebController {
+	@RequestMapping(value = "/home", method = RequestMethod.GET)
+	public ModelAndView home(@RequestHeader(value = "token", defaultValue = "null", required = false) String token) {
+		System.out.println(token);
+		if (token.equals("null")) {
+			System.out.println("ingen token");
+			return new ModelAndView("/loginpage.html");
+		}
+		else if (TokenManager.verifiser(token)) {
+			System.out.println("Token verifisert");
+			return new ModelAndView("/indexpage.html");
+		}
+		else {
+			return new ModelAndView("/loginpage.html");
+		}
+	}
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
-	public String login() {
-		return "/loginpage.html";
+	public ModelAndView login() {
+		return new ModelAndView("/loginpage.html");
 	}
 
 	@RequestMapping("/user")
@@ -25,9 +46,12 @@ public class WebController {
 	}
 
 	@RequestMapping(value="/login", method = RequestMethod.POST)
-	public void login(@RequestBody Authentication auth) {
+	public String login(@RequestBody Authentication auth) throws UnsupportedEncodingException {
 		System.out.println("POST til login!");
 		CustomAuthenticationProvider cust = new CustomAuthenticationProvider();
-		cust.authenticate(auth);
+		if (cust.auth(auth)) {
+			return TokenManager.lagToken();
+		}
+		throw new IllegalArgumentException("Wrong user name or password");
 	}
 }
