@@ -2,12 +2,34 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <title>Spring Security Example </title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="jquery.serialize-object.min.js"></script>
 </head>
 <body>
-<form action="/login" method="POST">
+<form enctype="multipart/form-data" onsubmit="funk(this)">
     <div><label> User Name : <input type="text" name="username"/> </label></div>
     <div><label> Password: <input type="password" name="password"/> </label></div>
     <div><input type="submit" value="Sign In"/></div>
 </form>
+<script language="JavaScript">
+    function funk(form) {
+        var data = JSON.stringify($(form).serializeObject());
+        console.log(data);
+        $.ajax({
+            type: "POST",
+            url: "/login",
+            data: data,
+            contentType: "application/json; charset=utf-8",
+            dataType: "text", //return data type
+            complete: function(rec){
+                console.log(rec);
+                document.cookie = "token=" + rec;
+            },
+            failure: function(errMsg) {
+                console.log(errMsg);
+            }
+        });
+    }
+</script>
 </body>
 </html>
