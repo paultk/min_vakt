@@ -45,9 +45,11 @@ public class PasswordEncoderGenerator {
             spec.clearPassword();
         }
     }
+
     public static boolean checkPasswordMatch(String ptPassord, Passord passord) {
         return checkPasswordMatch(ptPassord, hexStringToByteArray(passord.getSalt()), hexStringToByteArray(passord.getHash()));
     }
+
     public static boolean checkPasswordMatch(String plaintextPassword, byte[] salt, byte[] expectedHash) {
         char[] password = plaintextPassword.toCharArray();
         byte[] pwdHash = generateHash(plaintextPassword, salt);
@@ -57,10 +59,6 @@ public class PasswordEncoderGenerator {
             if (pwdHash[i] != expectedHash[i]) return false;
         }
         return true;
-    }
-
-    public static String generatePassword() {
-        return null; // TODO: 13/01/17 (Axel): is this necessary? Consider.
     }
 
     public static String bytesToHex(byte[] bytes) {

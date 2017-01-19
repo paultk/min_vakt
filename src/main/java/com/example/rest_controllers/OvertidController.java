@@ -1,6 +1,5 @@
 package com.example.rest_controllers;
 
-import com.example.database_classes.Bruker;
 import com.example.database_classes.Overtid;
 import com.example.sql_folder.SqlQueries;
 import org.springframework.web.bind.annotation.*;

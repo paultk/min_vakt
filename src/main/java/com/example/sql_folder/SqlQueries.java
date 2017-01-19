@@ -25,7 +25,6 @@ public class SqlQueries extends DBConnection {
     public SqlQueries() {
 		DBConnection.connect();
 		connection = DBConnection.conn;
-        // tom inntil videre pga inheritance av DBConnection
     }
 
     /*
@@ -448,6 +447,12 @@ public class SqlQueries extends DBConnection {
         }
         return vakter.toArray(new Vakt[vakter.size()]);
     }
+
+    public Vakt[] selectAllVakterDate(LocalDateTime ldt) {
+		LocalDateTime startOfDay = ldt.withHour(0).withMinute(0).withSecond(0);
+		LocalDateTime endOfDay = ldt.withHour(23).withMinute(59).withSecond(59);
+		return selectAllVakterDate(startOfDay, endOfDay);
+	}
 
     public Vakt[] selectAllVakterDate(LocalDateTime fratid, LocalDateTime tiltid) {
         ResultSet res = null;
@@ -1188,6 +1193,5 @@ public class SqlQueries extends DBConnection {
 		SqlQueries query = new SqlQueries();
 //		System.out.println();
 //		System.out.println(Arrays.toString(query.selectVakterAvdeling(1)));
-
 	}
 }
