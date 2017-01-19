@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
 /**
  * Created by Håkon on 12.01.2017.
@@ -36,7 +37,9 @@ public class VaktController {
     @RequestMapping("/vakt/all/{date}")
     public Vakt[] getAllVaktDate(@PathVariable("date") String date) {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        LocalDateTime ldt = LocalDateTime.parse(date, dtf);
+        LocalDate test = LocalDate.parse(date, dtf);
+        //LocalDateTime ldt = LocalDateTime.parse(date, dtf);
+        LocalDateTime ldt = test.atStartOfDay();
 
         return query.selectAllVakterDate(ldt);
     }

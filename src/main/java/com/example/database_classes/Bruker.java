@@ -224,7 +224,10 @@ public class Bruker {
     }
 
     public void hashPassord() throws IllegalArgumentException {
-        if (!PasswordSystemManager.checkPasswordValidity(plaintextPassord)) throw new IllegalArgumentException(INVALID_PASSWORD_FORMAT);
+        if (!PasswordSystemManager.checkPasswordValidity(plaintextPassord)) {
+            System.out.println("Attempted password: " + plaintextPassord);
+            throw new IllegalArgumentException(INVALID_PASSWORD_FORMAT);
+        }
         PasswordSystemManager passwordEncoder = new PasswordSystemManager();
         byte[] saltBytes = passwordEncoder.generateSalt();
         byte[] hashBytes = passwordEncoder.generateHash(plaintextPassord, saltBytes);
