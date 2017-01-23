@@ -5,10 +5,7 @@ import com.example.database_classes.Token;
 import com.example.security.CustomAuthenticationProvider;
 import com.example.security.TokenManager;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.io.UnsupportedEncodingException;
@@ -19,7 +16,7 @@ import java.security.Principal;
  */
 @Controller
 public class WebController {
-	@RequestMapping(value = "/home", method = RequestMethod.GET)
+	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public ModelAndView home(@RequestHeader(value = "token", defaultValue = "null", required = false) String token) {
 		System.out.println(token);
 		if (token.equals("null")) {
@@ -45,6 +42,7 @@ public class WebController {
 	}
 
 	@RequestMapping(value="/login", method = RequestMethod.POST)
+	@ResponseBody
 	public Token login(@RequestBody Authentication auth) throws UnsupportedEncodingException {
 		System.out.println("POST til login!");
 		CustomAuthenticationProvider cust = new CustomAuthenticationProvider();

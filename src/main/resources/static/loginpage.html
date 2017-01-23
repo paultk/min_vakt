@@ -20,7 +20,7 @@
             url: "/login",
             data: data,
             contentType: "application/json; charset=utf-8",
-            dataType: "text", //return data type
+            dataType: "json", //return data type
             success: function(rec){
                 alert(rec);
                 document.cookie = "token=" + rec;
