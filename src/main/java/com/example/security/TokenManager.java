@@ -14,8 +14,8 @@ import java.util.Date;
  * Created by Jens on 19-Jan-17.
  */
 public class TokenManager {
-	public static String issuer = "minVakt";
-	public static String secret = "hemmelig"; // lol
+	private static String issuer = "minVakt";
+	private static String secret = "hemmelig"; // lol
 
 	public static String lagToken() throws UnsupportedEncodingException {
 		LocalDateTime time = LocalDateTime.now();

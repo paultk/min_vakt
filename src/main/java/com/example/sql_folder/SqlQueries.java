@@ -2,12 +2,13 @@ package com.example.sql_folder;
 import com.example.database_classes.*;
 
 import java.sql.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoField;
+import java.time.temporal.ChronoUnit;
+import java.time.temporal.ValueRange;
 import java.util.ArrayList;
-
-/**
- * Created by axelkvistad on 10/01/17.
- */
+import java.util.Calendar;
 
 /**
  * Created by axelkvistad on 10/01/17.
@@ -391,6 +392,67 @@ public class SqlQueries extends DBConnection {
         }
         return null;
     }
+
+    public double calculateMonthlyWage(int brukerId, LocalDate localDate) {
+		int fullEmploymentHours = 165;
+		ValueRange range = localDate.range(ChronoField.DAY_OF_MONTH);
+		Long max = range.getMaximum();
+		LocalDateTime startOfMonth = localDate.withDayOfMonth(1).atStartOfDay();
+		LocalDateTime endOfMonth = localDate.withDayOfMonth(max.intValue()).atTime(23, 59, 59);
+
+		ArrayList<Vakt> vaktList = new ArrayList<>();
+
+		try {
+			String selectSql =
+					"SELECT v.*, b.timelonn, b.stillingsprosent, Sum(o.ant_timer) AS o_tid " +
+							"FROM bruker b " +
+								"JOIN bruker_vakt bv ON b.bruker_id = bv.bruker_id " +
+								"JOIN vakt v ON v.vakt_id = bv.vakt_id " +
+								"JOIN overtid o ON bv.vakt_id = o.vakt_id AND bv.bruker_id = o.bruker_id " +
+							"WHERE b.bruker_id = ? AND v.fra_tid >= ? AND v.til_tid <= ?;";
+			selectQuery = connection.prepareStatement(selectSql);
+
+			selectQuery.setInt(1, brukerId);
+			selectQuery.setTimestamp(2, Timestamp.valueOf(startOfMonth));
+			selectQuery.setTimestamp(3, Timestamp.valueOf(endOfMonth));
+
+			ResultSet res = selectQuery.executeQuery();
+
+			int employmentPercentage = res.getInt("stillingsprosent");
+			double hourlyWage = res.getDouble("timelonn");
+			double overTime = res.getDouble("o_tid");
+			while (res.next()) {
+				vaktList.add(new Vakt(
+						res.getInt("vakt_id"),
+						res.getInt("vaktansvarlig_id"),
+						res.getInt("avdeling_id"),
+						res.getTimestamp("fra_tid").toLocalDateTime(),
+						res.getTimestamp("til_tid").toLocalDateTime(),
+						res.getInt("ant_pers")));
+			}
+
+			double employmentHours = (fullEmploymentHours * employmentPercentage) / 100;
+
+			double hoursWorkedThisMonth = 0;
+			for (Vakt vakt : vaktList) {
+				Long hours = vakt.getFraTid().until(vakt.getTilTid(), ChronoUnit.HOURS);
+				hoursWorkedThisMonth += hours.doubleValue();
+			}
+
+			if (hoursWorkedThisMonth > employmentHours) {
+				overTime += (hoursWorkedThisMonth - employmentHours);
+			}
+
+			double monthlyWage = (employmentHours * hourlyWage) + (overTime * hourlyWage * 1.5);
+
+			return monthlyWage;
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return -1;
+	}
 
     /*
     *

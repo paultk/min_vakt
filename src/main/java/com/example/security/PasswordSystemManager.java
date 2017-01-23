@@ -136,8 +136,6 @@ public class PasswordSystemManager {
         byte[] saltTest = hexStringToByteArray(saltHex);
 
         String testPassword2 = "!!Aa1234";
-        System.out.println(checkPasswordValidity(testPassword2));
-        System.out.println(checkPasswordMatch(testPassword, saltTest, hashTest));
 
     }
 }
