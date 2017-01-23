@@ -8,9 +8,11 @@ import com.example.security.TokenManager;
 public class Token {
 	private String token;
 
-	public Token() {
+	public Token(){}
+
+	public Token(String username) {
 		try {
-			token = TokenManager.lagToken();
+			token = TokenManager.lagToken(username);
 		}
 		catch (Exception e) {}
 	}

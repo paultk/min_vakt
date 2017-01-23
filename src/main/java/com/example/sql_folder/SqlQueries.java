@@ -974,6 +974,30 @@ public class SqlQueries extends DBConnection {
         return null;
     }
 
+	public Fravaer selectFravaerFromVaktBruker(int brukerId, int vaktID) {
+
+		try {
+			String selectSql = "SELECT * FROM fravaer WHERE bruker_id = ? AND vakt_id = ?";
+			selectQuery = connection.prepareStatement(selectSql);
+			selectQuery.setInt(1, brukerId);
+			selectQuery.setInt(2, vaktID);
+			ResultSet res = selectQuery.executeQuery();
+
+			if (!res.next()) return null;
+			int vaktId = res.getInt("vakt_id");
+			LocalDateTime fraTid = res.getTimestamp("fra_tid").toLocalDateTime();
+			LocalDateTime tilTid = res.getTimestamp("til_tid").toLocalDateTime();
+			String kommentar = res.getString("kommentar");
+
+			return new Fravaer(brukerId, vaktId, fraTid, tilTid, kommentar);
+
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
     public boolean insertFravaer(Fravaer newFravaer) {
         try {
             String insertSql = "INSERT INTO fravaer(bruker_id, vakt_id,fra_tid,til_tid, kommentar) VALUES(?,?,?,?,?)";
@@ -1123,10 +1147,11 @@ public class SqlQueries extends DBConnection {
     *
     */
 
-    public Overtid[] selectOvertiderBruker(int brukerId) {
+    public Overtid[] selectOvertiderBrukerVakt(int brukerId, int vaktId) {
 		try {
-			selectQuery = connection.prepareStatement("SELECT * FROM overtid WHERE bruker_id = ?");
+			selectQuery = connection.prepareStatement("SELECT * FROM overtid WHERE bruker_id = ? AND vakt_id = ?");
 			selectQuery.setInt(1, brukerId);
+			selectQuery.setInt(2, vaktId);
 			ResultSet res = selectQuery.executeQuery();
 			ArrayList<Overtid> overtider = new ArrayList<>();
 			while (res.next()) {

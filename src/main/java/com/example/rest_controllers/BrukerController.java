@@ -67,13 +67,15 @@ public class BrukerController {
     	Vakt[] vakter = query.selectMånedVakterBruker(bruker.getBrukerId(), year, month);
     	double antTimer = 0;
     	for (Vakt v : vakter) {
-    		antTimer += Math.ceil(ChronoUnit.HOURS.between(v.getFraTid(), v.getTilTid())) + 1;
+    		antTimer += Math.floor(ChronoUnit.HOURS.between(v.getFraTid(), v.getTilTid()) + 1);
+			Fravaer fravær = query.selectFravaerFromVaktBruker(bruker.getBrukerId(), v.getVaktId());
+			antTimer -= (Math.floor(ChronoUnit.HOURS.between(fravær.getFraTid(), fravær.getTilTid()) + 1));
+			Overtid[] overtider = query.selectOvertiderBrukerVakt(bruker.getBrukerId(), v.getVaktId());
+			for (Overtid o : overtider) {
+				antTimer += o.getAntTimer();
+			}
 		}
 		System.out.println("Timer fra vakter: " + antTimer);
-		Overtid[] overtider = query.selectOvertiderBruker(bruker.getBrukerId());
-    	for (Overtid o : overtider) {
-    		antTimer += o.getAntTimer();
-		}
 		return (int)antTimer;
 	}
 
