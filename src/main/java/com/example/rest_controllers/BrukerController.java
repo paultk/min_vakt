@@ -44,7 +44,8 @@ public class BrukerController {
 		try {
             return query.insertBruker(bruker);
         } catch (IllegalArgumentException e) {
-		    e.printStackTrace();
+			System.out.println("hei");
+			e.printStackTrace();
         }
         return false;
 	}

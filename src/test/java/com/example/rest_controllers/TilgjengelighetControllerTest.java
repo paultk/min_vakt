@@ -10,19 +10,21 @@ import org.junit.Test;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-import static org.junit.Assert.*;
-
 /**
  * Created by Håkon on 13.01.2017.
  */
 public class TilgjengelighetControllerTest {
 
     private TilgjengelighetController tilgjengelighetController = new TilgjengelighetController();
-    DateTimeFormatter aDateTimeFormatter = DateTimeFormatter.ofPattern("y M d H m s");
-    LocalDateTime m = LocalDateTime.parse("2010 12 18 14 30 40", aDateTimeFormatter);
+    DateTimeFormatter aDateTimeFormatter = DateTimeFormatter.ISO_DATE_TIME;
+    LocalDateTime m = LocalDateTime.parse("2008-12-18T14:30:40", aDateTimeFormatter);
+    LocalDateTime n = LocalDateTime.parse("2018-12-18T14:30:40", aDateTimeFormatter);
+    String t = "2008-12-18T14:30:40";
+    String s = "2018-12-18T14:30:40";
 
-    Tilgjengelighet tilgjengelighet = new Tilgjengelighet(2, m, m);
-    Tilgjengelighet updateTilgjengelighet = new Tilgjengelighet(1, m, m);
+    Tilgjengelighet tilgjengelighet = new Tilgjengelighet(2, m, n);
+    Tilgjengelighet updateTilgjengelighet = new Tilgjengelighet(1, m, n);
+
 
     @Test
     public void testGetTilgjengelighet() throws Exception {
@@ -43,6 +45,12 @@ public class TilgjengelighetControllerTest {
     public void testUpdateTilgjengelighet() throws Exception {
         Assert.assertTrue("Can't edite tilgjengelighet in DB", tilgjengelighetController.updateTilgjengelighet(updateTilgjengelighet));
     }
+
+    @Test
+    public void testGetAllTilgjengelighetDate() throws Exception { //gir en MySQLSyntaxErrorException: SAVEPOINT
+        Assert.assertNotNull("Can't get tilgjengeighetDate from DB", tilgjengelighetController.getAllTilgjengelighetDate(t,s));
+    }
+
 
     @Before
     public void first() {

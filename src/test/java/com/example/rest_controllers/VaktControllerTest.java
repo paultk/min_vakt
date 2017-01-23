@@ -16,10 +16,12 @@ import java.time.format.DateTimeFormatter;
 public class VaktControllerTest {
 
     VaktController controller = new VaktController();
-    DateTimeFormatter aDateTimeFormatter = DateTimeFormatter.ofPattern("y M d H m s");
-    LocalDateTime m = LocalDateTime.parse("2010 12 18 14 30 40", aDateTimeFormatter);
+    DateTimeFormatter aDateTimeFormatter = DateTimeFormatter.ISO_DATE_TIME;
+    LocalDateTime m = LocalDateTime.parse("2010-12-18T14:30:40", aDateTimeFormatter);
     Vakt vakt = new Vakt(1, 1, 1 ,m , m, 350);
     Vakt nyVakt = new Vakt(1, 2, 1 ,m , m, 365);
+    String t = "2008-12-18T14:30:40";
+    String s = "2018-12-18T14:30:41";
 
 
 
@@ -30,6 +32,8 @@ public class VaktControllerTest {
         Assert.assertNotNull("Can't get vakter from database", vakter);
         Assert.assertTrue("Can't update vakt from DB", controller.updateVakt(nyVakt));
         Assert.assertNotNull("Can't get single vakt from DB", controller.getVakt(vakter[1].getVaktId()));
+        Assert.assertNotNull("Can't get vakter on a date from DB", controller.getAllVaktDate(t,s));
+        //System.out.println(Arrays.toString(controller.getAllVaktDate(t,s)));
         Assert.assertTrue("Can't delete vakt from DB", controller.deleteVakt(vakter[vakter.length - 1]));
     }
 

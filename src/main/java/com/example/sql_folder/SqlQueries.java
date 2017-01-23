@@ -526,8 +526,6 @@ public class SqlQueries extends DBConnection {
         selectQuery = connection.prepareStatement(selectSql);
         selectQuery.setTimestamp(1, Timestamp.valueOf(fratid));
         selectQuery.setTimestamp(2, Timestamp.valueOf(tiltid));
-        System.out.println(Timestamp.valueOf(fratid));
-        System.out.println(Timestamp.valueOf(tiltid));
 
         res = selectQuery.executeQuery();
         while (res.next()) {
@@ -547,7 +545,37 @@ public class SqlQueries extends DBConnection {
         return vakter.toArray(new Vakt[vakter.size()]);
 }
 
-    public Vakt[] selectAllVakter() {
+	public VaktMedBruker[] selectAllVakterMonth(LocalDateTime fratid, int avdId) {
+		ResultSet res = null;
+		ArrayList<VaktMedBruker> vakter = new ArrayList<>();
+
+
+		try {
+			String selectSql = "SELECT vakt.vakt_id,bruker_vakt.vakt_id vaktansvarlig_id, avdeling_id, fra_tid, til_tid, ant_pers, bruker_vakt.bruker_id " +
+					"FROM vakt, bruker_vakt WHERE MONTH(fra_tid) = ? AND YEAR(fra_tid) = ? AND avdeling_id = ?";
+			selectQuery = connection.prepareStatement(selectSql);
+			selectQuery.setInt(1, fratid.getMonthValue());
+			selectQuery.setInt(2, fratid.getYear());
+			selectQuery.setInt(3, avdId);
+
+			res = selectQuery.executeQuery();
+			while (res.next()) {
+				Vakt vakt = new Vakt(res.getInt("vakt_id"), res.getInt("vaktansvarlig_id"),
+						res.getInt("avdeling_id"), res.getTimestamp("fra_tid").toLocalDateTime(),
+						res.getTimestamp("til_tid").toLocalDateTime(),res.getInt("ant_pers"));
+				vakter.add(new VaktMedBruker(vakt, res.getInt("bruker_id")));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			SqlCleanup.closeEverything(res, selectQuery, connection);
+		}
+		VaktMedBruker[] ret = vakter.toArray(new VaktMedBruker[vakter.size()]);
+		return ret;
+	}
+
+
+	public Vakt[] selectAllVakter() {
     	ResultSet res = null;
     	try {
     		ArrayList<Vakt> allVakter = new ArrayList<>();
