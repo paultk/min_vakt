@@ -1152,10 +1152,12 @@ public class SqlQueries extends DBConnection {
     *
     */
 
-    public Overtid[] selectOvertiderBrukerVakt(int brukerVaktId) {
+    public Overtid[] selectOvertiderBrukerVakt(int brukerId, int vaktId) {
 		try {
-			selectQuery = connection.prepareStatement("SELECT * FROM overtid WHERE bruker_vakt_id = ?");
-			selectQuery.setInt(1, brukerVaktId);
+			selectQuery = connection.prepareStatement("SELECT * FROM overtid WHERE bruker_vakt_id IN (" +
+					"SELECT bruker_vakt_id FROM bruker_vakt WHERE bruker_id = ? AND vakt_id = ?)");
+			selectQuery.setInt(1, brukerId);
+			selectQuery.setInt(2, vaktId);
 			ResultSet res = selectQuery.executeQuery();
 			ArrayList<Overtid> overtider = new ArrayList<>();
 			while (res.next()) {
@@ -1176,7 +1178,7 @@ public class SqlQueries extends DBConnection {
 
     public Overtid selectOvertid(int overtidId) {
         try {
-            String selectSql = "SELECT bruker_vakt_id, ant_timer, kommentar FROM overtid WHERE overtid_id = ?";
+            String selectSql = "SELECT * FROM overtid WHERE overtid_id = ?";
             selectQuery = connection.prepareStatement(selectSql);
 			selectQuery.setInt(1, overtidId);
             ResultSet res = selectQuery.executeQuery();
@@ -1185,7 +1187,6 @@ public class SqlQueries extends DBConnection {
 
             int brukerVaktId = res.getInt("bruker_vakt_id");
             double antTimer = res.getDouble("ant_timer");
-            int vaktId = res.getInt("vakt_id");
             String kommentar = res.getString("kommentar");
 
             return new Overtid(overtidId, brukerVaktId, antTimer, kommentar);

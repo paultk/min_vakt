@@ -18,8 +18,8 @@ public class FravaerControllerTest {
     FravaerController controller = new FravaerController();
     DateTimeFormatter aDateTimeFormatter = DateTimeFormatter.ISO_DATE_TIME;
     LocalDateTime m = LocalDateTime.parse("2008-12-18T14:30:40", aDateTimeFormatter);
-    Fravaer fravaer = new Fravaer(4, 3, m, m, "Bam");
-    Fravaer updateFravaer = new Fravaer(4, 3, m, m, "Kvart");
+    Fravaer fravaer = new Fravaer(1, m, m, "Bam");
+    Fravaer updateFravaer = new Fravaer(1, m, m, "Kvart");
 
 
     @Test
