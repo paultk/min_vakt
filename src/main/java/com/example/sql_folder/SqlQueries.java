@@ -512,14 +512,13 @@ public class SqlQueries extends DBConnection {
 
     public Vakt[] selectAllVakterDate(LocalDateTime ldt) {
 		LocalDateTime startTime = ldt.withHour(0).withMinute(0).withSecond(0);
-		LocalDateTime endTime = ldt.plusDays(2);
+		LocalDateTime endTime = ldt.plusYears(2);
 		return selectAllVakterDate(startTime, endTime);
 	}
 
     public Vakt[] selectAllVakterDate(LocalDateTime fratid, LocalDateTime tiltid) {
         ResultSet res = null;
         ArrayList<Vakt> vakter = new ArrayList<>();
-
 
     try {
         String selectSql = "SELECT * FROM vakt WHERE fra_tid > ? AND til_tid < ?";
