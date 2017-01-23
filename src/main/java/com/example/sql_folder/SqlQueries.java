@@ -421,6 +421,7 @@ public class SqlQueries extends DBConnection {
 		LocalDateTime endOfMonth = localDate.withDayOfMonth(max.intValue()).atTime(23, 59, 59);
 
 		ArrayList<Vakt> vaktList = new ArrayList<>();
+		ResultSet res = null;
 
 		try {
 			String selectSql =
@@ -428,7 +429,7 @@ public class SqlQueries extends DBConnection {
 							"FROM bruker b " +
 								"JOIN bruker_vakt bv ON b.bruker_id = bv.bruker_id " +
 								"JOIN vakt v ON v.vakt_id = bv.vakt_id " +
-								"JOIN overtid o ON bv.vakt_id = o.vakt_id AND bv.bruker_id = o.bruker_id " +
+								"LEFT JOIN overtid o ON bv.vakt_id = o.vakt_id AND bv.bruker_id = o.bruker_id " +
 							"WHERE b.bruker_id = ? AND v.fra_tid >= ? AND v.til_tid <= ?;";
 			selectQuery = connection.prepareStatement(selectSql);
 
@@ -436,11 +437,12 @@ public class SqlQueries extends DBConnection {
 			selectQuery.setTimestamp(2, Timestamp.valueOf(startOfMonth));
 			selectQuery.setTimestamp(3, Timestamp.valueOf(endOfMonth));
 
-			ResultSet res = selectQuery.executeQuery();
+			res = selectQuery.executeQuery();
 
-			int employmentPercentage = res.getInt("stillingsprosent");
-			double hourlyWage = res.getDouble("timelonn");
-			double overTime = res.getDouble("o_tid");
+			int employmentPercentage = -1;
+			double hourlyWage = -1;
+			double overTime = -1;
+
 			while (res.next()) {
 				vaktList.add(new Vakt(
 						res.getInt("vakt_id"),
@@ -449,12 +451,20 @@ public class SqlQueries extends DBConnection {
 						res.getTimestamp("fra_tid").toLocalDateTime(),
 						res.getTimestamp("til_tid").toLocalDateTime(),
 						res.getInt("ant_pers")));
+
+				employmentPercentage = res.getInt("stillingsprosent");
+				hourlyWage = res.getDouble("timelonn");
+				overTime = res.getDouble("o_tid");
 			}
+			System.out.println("overtime: " + overTime);
+
+			System.out.println(vaktList.size());
 
 			double employmentHours = (fullEmploymentHours * employmentPercentage) / 100;
 
 			double hoursWorkedThisMonth = 0;
 			for (Vakt vakt : vaktList) {
+				System.out.println(vakt);
 				Long hours = vakt.getFraTid().until(vakt.getTilTid(), ChronoUnit.HOURS);
 				hoursWorkedThisMonth += hours.doubleValue();
 			}
@@ -469,6 +479,8 @@ public class SqlQueries extends DBConnection {
 
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			SqlCleanup.closeEverything(res, selectQuery, connection);
 		}
 
 		return -1;
@@ -532,7 +544,7 @@ public class SqlQueries extends DBConnection {
 
     public Vakt[] selectAllVakterDate(LocalDateTime ldt) {
 		LocalDateTime startTime = ldt.withHour(0).withMinute(0).withSecond(0);
-		LocalDateTime endTime = ldt.plusYears(2);
+		LocalDateTime endTime = ldt.plusYears(2); // TODO: 23/01/17 (Axel): bedre løsning her
 		return selectAllVakterDate(startTime, endTime);
 	}
 
@@ -541,10 +553,12 @@ public class SqlQueries extends DBConnection {
         ArrayList<Vakt> vakter = new ArrayList<>();
 
     try {
-        String selectSql = "SELECT * FROM vakt WHERE fra_tid > ? AND til_tid < ?";
+        String selectSql = "SELECT * FROM vakt WHERE fra_tid BETWEEN ? AND ? AND til_tid <= ?";
+
         selectQuery = connection.prepareStatement(selectSql);
         selectQuery.setTimestamp(1, Timestamp.valueOf(fratid));
-        selectQuery.setTimestamp(2, Timestamp.valueOf(tiltid));
+        selectQuery.setTimestamp(2, Timestamp.valueOf(fratid.withHour(23).withMinute(59).withSecond(59)));
+        selectQuery.setTimestamp(3, Timestamp.valueOf(tiltid));
 
         res = selectQuery.executeQuery();
         while (res.next()) {
@@ -1302,5 +1316,32 @@ public class SqlQueries extends DBConnection {
 		SqlQueries query = new SqlQueries();
 //		System.out.println();
 //		System.out.println(Arrays.toString(query.selectVakterAvdeling(1)));
+		/*LocalDateTime fra1 = LocalDateTime.now();
+		LocalDateTime til1 = fra1.plusHours(8);
+		LocalDateTime fra2 = fra1.plusDays(1);
+		LocalDateTime til2 = fra2.plusHours(8);
+		LocalDateTime fra3 = fra2.plusDays(1);
+		LocalDateTime til3 = fra3.plusHours(8);
+		LocalDateTime fra4 = fra3.plusDays(1);
+		LocalDateTime til4 = fra4.plusHours(8);
+
+		Vakt vakt1 = new Vakt(16, 16, 2,  fra1, til1, 10);
+		Vakt vakt2 = new Vakt(16, 16, 2, fra2, til2, 20);
+		Vakt vakt3 = new Vakt(16, 16, 2, fra3, til3, 30);
+		Vakt vakt4 = new Vakt(16, 16, 2, fra4, til4, 40);
+		query.insertVakt(vakt1);
+		query.insertVakt(vakt2);
+		query.insertVakt(vakt3);
+		query.insertVakt(vakt4);*/
+		/*query.insertBrukerVakt(16, 102);
+		query.insertBrukerVakt(16, 103);
+		query.insertBrukerVakt(16, 104);
+		query.insertBrukerVakt(16, 105);*/
+		/*Overtid overtid1 = new Overtid(4, 16, 4, 102, "overtid test1");
+		Overtid overtid2 = new Overtid(5, 16, 10, 103, "overtid test2");
+		query.insertOvertid(overtid1);
+		query.insertOvertid(overtid2);*/
+
+		System.out.println(query.calculateMonthlyWage(16, LocalDate.now()));
 	}
 }
