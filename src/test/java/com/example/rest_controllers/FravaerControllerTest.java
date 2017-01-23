@@ -16,8 +16,8 @@ import java.time.format.DateTimeFormatter;
 public class FravaerControllerTest {
 
     FravaerController controller = new FravaerController();
-    DateTimeFormatter aDateTimeFormatter = DateTimeFormatter.ofPattern("y M d H m s");
-    LocalDateTime m = LocalDateTime.parse("2010 12 18 14 30 40", aDateTimeFormatter);
+    DateTimeFormatter aDateTimeFormatter = DateTimeFormatter.ISO_DATE_TIME;
+    LocalDateTime m = LocalDateTime.parse("2008-12-18T14:30:40", aDateTimeFormatter);
     Fravaer fravaer = new Fravaer(4, 3, m, m, "Bam");
     Fravaer updateFravaer = new Fravaer(4, 3, m, m, "Kvart");
 
@@ -41,28 +41,6 @@ public class FravaerControllerTest {
     public void after() {
         DBConnection.afterTest();
     }
-    /*
-    @Test
-    public void insertFravaer() throws Exception {
-        Assert.assertTrue(controller.insertFravaer(fravaer));
-    }
-
-    @Test
-    public void updateFravaer() throws Exception {
-        Assert.assertTrue(controller.updateFravaer(updateFravaer));
-    }
-
-    @Test
-    public void getFravaer() throws Exception {
-        Assert.assertNotNull(controller.getFravaer(3)); // We must chose a object already registered in the database
-
-    }
-
-    @Test
-    public void deleteFravaer() throws Exception {
-        Assert.assertTrue(controller.deleteFravaer(controller.getFravaer(3)));
-    }*/
-
 
 
 

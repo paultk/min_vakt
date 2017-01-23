@@ -28,10 +28,12 @@ public class TilgjengelighetController {
         LocalDateTime fra = LocalDateTime.parse(fratid, aDateTimeFormatter);
         LocalDateTime til = LocalDateTime.parse(tiltid, aDateTimeFormatter);
 
-        System.out.println("asdf" + fra.toString());
 
         return query.selectAllTilgjengelighetDate(fra,til);
     }
+
+
+
 
     @RequestMapping(value="/tilgjengelighet/delete", method= RequestMethod.DELETE)
     public boolean deleteTilgjengelighet(@RequestBody Tilgjengelighet tilgjengelighet) {

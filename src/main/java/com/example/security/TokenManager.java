@@ -3,7 +3,6 @@ package com.example.security;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
-import com.auth0.jwt.exceptions.JWTCreationException;
 
 import java.io.UnsupportedEncodingException;
 import java.time.LocalDateTime;
@@ -15,7 +14,7 @@ import java.util.Date;
  */
 public class TokenManager {
 	private static String issuer = "minVakt";
-	private static String secret = "hemmelig"; // lol
+	private static String secret = "hemmelig"; // lol // superlol
 
 	public static String lagToken() throws UnsupportedEncodingException {
 		LocalDateTime time = LocalDateTime.now();

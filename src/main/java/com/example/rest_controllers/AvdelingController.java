@@ -1,9 +1,9 @@
 package com.example.rest_controllers;
 
 
+import com.example.database_classes.Avdeling;
 import com.example.sql_folder.SqlQueries;
 import org.springframework.web.bind.annotation.*;
-import com.example.database_classes.Avdeling;
 
 /**
  * Created by Håkon on 12.01.2017.
@@ -16,6 +16,11 @@ public class AvdelingController {
     public Avdeling getAvdeling(@PathVariable("id") Integer id) {
         Avdeling ret = query.selectAvdeling(id);
         return query.selectAvdeling(id);
+    }
+
+    @RequestMapping("/avdeling/all")
+    public Avdeling[] getAvdelinger() {
+        return query.selectAllAvdelinger();
     }
 
     @RequestMapping(value="/avdeling/delete", method= RequestMethod.POST)

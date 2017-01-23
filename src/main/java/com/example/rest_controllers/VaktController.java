@@ -3,13 +3,13 @@ package com.example.rest_controllers;
 import com.example.database_classes.Avdeling;
 import com.example.database_classes.Bruker;
 import com.example.database_classes.Vakt;
+import com.example.database_classes.VaktMedBruker;
 import com.example.sql_folder.SqlQueries;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
 
 /**
  * Created by Håkon on 12.01.2017.
@@ -44,6 +44,8 @@ public class VaktController {
         return query.selectAllVakterDate(ldt);
     }
 
+
+
     /**
      * Returns all Vakt objects that start/end at a given date/time
      * @param fratid
@@ -58,6 +60,16 @@ public class VaktController {
         LocalDateTime til = LocalDateTime.parse(tiltid, aDateTimeFormatter);
 
         return query.selectAllVakterDate(fra, til);
+    }
+
+    @RequestMapping("/vakt/all/month/{fratid}/{avdId}")
+    public VaktMedBruker[] getAllVaktMonth(@PathVariable("fratid") String fratid, @PathVariable("avdId") int avdId) {
+
+        DateTimeFormatter aDateTimeFormatter = DateTimeFormatter.ISO_DATE_TIME;
+        LocalDateTime fra = LocalDateTime.parse(fratid, aDateTimeFormatter);
+
+
+        return query.selectAllVakterMonth(fra,avdId);
     }
 
     /**
