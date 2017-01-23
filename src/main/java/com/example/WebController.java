@@ -54,7 +54,7 @@ public class WebController {
 		CustomAuthenticationProvider cust = new CustomAuthenticationProvider();
 		if (cust.auth(auth)) {
 			System.out.println("Autentisert");
-			return new Token();
+			return new Token(auth.getUsername());
 		}
 		throw new IllegalArgumentException("Wrong user name or password");
 	}
