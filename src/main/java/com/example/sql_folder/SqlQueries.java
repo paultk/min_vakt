@@ -414,8 +414,9 @@ public class SqlQueries extends DBConnection {
     }
 
     public double calculateMonthlyWage(int brukerId, LocalDate localDate) {
-		int fullEmploymentHours = 165;
-		ValueRange range = localDate.range(ChronoField.DAY_OF_MONTH);
+		int fullEmploymentHours = (int)Math.round(37.5 * localDate.lengthOfMonth() / 7);
+        System.out.println("fullEmploymentHours: " + fullEmploymentHours);
+        ValueRange range = localDate.range(ChronoField.DAY_OF_MONTH);
 		Long max = range.getMaximum();
 		LocalDateTime startOfMonth = localDate.withDayOfMonth(1).atStartOfDay();
 		LocalDateTime endOfMonth = localDate.withDayOfMonth(max.intValue()).atTime(23, 59, 59);
@@ -425,7 +426,7 @@ public class SqlQueries extends DBConnection {
 
 		try {
 			String selectSql =
-					"SELECT v.*, b.timelonn, b.stillingsprosent, Sum(o.ant_timer) AS o_tid " +
+					"SELECT v.*, b.timelonn, b.stillingsprosent, o.ant_timer " +
 							"FROM bruker b " +
 								"JOIN bruker_vakt bv ON b.bruker_id = bv.bruker_id " +
 								"JOIN vakt v ON v.vakt_id = bv.vakt_id " +
@@ -439,9 +440,9 @@ public class SqlQueries extends DBConnection {
 
 			res = selectQuery.executeQuery();
 
-			int employmentPercentage = -1;
-			double hourlyWage = -1;
-			double overTime = -1;
+			int employmentPercentage = 0;
+			double hourlyWage = 0;
+			double overTime = 0;
 
 			while (res.next()) {
 				vaktList.add(new Vakt(
@@ -454,28 +455,34 @@ public class SqlQueries extends DBConnection {
 
 				employmentPercentage = res.getInt("stillingsprosent");
 				hourlyWage = res.getDouble("timelonn");
-				overTime = res.getDouble("o_tid");
+				overTime += res.getDouble("ant_timer");
 			}
 			System.out.println("overtime: " + overTime);
 
-			System.out.println(vaktList.size());
-
 			double employmentHours = (fullEmploymentHours * employmentPercentage) / 100;
+
+            System.out.println("employmentHours: " + employmentHours);
 
 			double hoursWorkedThisMonth = 0;
 			for (Vakt vakt : vaktList) {
 				System.out.println(vakt);
 				Long hours = vakt.getFraTid().until(vakt.getTilTid(), ChronoUnit.HOURS);
-				hoursWorkedThisMonth += hours.doubleValue();
+                System.out.println("hours: " + hours);
+                hoursWorkedThisMonth += hours.doubleValue();
 			}
+            System.out.println("hoursWorkedThisMonth: " + hoursWorkedThisMonth);
 
 			if (hoursWorkedThisMonth > employmentHours) {
-				overTime += (hoursWorkedThisMonth - employmentHours);
+                System.out.println("hoursWorkedThisMonth > employmentHours");
+                overTime += (hoursWorkedThisMonth - employmentHours);
+                return (employmentHours * hourlyWage) + (overTime * hourlyWage * 1.5);
 			}
 
-			double monthlyWage = (employmentHours * hourlyWage) + (overTime * hourlyWage * 1.5);
+            System.out.println("Regular pay: " + (hoursWorkedThisMonth * hourlyWage));
+            System.out.println("Overtime pay: " + (overTime * hourlyWage * 1.5));
 
-			return monthlyWage;
+			return (hoursWorkedThisMonth * hourlyWage) + (overTime * hourlyWage * 1.5);
+
 
 		} catch (SQLException e) {
 			e.printStackTrace();

@@ -3,9 +3,12 @@ package com.example.rest_controllers;
 import com.example.database_classes.*;
 import com.example.security.TokenManager;
 import com.example.sql_folder.SqlQueries;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 
 /**
@@ -72,6 +75,13 @@ public class BrukerController {
     		antTimer += o.getAntTimer();
 		}
 		return (int)antTimer;
+	}
+
+	@RequestMapping("/bruker/stillingstimer/{year}/{month}")
+	public int getStillingstimerBruker(@RequestBody Bruker bruker, @PathVariable("year") int year, @PathVariable("month") int month) {
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		LocalDate date = LocalDate.parse(year + "-" + month + "-01", dtf);
+		return bruker.getTotalMonthHours(date);
 	}
 
 	public static void main(String[] args) {

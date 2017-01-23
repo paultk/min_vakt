@@ -2,6 +2,8 @@ package com.example.database_classes;
 
 import com.example.security.PasswordSystemManager;
 
+import java.time.LocalDate;
+
 
 /**
  * Created by paul on 10.01.17.
@@ -234,6 +236,10 @@ public class Bruker {
 
         salt = passwordEncoder.bytesToHex(saltBytes);
         hash = passwordEncoder.bytesToHex(hashBytes);
+    }
+
+    public int getTotalMonthHours(LocalDate localDate) {
+        return(int)Math.round(37.5 * localDate.lengthOfMonth() / 7) * stillingsProsent / 100;
     }
 
     @Override
