@@ -15,7 +15,8 @@ import java.util.Date;
  */
 public class TokenManager {
 	public static String issuer = "minVakt";
-	public static String secret = "hemmelig";
+	public static String secret = "hemmelig"; // lol
+
 	public static String lagToken() throws UnsupportedEncodingException {
 		LocalDateTime time = LocalDateTime.now();
 		//Set timeouts here

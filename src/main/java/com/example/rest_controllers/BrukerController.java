@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 /**
  * Created by Jens on 11-Jan-17.
  */
+@CrossOrigin
 @RestController
 public class BrukerController {
     SqlQueries query = new SqlQueries();

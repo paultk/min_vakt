@@ -31,6 +31,7 @@ public class WebController {
 			return new ModelAndView("/loginpage.html");
 		}
 	}
+
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public ModelAndView login() {
 		return new ModelAndView("/loginpage.html");
