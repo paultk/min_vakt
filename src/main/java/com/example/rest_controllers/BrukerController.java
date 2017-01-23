@@ -5,6 +5,9 @@ import com.example.security.TokenManager;
 import com.example.sql_folder.SqlQueries;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
+
 /**
  * Created by Jens on 11-Jan-17.
  */
@@ -53,6 +56,22 @@ public class BrukerController {
 	@RequestMapping(value="/bruker/update", method=RequestMethod.POST)
 	public boolean updateBruker(@RequestBody Bruker bruker) {
 		return query.updateBruker(bruker);
+	}
+
+	//Gets hours worked in month, rounded up
+	@RequestMapping("/bruker/timer/{year}/{month}")
+	public int getTimerBruker(@RequestBody Bruker bruker, @PathVariable("year") int year, @PathVariable("month") int month) {
+    	Vakt[] vakter = query.selectMånedVakterBruker(bruker.getBrukerId(), year, month);
+    	double antTimer = 0;
+    	for (Vakt v : vakter) {
+    		antTimer += Math.ceil(ChronoUnit.HOURS.between(v.getFraTid(), v.getTilTid())) + 1;
+		}
+		System.out.println("Timer fra vakter: " + antTimer);
+		Overtid[] overtider = query.selectOvertiderBruker(bruker.getBrukerId());
+    	for (Overtid o : overtider) {
+    		antTimer += o.getAntTimer();
+		}
+		return (int)antTimer;
 	}
 
 	public static void main(String[] args) {
