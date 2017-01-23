@@ -33,7 +33,7 @@ public class WebController {
 	}*/
 
 	@RequestMapping(value="/", method = RequestMethod.GET)
-	public ModelAndView index() {
+	public ModelAndView home() {
 		return new ModelAndView("/index.html");
 	}
 
