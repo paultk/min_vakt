@@ -49,7 +49,7 @@ public class WebController {
 
 	@RequestMapping(value="/login", method = RequestMethod.POST)
 	@ResponseBody
-	public Token login(@RequestBody Authentication auth) throws UnsupportedEncodingException {
+	public Token login(@RequestBody Authentication auth) throws Exception {
 		System.out.println("POST til login!");
 		CustomAuthenticationProvider cust = new CustomAuthenticationProvider();
 		if (cust.auth(auth)) {

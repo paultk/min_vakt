@@ -10,11 +10,8 @@ public class Token {
 
 	public Token(){}
 
-	public Token(String username) {
-		try {
-			token = TokenManager.lagToken(username);
-		}
-		catch (Exception e) {}
+	public Token(String username) throws Exception {
+		token = TokenManager.lagToken(username);
 	}
 
 	public String getToken() {

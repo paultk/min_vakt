@@ -338,7 +338,7 @@ public class SqlQueries extends DBConnection {
 			ResultSet res = selectQuery.executeQuery();
 			ArrayList<BrukerVakt> brukerVakter = new ArrayList<>();
 			while (res.next()) {
-				BrukerVakt brk = new BrukerVakt(res.getInt("bruker_id"), res.getInt("vakt_id"));
+				BrukerVakt brk = new BrukerVakt(res.getInt("bruker_vakt_id"), res.getInt("bruker_id"), res.getInt("vakt_id"));
 				brukerVakter.add(brk);
 			}
 			SqlCleanup.closeResSet(res);
@@ -960,12 +960,12 @@ public class SqlQueries extends DBConnection {
             ResultSet res = selectQuery.executeQuery();
 
             if (!res.next()) return null;
-            int vaktId = res.getInt("vakt_id");
+            int brukerVaktId = res.getInt("bruker_vakt_id");
             LocalDateTime fraTid = res.getTimestamp("fra_tid").toLocalDateTime();
             LocalDateTime tilTid = res.getTimestamp("til_tid").toLocalDateTime();
             String kommentar = res.getString("kommentar");
 
-            return new Fravaer(brukerId, vaktId, fraTid, tilTid, kommentar);
+            return new Fravaer(brukerVaktId, fraTid, tilTid, kommentar);
 
 
         } catch (SQLException e) {
@@ -984,12 +984,12 @@ public class SqlQueries extends DBConnection {
 			ResultSet res = selectQuery.executeQuery();
 
 			if (!res.next()) return null;
-			int vaktId = res.getInt("vakt_id");
+			int vaktId = res.getInt("bruker_vakt_id");
 			LocalDateTime fraTid = res.getTimestamp("fra_tid").toLocalDateTime();
 			LocalDateTime tilTid = res.getTimestamp("til_tid").toLocalDateTime();
 			String kommentar = res.getString("kommentar");
 
-			return new Fravaer(brukerId, vaktId, fraTid, tilTid, kommentar);
+			return new Fravaer(brukerId, fraTid, tilTid, kommentar);
 
 
 		} catch (SQLException e) {
@@ -1000,18 +1000,17 @@ public class SqlQueries extends DBConnection {
 
     public boolean insertFravaer(Fravaer newFravaer) {
         try {
-            String insertSql = "INSERT INTO fravaer(bruker_id, vakt_id,fra_tid,til_tid, kommentar) VALUES(?,?,?,?,?)";
+            String insertSql = "INSERT INTO fravaer(bruker_vakt_id, fra_tid,til_tid, kommentar) VALUES(?,?,?,?)";
             insertQuery = connection.prepareStatement(insertSql);
 
             // Oversetter LocalDateTime til Timestamp:
             Timestamp fraTid = Timestamp.valueOf(newFravaer.getFraTid());
             Timestamp tilTid = Timestamp.valueOf(newFravaer.getTilTid());
 
-            insertQuery.setInt(1,newFravaer.getBrukerId());
-            insertQuery.setInt(2, newFravaer.getVaktId());
-            insertQuery.setTimestamp(3, fraTid);
-            insertQuery.setTimestamp(4, tilTid);
-            insertQuery.setString(5, newFravaer.getKommentar());
+            insertQuery.setInt(1,newFravaer.getBrukerVaktId());
+            insertQuery.setTimestamp(2, fraTid);
+            insertQuery.setTimestamp(3, tilTid);
+            insertQuery.setString(4, newFravaer.getKommentar());
             insertQuery.execute();
             return true;
 
@@ -1023,7 +1022,7 @@ public class SqlQueries extends DBConnection {
 
     public boolean updateFravaer(Fravaer fravaer) {
         try {
-            String updateSql = "UPDATE fravaer SET fra_tid =  ?,til_tid =  ?,kommentar =  ? WHERE  bruker_id = ? AND  vakt_id = ?;";
+            String updateSql = "UPDATE fravaer SET fra_tid =  ?,til_tid =  ?,kommentar =  ? WHERE  bruker_vakt_id = ?";
 
             updateQuery = connection.prepareStatement(updateSql);
 
@@ -1034,8 +1033,7 @@ public class SqlQueries extends DBConnection {
             updateQuery.setTimestamp(1, fraTid);
             updateQuery.setTimestamp(2, tilTid);
             updateQuery.setString(3, fravaer.getKommentar());
-            updateQuery.setInt(4,fravaer.getBrukerId());
-            updateQuery.setInt(5, fravaer.getVaktId());
+            updateQuery.setInt(4,fravaer.getBrukerVaktId());
 
             if (updateQuery.executeUpdate() == 1) {
                 return true;
@@ -1048,9 +1046,9 @@ public class SqlQueries extends DBConnection {
 
     public boolean deleteFravaer(Fravaer fravaer) {
         try {
-            String deleteSql = "DELETE FROM fravaer WHERE bruker_id = ?";
+            String deleteSql = "DELETE FROM fravaer WHERE bruker_vakt_id = ?";
             deleteQuery = connection.prepareStatement(deleteSql);
-            deleteQuery.setInt(1, fravaer.getBrukerId());
+            deleteQuery.setInt(1, fravaer.getBrukerVaktId());
             deleteQuery.executeUpdate();
 
             return true;
@@ -1071,8 +1069,7 @@ public class SqlQueries extends DBConnection {
 
                 while (res.next()) {
                     allFravaer.add(new Fravaer(
-                            res.getInt("bruker_id"),
-                            res.getInt("vakt_id"),
+                            res.getInt("bruker_vakt_id"),
                             res.getTimestamp("fra_tid").toLocalDateTime(),
                             res.getTimestamp("til_tid").toLocalDateTime(),
                             res.getString("kommentar")
@@ -1096,8 +1093,7 @@ public class SqlQueries extends DBConnection {
 			ArrayList<Fravaer> fravaer = new ArrayList<>();
 			while (res.next()) {
 				Fravaer frv = new Fravaer(
-						res.getInt("bruker_id"),
-						res.getInt("vakt_id"),
+						res.getInt("bruker_vakt_id"),
 						res.getTimestamp("fra_tid").toLocalDateTime(),
 						res.getTimestamp("til_tid").toLocalDateTime(),
 						res.getString("kommentar"));
@@ -1115,14 +1111,13 @@ public class SqlQueries extends DBConnection {
     public Fravaer[] selectFravaerFromBrukerId(int brukerId) {
         try {
             selectQuery = connection.prepareStatement("SELECT * FROM fravaer WHERE bruker_id IN " +
-                    "(SELECT bruker_id FROM bruker WHERE bruker_id = ?)");
+                    "(SELECT bruker_id FROM bruker_vakt WHERE bruker_id = ?)");
             selectQuery.setInt(1, brukerId);
             ResultSet res = selectQuery.executeQuery();
             ArrayList<Fravaer> fravaer = new ArrayList<>();
             while (res.next()) {
                 Fravaer frv = new Fravaer(
-                        res.getInt("bruker_id"),
-                        res.getInt("vakt_id"),
+                        res.getInt("bruker_vakt_id"),
                         res.getTimestamp("fra_tid").toLocalDateTime(),
                         res.getTimestamp("til_tid").toLocalDateTime(),
                         res.getString("kommentar"));
@@ -1147,19 +1142,17 @@ public class SqlQueries extends DBConnection {
     *
     */
 
-    public Overtid[] selectOvertiderBrukerVakt(int brukerId, int vaktId) {
+    public Overtid[] selectOvertiderBrukerVakt(int brukerVaktId) {
 		try {
-			selectQuery = connection.prepareStatement("SELECT * FROM overtid WHERE bruker_id = ? AND vakt_id = ?");
-			selectQuery.setInt(1, brukerId);
-			selectQuery.setInt(2, vaktId);
+			selectQuery = connection.prepareStatement("SELECT * FROM overtid WHERE bruker_vakt_id = ?");
+			selectQuery.setInt(1, brukerVaktId);
 			ResultSet res = selectQuery.executeQuery();
 			ArrayList<Overtid> overtider = new ArrayList<>();
 			while (res.next()) {
 				Overtid ny = new Overtid(
 						res.getInt("overtid_id"),
-						res.getInt("bruker_id"),
+						res.getInt("bruker_vakt_id"),
 						res.getDouble("ant_timer"),
-						res.getInt("vakt_id"),
 						res.getString("kommentar"));
 				overtider.add(ny);
 			}
@@ -1173,19 +1166,19 @@ public class SqlQueries extends DBConnection {
 
     public Overtid selectOvertid(int overtidId) {
         try {
-            String selectSql = "SELECT bruker_id, ant_timer, vakt_id, kommentar FROM overtid WHERE overtid_id = ?";
+            String selectSql = "SELECT bruker_vakt_id, ant_timer, kommentar FROM overtid WHERE overtid_id = ?";
             selectQuery = connection.prepareStatement(selectSql);
 			selectQuery.setInt(1, overtidId);
             ResultSet res = selectQuery.executeQuery();
 
             if (!res.next()) return null;
 
-            int brukerId = res.getInt("bruker_id");
+            int brukerVaktId = res.getInt("bruker_vakt_id");
             double antTimer = res.getDouble("ant_timer");
             int vaktId = res.getInt("vakt_id");
             String kommentar = res.getString("kommentar");
 
-            return new Overtid(overtidId, brukerId, antTimer, vaktId, kommentar);
+            return new Overtid(overtidId, brukerVaktId, antTimer, kommentar);
 
 
         } catch (SQLException e) {
@@ -1202,9 +1195,8 @@ public class SqlQueries extends DBConnection {
 			while (res.next()) {
 				Overtid ny = new Overtid(
 						res.getInt("overtid_id"),
-						res.getInt("bruker_id"),
+						res.getInt("bruker_vakt_id"),
 						res.getDouble("ant_timer"),
-						res.getInt("vakt_id"),
 						res.getString("kommentar"));
 				overtider.add(ny);
 			}
@@ -1218,12 +1210,11 @@ public class SqlQueries extends DBConnection {
 
     public boolean insertOvertid(Overtid newOvertid) {
         try {
-            String insertSql = "INSERT INTO overtid(bruker_id, ant_timer, vakt_id, kommentar) VALUES(?,?,?,?)";
+            String insertSql = "INSERT INTO overtid(bruker_vakt_id, ant_timer, kommentar) VALUES(?,?,?)";
             insertQuery = connection.prepareStatement(insertSql);
-            insertQuery.setInt(1, newOvertid.getBrukerId());
+            insertQuery.setInt(1, newOvertid.getBrukerVaktId());
             insertQuery.setDouble(2, newOvertid.getAntTimer());
-            insertQuery.setInt(3, newOvertid.getVaktId());
-            insertQuery.setString(4, newOvertid.getKommentar());
+            insertQuery.setString(3, newOvertid.getKommentar());
 
             insertQuery.execute();
             return true;
@@ -1236,15 +1227,13 @@ public class SqlQueries extends DBConnection {
 
     public boolean updateOvertid(Overtid overtid) {
         try {
-            String updateSql = "UPDATE overtid SET bruker_id = ?, ant_timer = ?, vakt_id = ?, kommentar = ? WHERE overtid_id = ?";
+            String updateSql = "UPDATE overtid SET ant_timer = ?, kommentar = ? WHERE overtid_id = ?";
             updateQuery = connection.prepareStatement(updateSql);
 
 
-            updateQuery.setInt(1, overtid.getBrukerId());
-            updateQuery.setDouble(2, overtid.getAntTimer());
-            updateQuery.setInt(3, overtid.getVaktId());
-            updateQuery.setString(4, overtid.getKommentar());
-			updateQuery.setInt(5, overtid.getOvertidId());
+            updateQuery.setDouble(1, overtid.getAntTimer());
+            updateQuery.setString(2, overtid.getKommentar());
+			updateQuery.setInt(3, overtid.getOvertidId());
 
             if (updateQuery.executeUpdate() == 1) {
                 return true;

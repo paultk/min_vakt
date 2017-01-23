@@ -7,15 +7,14 @@ import java.time.LocalDateTime;
  * Created by paul on 10.01.17.
  */
 public class Overtid {
-    private int overtidId, brukerId, vaktId;
+    private int overtidId, brukerVaktId;
     private double antTimer;
     private String kommentar;
 
-    public Overtid(int overtidId, int brukerId, double antTimer, int vaktId, String kommentar) {
+    public Overtid(int overtidId, int brukerVaktId, double antTimer, String kommentar) {
       this.overtidId = overtidId;
-      this.brukerId = brukerId;
+      this.brukerVaktId = brukerVaktId;
       this.antTimer = antTimer;
-      this.vaktId = vaktId;
       this.kommentar = kommentar;
     }
 
@@ -29,12 +28,12 @@ public class Overtid {
         this.overtidId = id;
     }
 
-    public int getBrukerId() {
-        return brukerId;
+    public int getBrukerVaktId() {
+        return brukerVaktId;
     }
 
-    public void setBrukerId(int brukerId) {
-        this.brukerId = brukerId;
+    public void setBrukerVaktId(int brukerId) {
+        this.brukerVaktId = brukerId;
     }
 
     public double getAntTimer() {
@@ -43,14 +42,6 @@ public class Overtid {
 
     public void setAntTimer(double antTimer) {
         this.antTimer = antTimer;
-    }
-
-    public int getVaktId() {
-        return vaktId;
-    }
-
-    public void setVaktId(int vaktId) {
-        this.vaktId = vaktId;
     }
 
     public String getKommentar() {

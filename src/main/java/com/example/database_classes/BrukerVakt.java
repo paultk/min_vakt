@@ -5,14 +5,22 @@ package com.example.database_classes;
  */
 public class BrukerVakt {
 
-    private int brukerId, vaktId;
+    private int brukerVaktId, brukerId, vaktId;
 
-    public BrukerVakt(int brukerId, int vaktId) {
+    public BrukerVakt(int brukerVaktId, int brukerId, int vaktId) {
         this.brukerId = brukerId;
         this.vaktId = vaktId;
     }
 
     public BrukerVakt() {}
+
+    public int getBrukerVaktId() {
+        return brukerVaktId;
+    }
+
+    public void setBrukerVaktId(int brukerVaktId) {
+        this.brukerVaktId = brukerVaktId;
+    }
 
     public int getBrukerId() {
         return brukerId;

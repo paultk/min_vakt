@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
  */
 public class Fravaer {
 
-    private int brukerId, vaktId;
+    private int brukerVaktId;
 
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     @JsonFormat(pattern = "YYYY-MM-dd HH:mm:ss")
@@ -24,9 +24,8 @@ public class Fravaer {
     private String kommentar;
 
 
-    public Fravaer(int brukerId, int vaktId, LocalDateTime fraTid, LocalDateTime tilTid, String kommentar) {
-        this.brukerId = brukerId;
-        this.vaktId = vaktId;
+    public Fravaer(int brukerVaktId, LocalDateTime fraTid, LocalDateTime tilTid, String kommentar) {
+        this.brukerVaktId = brukerVaktId;
         this.fraTid = fraTid;
         this.tilTid = tilTid;
         this.kommentar = kommentar;
@@ -36,20 +35,12 @@ public class Fravaer {
 
     public Fravaer() {}
 
-    public int getBrukerId() {
-        return brukerId;
+    public int getBrukerVaktId() {
+        return brukerVaktId;
     }
 
-    public void setBrukerId(int brukerId) {
-        this.brukerId = brukerId;
-    }
-
-    public int getVaktId() {
-        return vaktId;
-    }
-
-    public void setVaktId(int vaktId) {
-        this.vaktId = vaktId;
+    public void setBrukerVaktId(int brukerVaktId) {
+        this.brukerVaktId = brukerVaktId;
     }
 
     public LocalDateTime getFraTid() {
@@ -76,14 +67,4 @@ public class Fravaer {
         this.kommentar = kommentar;
     }
 
-    @Override
-    public String toString() {
-        return "Fravaer{" +
-                "brukerId=" + brukerId +
-                ", vaktId=" + vaktId +
-                ", fraTid=" + fraTid +
-                ", tilTid=" + tilTid +
-                ", kommentar='" + kommentar + '\'' +
-                '}';
-    }
 }
