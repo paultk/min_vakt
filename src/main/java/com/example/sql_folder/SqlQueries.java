@@ -151,6 +151,7 @@ public class SqlQueries extends DBConnection {
 		}
 		return null;
 	}
+
     public Bruker selectBruker(int brukerId) {
         try {
             selectQuery = connection.prepareStatement("SELECT * FROM bruker WHERE bruker_id = ?");
@@ -302,6 +303,19 @@ public class SqlQueries extends DBConnection {
     * BRUKERVAKT
     *
     */
+
+	/*public boolean checkExistsBrukerVakt(int brukerId, int vaktId) {
+	    try {
+	        String selectSql = "SELECT * FROM bruker_vakt WHERE bruker_id = ? AND vakt_id = ?";
+	        selectQuery = connection.prepareStatement(selectSql);
+	        selectQuery.setInt(1, brukerId);
+	        selectQuery.setInt(2, vaktId);
+	        selectQuery.
+
+        } catch (SQLException e) {
+	        e.printStackTrace();
+        }
+    }*/
 
 	public boolean insertBrukerVakt(int brukerId, int vaktId) {
 		try {
@@ -954,7 +968,7 @@ public class SqlQueries extends DBConnection {
     public Fravaer selectFravaer(int brukerId) {
 
         try {
-            String selectSql = "SELECT * FROM fravaer WHERE bruker_id = ?";
+            String selectSql = "SELECT * FROM fravaer WHERE bruker_vakt_id IN (SELECT bruker_vakt_id FROM bruker_vakt WHERE vakt_id = ?)";
             selectQuery = connection.prepareStatement(selectSql);
             selectQuery.setInt(1, brukerId);
             ResultSet res = selectQuery.executeQuery();
@@ -977,7 +991,7 @@ public class SqlQueries extends DBConnection {
 	public Fravaer selectFravaerFromVaktBruker(int brukerId, int vaktID) {
 
 		try {
-			String selectSql = "SELECT * FROM fravaer WHERE bruker_id = ? AND vakt_id = ?";
+			String selectSql = "SELECT * FROM fravaer WHERE bruker_vakt_id IN (SELECT bruker_vakt_id FROM bruker_vakt WHERE bruker_id = ? AND vakt_id = ?)";
 			selectQuery = connection.prepareStatement(selectSql);
 			selectQuery.setInt(1, brukerId);
 			selectQuery.setInt(2, vaktID);
@@ -1000,7 +1014,7 @@ public class SqlQueries extends DBConnection {
 
     public boolean insertFravaer(Fravaer newFravaer) {
         try {
-            String insertSql = "INSERT INTO fravaer(bruker_vakt_id, fra_tid,til_tid, kommentar) VALUES(?,?,?,?)";
+            String insertSql = "INSERT INTO fravaer(bruker_vakt_id, fra_tid, til_tid, kommentar) VALUES(?,?,?,?)";
             insertQuery = connection.prepareStatement(insertSql);
 
             // Oversetter LocalDateTime til Timestamp:
@@ -1086,8 +1100,8 @@ public class SqlQueries extends DBConnection {
 
 	public Fravaer[] selectFravaerFromVaktId(int vaktId) {
 		try {
-			selectQuery = connection.prepareStatement("SELECT * FROM fravaer WHERE vakt_id IN " +
-					"(SELECT vakt_id FROM vakt WHERE vakt_id = ?)");
+			selectQuery = connection.prepareStatement("SELECT * FROM fravaer WHERE bruker_vakt_id IN " +
+					"(SELECT bruker_vakt_id FROM bruker_vakt WHERE vakt_id = ?)");
 			selectQuery.setInt(1, vaktId);
 			ResultSet res = selectQuery.executeQuery();
 			ArrayList<Fravaer> fravaer = new ArrayList<>();
@@ -1110,8 +1124,8 @@ public class SqlQueries extends DBConnection {
 
     public Fravaer[] selectFravaerFromBrukerId(int brukerId) {
         try {
-            selectQuery = connection.prepareStatement("SELECT * FROM fravaer WHERE bruker_id IN " +
-                    "(SELECT bruker_id FROM bruker_vakt WHERE bruker_id = ?)");
+            selectQuery = connection.prepareStatement("SELECT * FROM fravaer WHERE bruker_vakt_id IN " +
+                    "(SELECT bruker_vakt_id FROM bruker_vakt WHERE bruker_id = ?)");
             selectQuery.setInt(1, brukerId);
             ResultSet res = selectQuery.executeQuery();
             ArrayList<Fravaer> fravaer = new ArrayList<>();
@@ -1131,10 +1145,6 @@ public class SqlQueries extends DBConnection {
         }
         return null;
     }
-
-
-
-
 
     /*
     *
