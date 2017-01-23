@@ -62,6 +62,11 @@ public class VaktController {
         return query.selectAllVakterDate(fra, til);
     }
 
+    @RequestMapping("vakt/bruker/month/{brukerId}/{year}/{month}")
+    public Vakt[] getVakterBrukerCurMonth(@PathVariable("brukerId") int brukerId, @PathVariable("month") int month, @PathVariable("year") int year) {
+        return query.selectMånedVakterBruker(brukerId, year, month);
+    }
+
     @RequestMapping("/vakt/all/month/{fratid}/{avdId}")
     public VaktMedBruker[] getAllVaktMonth(@PathVariable("fratid") String fratid, @PathVariable("avdId") int avdId) {
 

@@ -728,6 +728,34 @@ public class SqlQueries extends DBConnection {
 		}
 		return null;
 	}
+
+	public Vakt[] selectMånedVakterBruker(int brukerId, int year, int month) {
+    	try {
+    		selectQuery = connection.prepareStatement("SELECT * FROM vakt WHERE vakt_id IN " +
+					"(SELECT vakt_id FROM bruker_vakt WHERE bruker_id = ?) " +
+					"AND MONTH(fra_tid) = ? AND YEAR(fra_tid) = ?");
+    		selectQuery.setInt(1, brukerId);
+    		selectQuery.setInt(2, month);
+    		selectQuery.setInt(3, year);
+    		ArrayList<Vakt> vakter = new ArrayList<>();
+    		ResultSet res = selectQuery.executeQuery();
+    		while (res.next()) {
+    			vakter.add(new Vakt(
+    					res.getInt("vakt_id"),
+						res.getInt("vaktansvarlig_id"),
+						res.getInt("avdeling_id"),
+						res.getTimestamp("fra_tid").toLocalDateTime(),
+						res.getTimestamp("til_tid").toLocalDateTime(),
+						res.getInt("ant_pers")
+				));
+			}
+			return vakter.toArray(new Vakt[vakter.size()]);
+		}
+		catch (SQLException e) {
+    		e.printStackTrace();
+		}
+		return null;
+	}
     /*
     *
     * STILLING
@@ -1087,6 +1115,29 @@ public class SqlQueries extends DBConnection {
     * OVERTID
     *
     */
+
+    public Overtid[] selectOvertiderBruker(int brukerId) {
+		try {
+			selectQuery = connection.prepareStatement("SELECT * FROM overtid WHERE bruker_id = ?");
+			selectQuery.setInt(1, brukerId);
+			ResultSet res = selectQuery.executeQuery();
+			ArrayList<Overtid> overtider = new ArrayList<>();
+			while (res.next()) {
+				Overtid ny = new Overtid(
+						res.getInt("overtid_id"),
+						res.getInt("bruker_id"),
+						res.getDouble("ant_timer"),
+						res.getInt("vakt_id"),
+						res.getString("kommentar"));
+				overtider.add(ny);
+			}
+			return overtider.toArray(new Overtid[overtider.size()]);
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 
     public Overtid selectOvertid(int overtidId) {
         try {
