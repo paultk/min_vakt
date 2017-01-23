@@ -1140,10 +1140,11 @@ public class SqlQueries extends DBConnection {
     *
     */
 
-    public Overtid[] selectOvertiderBruker(int brukerId) {
+    public Overtid[] selectOvertiderBrukerVakt(int brukerId, int vaktId) {
 		try {
-			selectQuery = connection.prepareStatement("SELECT * FROM overtid WHERE bruker_id = ?");
+			selectQuery = connection.prepareStatement("SELECT * FROM overtid WHERE bruker_id = ? AND vakt_id = ?");
 			selectQuery.setInt(1, brukerId);
+			selectQuery.setInt(2, vaktId);
 			ResultSet res = selectQuery.executeQuery();
 			ArrayList<Overtid> overtider = new ArrayList<>();
 			while (res.next()) {
