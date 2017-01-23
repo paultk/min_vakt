@@ -16,7 +16,7 @@ import java.security.Principal;
  */
 @Controller
 public class WebController {
-	@RequestMapping(value = "/", method = RequestMethod.GET)
+	/*@RequestMapping(value = "/", method = RequestMethod.GET)
 	public ModelAndView home(@RequestHeader(value = "token", defaultValue = "null", required = false) String token) {
 		System.out.println(token);
 		if (token.equals("null")) {
@@ -30,6 +30,11 @@ public class WebController {
 		else {
 			return new ModelAndView("/loginpage.html");
 		}
+	}*/
+
+	@RequestMapping(value="/", method = RequestMethod.GET)
+	public ModelAndView index() {
+		return new ModelAndView("/index.html");
 	}
 
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
