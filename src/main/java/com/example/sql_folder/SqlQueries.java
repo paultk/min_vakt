@@ -8,7 +8,6 @@ import java.time.temporal.ChronoField;
 import java.time.temporal.ChronoUnit;
 import java.time.temporal.ValueRange;
 import java.util.ArrayList;
-import java.util.Calendar;
 
 /**
  * Created by axelkvistad on 10/01/17.
@@ -53,6 +52,27 @@ public class SqlQueries extends DBConnection {
         }
         return null;
     }
+
+    public Avdeling[] selectAllAvdelinger() {
+		try {
+			selectQuery = connection.prepareStatement("SELECT * FROM avdeling");
+			ResultSet res = selectQuery.executeQuery();
+			ArrayList<Avdeling> avdelinger = new ArrayList<>();
+			while (res.next()) {
+				Avdeling avd = new Avdeling(
+						res.getInt("avdeling_id"),
+						res.getString("avd_navn"));
+				avdelinger.add(avd);
+			}
+			SqlCleanup.closeResSet(res);
+			Avdeling[] ret = new Avdeling[avdelinger.size()];
+			return avdelinger.toArray(ret);
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 
     public boolean insertAvdeling(Avdeling newAvdeling) {
         try {
