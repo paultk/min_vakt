@@ -14,7 +14,7 @@ import static org.junit.Assert.*;
  */
 public class StillingControllerTest {
 
-    private StillingController stillingController = new StillingController();
+    /*private StillingController stillingController = new StillingController();
 
     Stilling stilling = new Stilling(3, "Lege");
     Stilling updateStilling = new Stilling(8, "Hjelpepleier");
@@ -47,5 +47,5 @@ public class StillingControllerTest {
     @After
     public void after() {
         DBConnection.afterTest();
-    }
+    }*/
 }
