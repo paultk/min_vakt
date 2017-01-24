@@ -57,8 +57,8 @@ public class BrukerController {
 	}
 
 	@RequestMapping(value="/bruker/{id}/stilling")
-	public String getBrukerStillingbeskrivelse(@RequestBody Bruker bruker) {
-    	return query.selectStillingsbeskrivelse(bruker.getBrukerId());
+	public String getBrukerStillingbeskrivelse(@PathVariable("id") Integer id) {
+    	return query.selectStillingsbeskrivelse(id);
 	}
 
 	@RequestMapping(value="/bruker/update", method=RequestMethod.POST)
