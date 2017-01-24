@@ -15,10 +15,10 @@ import javax.websocket.server.PathParam;
 @RestController
 public class StillingController {
     SqlQueries query = new SqlQueries();
-    @RequestMapping("/stilling/{id}")
-    public Stilling getStilling(@PathVariable("id") Integer id) {
-        Stilling ret = query.selectStilling(id);
-        return query.selectStilling(id);
+    @RequestMapping("/stilling/{beskrivelse}")
+    public Stilling getStilling(@PathVariable("beskrivelse") String beskrivelse) {
+        Stilling ret = query.selectStilling(beskrivelse);
+        return query.selectStilling(beskrivelse);
     }
 
     @RequestMapping(value="/stilling/delete", method=RequestMethod.POST)
