@@ -56,6 +56,11 @@ public class BrukerController {
         return false;
 	}
 
+	@RequestMapping(value="/bruker/{id}/stilling")
+	public String getBrukerStillingbeskrivelse(@RequestBody Bruker bruker) {
+    	return query.selectStillingsbeskrivelse(bruker.getBrukerId());
+	}
+
 	@RequestMapping(value="/bruker/update", method=RequestMethod.POST)
 	public boolean updateBruker(@RequestBody Bruker bruker) {
 		return query.updateBruker(bruker);
