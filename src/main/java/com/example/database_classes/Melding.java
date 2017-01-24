@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
  * Created by Knut on 24.01.2017.
  */
 public class Melding {
-    private int varselId;
+    private int meldingId;
     private int tilBrukerId;
     private int fraBrukerId;
     private  String overskrift;
@@ -26,8 +26,8 @@ public class Melding {
     private LocalDateTime tid_sendt;
     private boolean sett;
 
-    public Melding(int varselId, int tilBrukerId, int fraBrukerId, String overskrift, String melding, LocalDateTime tid_sendt, boolean sett) {
-        this.varselId = varselId;
+    public Melding(int meldingId, int tilBrukerId, int fraBrukerId, String overskrift, String melding, LocalDateTime tid_sendt, boolean sett) {
+        this. meldingId = meldingId;
         this.tilBrukerId = tilBrukerId;
         this.fraBrukerId = fraBrukerId;
         this.overskrift = overskrift;
@@ -38,12 +38,12 @@ public class Melding {
 
     public Melding(){}
 
-    public int getVarselId() {
-        return varselId;
+    public int getMeldingId() {
+        return  meldingId;
     }
 
-    public void setVarselId(int varselId) {
-        this.varselId = varselId;
+    public void setMeldingId(int meldingId) {
+        this. meldingId = meldingId;
     }
 
     public int getTilBrukerId() {
@@ -97,7 +97,7 @@ public class Melding {
 	@Override
 	public String toString() {
 		return "Melding{" +
-				"varselId=" + varselId +
+				"varselId=" +  meldingId +
 				", tilBrukerId=" + tilBrukerId +
 				", fraBrukerId=" + fraBrukerId +
 				", overskrift='" + overskrift + '\'' +
