@@ -56,11 +56,6 @@ public class BrukerController {
         return false;
 	}
 
-	@RequestMapping(value="/bruker/{id}/stilling")
-	public String getBrukerStillingbeskrivelse(@PathVariable("id") Integer id) {
-    	return query.selectStillingsbeskrivelse(id);
-	}
-
 	@RequestMapping(value="/bruker/update", method=RequestMethod.POST)
 	public boolean updateBruker(@RequestBody Bruker bruker) {
 		return query.updateBruker(bruker);
@@ -93,7 +88,7 @@ public class BrukerController {
 
 	public static void main(String[] args) {
 		BrukerController controller = new BrukerController();
-		System.out.println(controller.addBruker(new Bruker(1, 0, 1, 1, 12345678, 100, 100, true, "admin", "admin", "admin", "Admin@@@")));
+		System.out.println(controller.addBruker(new Bruker(1, 0, "Sykepleier", 1, 12345678, 100, 100, true, "admin", "admin", "admin", "Admin@@@")));
 	}
 
 }

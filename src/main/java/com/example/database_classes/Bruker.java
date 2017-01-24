@@ -10,7 +10,8 @@ import java.time.LocalDate;
  */
 public class Bruker {
 
-    private int brukerId, passordId, stillingsId, avdelingId, telefonNr, stillingsProsent;
+    private int brukerId, passordId, avdelingId, telefonNr, stillingsProsent;
+    private String stillingsBeskrivelse;
     private double timelonn;
     private boolean admin;
     private String fornavn, etternavn, epost;
@@ -19,11 +20,11 @@ public class Bruker {
     private String salt;
     private static final String INVALID_PASSWORD_FORMAT = "Invalid password format: passwords must be at least 8 characters long, containing at least one lowercase character, one uppercase character, and two special characters (@#$%!^&+=).";
 
-    public Bruker(int brukerId, int passordId, int stillingsId, int avdelingId, int telefonNr, int stillingsProsent, double timelonn,
+    public Bruker(int brukerId, int passordId, String stillingsBeskrivelse, int avdelingId, int telefonNr, int stillingsProsent, double timelonn,
                   boolean admin, String fornavn, String etternavn, String epost, String plaintextPassord) {
         this.brukerId = brukerId;
         this.passordId = passordId;
-        this.stillingsId = stillingsId;
+        this.stillingsBeskrivelse = stillingsBeskrivelse;
         this.telefonNr = telefonNr;
         this.stillingsProsent = stillingsProsent;
         this.timelonn = timelonn;
@@ -35,10 +36,10 @@ public class Bruker {
         this.plaintextPassord = plaintextPassord;
     }
 
-    public Bruker(int passordId, int stillingsId, int avdelingId, int telefonNr, int stillingsProsent, double timelonn,
+    public Bruker(int passordId, String stillingsBeskrivelse, int avdelingId, int telefonNr, int stillingsProsent, double timelonn,
                   boolean admin, String fornavn, String etternavn, String epost, String plaintextPassord) {
         this.passordId = passordId;
-        this.stillingsId = stillingsId;
+        this.stillingsBeskrivelse = stillingsBeskrivelse;
         this.avdelingId = avdelingId;
         this.telefonNr = telefonNr;
         this.stillingsProsent = stillingsProsent;
@@ -50,11 +51,11 @@ public class Bruker {
         this.plaintextPassord = plaintextPassord;
     }
 
-    public Bruker(int brukerId, int passordId, int stillingsId, int avdelingId, int telefonNr, int stillingsProsent, double timelonn,
+    public Bruker(int brukerId, int passordId, String stillingsBeskrivelse, int avdelingId, int telefonNr, int stillingsProsent, double timelonn,
                   boolean admin, String fornavn, String etternavn, String epost) {
         this.brukerId = brukerId;
         this.passordId = passordId;
-        this.stillingsId = stillingsId;
+        this.stillingsBeskrivelse = stillingsBeskrivelse;
         this.telefonNr = telefonNr;
         this.stillingsProsent = stillingsProsent;
         this.timelonn = timelonn;
@@ -69,10 +70,10 @@ public class Bruker {
     public Bruker(){}
 
     // Constructor for testing in SqlQueries.java
-    public Bruker(int stillingsId, int avdelingId, int telefonNr, int stillingsProsent, double timelonn,
+    public Bruker(String stillingsBeskrivelse, int avdelingId, int telefonNr, int stillingsProsent, double timelonn,
                   boolean admin, String fornavn, String etternavn, String epost, String plaintextPassord) {
         if (!PasswordSystemManager.checkPasswordValidity(plaintextPassord)) throw new IllegalArgumentException(INVALID_PASSWORD_FORMAT);
-        this.stillingsId = stillingsId;
+        this.stillingsBeskrivelse = stillingsBeskrivelse;
         this.telefonNr = telefonNr;
         this.stillingsProsent = stillingsProsent;
         this.timelonn = timelonn;
@@ -123,19 +124,19 @@ public class Bruker {
     /**
      * Returns position ID
      *
-     * @return stillingsId
+     * @return stillingsBeskrivelse
      */
-    public int getStillingsId() {
-        return stillingsId;
+    public String getStillingsBeskrivelse() {
+        return stillingsBeskrivelse;
     }
 
     /**
      * Sets position ID
      *
-     * @param stillingsId position ID
+     * @param stillingsBeskrivelse position ID
      */
-    public void setStillingsId(int stillingsId) {
-        this.stillingsId = stillingsId;
+    public void setStillingsBeskrivelse(String stillingsBeskrivelse) {
+        this.stillingsBeskrivelse = stillingsBeskrivelse;
     }
 
     /**
@@ -247,7 +248,7 @@ public class Bruker {
         return "Bruker{" +
                 "brukerId=" + brukerId +
                 ", passordId=" + passordId +
-                ", stillingsId=" + stillingsId +
+                ", stillingsBeskrivelse=" + stillingsBeskrivelse +
                 ", avdelingId=" + avdelingId +
                 ", telefonNr=" + telefonNr +
                 ", stillingsProsent=" + stillingsProsent +

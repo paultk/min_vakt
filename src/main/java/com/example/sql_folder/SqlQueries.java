@@ -134,7 +134,7 @@ public class SqlQueries extends DBConnection {
 				return new Bruker(
 						res.getInt("bruker_id"),
 						res.getInt("passord_id"),
-						res.getInt("stilling_id"),
+						res.getString("stilling_beskrivelse"),
 						res.getInt("avdeling_id"),
 						res.getInt("telefonnr"),
 						res.getInt("stillingsprosent"),
@@ -161,7 +161,7 @@ public class SqlQueries extends DBConnection {
 				return new Bruker(
                         res.getInt("bruker_id"),
                         res.getInt("passord_id"),
-                        res.getInt("stilling_id"),
+                        res.getString("stilling_beskrivelse"),
                         res.getInt("avdeling_id"),
                         res.getInt("telefonnr"),
                         res.getInt("stillingsprosent"),
@@ -188,7 +188,7 @@ public class SqlQueries extends DBConnection {
 				Bruker brk = new Bruker(
 						res.getInt("bruker_id"),
 						res.getInt("passord_id"),
-						res.getInt("stilling_id"),
+						res.getString("stilling_beskrivelse"),
 						res.getInt("avdeling_id"),
 						res.getInt("telefonnr"),
 						res.getInt("stillingsprosent"),
@@ -209,27 +209,10 @@ public class SqlQueries extends DBConnection {
 		return null;
 	}
 
-	public String selectStillingsbeskrivelse(int brukerId) {
-    	try {
-    		String selectSql = "SELECT s.beskrivelse FROM stilling s JOIN bruker b ON s.stilling_id = b.stilling_id WHERE b.bruker_id = ?";
-    		selectQuery = connection.prepareStatement(selectSql);
-    		selectQuery.setInt(1, brukerId);
-
-    		ResultSet res = selectQuery.executeQuery();
-
-    		if (res.next()) {
-    			return res.getString("beskrivelse");
-			}
-		} catch (SQLException e) {
-    		e.printStackTrace();
-		}
-		return null;
-	}
-
 	public boolean updateBruker(Bruker bruker) {
 		try {
 			updateQuery = connection.prepareStatement("UPDATE  bruker SET  passord_id =  ?,\n" +
-					"stilling_id =  ?,\n" +
+					"stilling_beskrivelse =  ?,\n" +
 					"avdeling_id =  ?,\n" +
 					"fornavn =  ?,\n" +
 					"etternavn =  ?,\n" +
@@ -240,7 +223,7 @@ public class SqlQueries extends DBConnection {
 					"admin =  ?\n" +
                     " WHERE bruker_id = ?;");
 			updateQuery.setInt(1, bruker.getPassordId());
-			updateQuery.setInt(2, bruker.getStillingsId());
+			updateQuery.setString(2, bruker.getStillingsBeskrivelse());
 			updateQuery.setInt(3, bruker.getAvdelingId());
 			updateQuery.setString(4, bruker.getFornavn());
 			updateQuery.setString(5, bruker.getEtternavn());
@@ -279,11 +262,11 @@ public class SqlQueries extends DBConnection {
             }
 
 			insertQuery = connection.prepareStatement("INSERT INTO bruker (passord_id, " +
-					"stilling_id, avdeling_id, fornavn, etternavn, timelonn, telefonnr, " +
+					"stilling_beskrivelse, avdeling_id, fornavn, etternavn, timelonn, telefonnr, " +
 					"epost, stillingsprosent, admin) " +
 					"VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);");
 			insertQuery.setInt(1, bruker.getPassordId());
-			insertQuery.setInt(2, bruker.getStillingsId());
+			insertQuery.setString(2, bruker.getStillingsBeskrivelse());
 			insertQuery.setInt(3, bruker.getAvdelingId());
 			insertQuery.setString(4, bruker.getFornavn());
 			insertQuery.setString(5, bruker.getEtternavn());
@@ -396,7 +379,7 @@ public class SqlQueries extends DBConnection {
 				Bruker brk = new Bruker(
 						res.getInt("bruker_id"),
 						res.getInt("passord_id"),
-						res.getInt("stilling_id"),
+						res.getString("stilling_beskrivelse"),
 						res.getInt("avdeling_id"),
 						res.getInt("telefonnr"),
 						res.getInt("stillingsprosent"),
@@ -428,7 +411,7 @@ public class SqlQueries extends DBConnection {
 				brukere.add(new Bruker(
 						res.getInt("bruker_id"),
 						res.getInt("passord_id"),
-						res.getInt("stilling_id"),
+						res.getString("stilling_beskrivelse"),
 						res.getInt("avdeling_id"),
 						res.getInt("telefonnr"),
 						res.getInt("stillingsprosent"),
@@ -803,20 +786,18 @@ public class SqlQueries extends DBConnection {
     *
     */
 
-    public Stilling selectStilling(int stilling_id){
+    public Stilling selectStilling(String sBeskrivelse){
 
         try{
-            String selectSql = "SELECT beskrivelse FROM stilling WHERE stilling_id = ?";
+            String selectSql = "SELECT beskrivelse FROM stilling WHERE beskrivelse = ?";
             selectQuery = connection.prepareStatement(selectSql);
-            selectQuery.setInt(1, stilling_id);
+            selectQuery.setString(1, sBeskrivelse);
 
             ResultSet res = selectQuery.executeQuery();
 
             if (!res.next()) return null;
 
-            String beskrivelse = res.getString(1);
-
-            return new Stilling(stilling_id, beskrivelse);
+            return new Stilling(res.getString("beskrivelse"));
 
         } catch (SQLException sqlE) {
             sqlE.printStackTrace();
@@ -827,10 +808,9 @@ public class SqlQueries extends DBConnection {
     public boolean updateStilling(Stilling stilling){
 
         try {
-            String sql = "UPDATE stilling SET beskrivelse = ? WHERE stilling_id = ?";
+            String sql = "UPDATE stilling SET beskrivelse = ? WHERE beskrivelse = ?";
             PreparedStatement updateQuery = connection.prepareStatement(sql);
             updateQuery.setString(1, stilling.getBeskrivelse());
-            updateQuery.setInt(2, stilling.getStillingId());
             if (updateQuery.executeUpdate() == 1) {
                 return true;
             }
@@ -848,7 +828,6 @@ public class SqlQueries extends DBConnection {
             insertQuery.execute();
             ResultSet res = insertQuery.getGeneratedKeys();
             res.next();
-            newStilling.setStillingId(res.getInt(1));
             return true;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -860,10 +839,10 @@ public class SqlQueries extends DBConnection {
     public boolean deleteStilling(Stilling stilling){
         try {
 
-            String sql = "DELETE FROM stilling WHERE stilling_id = ?";
+            String sql = "DELETE FROM stilling WHERE beskrivelse = ?";
             PreparedStatement deleteQuery = connection.prepareStatement(sql);
 
-            deleteQuery.setInt(1,stilling.getStillingId());
+            deleteQuery.setString(1, stilling.getBeskrivelse());
             if (deleteQuery.executeUpdate() == 1) {
                 return true;
             }
@@ -1552,7 +1531,6 @@ public class SqlQueries extends DBConnection {
 		query.insertOvertid(overtid2);*/
 
 		//System.out.println(query.calculateMonthlyWage(16, LocalDate.now()));
-		System.out.println(query.selectStillingsbeskrivelse(16));
 
     }
 }
