@@ -86,6 +86,11 @@ public class BrukerController {
 		return bruker.getTotalMonthHours(date);
 	}
 
+	@RequestMapping("/bruker/{epost}")
+	public Bruker getBrukerByEpost(@PathVariable("epost") String epost)  {
+    	return query.selectBruker(epost);
+	}
+
 	public static void main(String[] args) {
 		BrukerController controller = new BrukerController();
 		System.out.println(controller.addBruker(new Bruker(1, 0, "Sykepleier", 1, 12345678, 100, 100, true, "admin", "admin", "admin", "Admin@@@")));
