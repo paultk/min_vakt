@@ -88,8 +88,8 @@ public class BrukerController {
 
 	@RequestMapping("/bruker/epost/{epost}")
 	public Bruker getBrukerByEpost(@PathVariable("epost") String epost)  {
-    	epost.replaceAll("%40", "@");
-    	return query.selectBruker(epost);
+    	epost = epost.replaceAll("%40", "@");
+		return query.selectBruker(epost);
 	}
 
 	public static void main(String[] args) {
