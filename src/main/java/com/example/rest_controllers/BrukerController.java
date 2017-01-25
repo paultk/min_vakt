@@ -86,7 +86,7 @@ public class BrukerController {
 		return bruker.getTotalMonthHours(date);
 	}
 
-	@RequestMapping("/bruker/{epost}")
+	@RequestMapping("/bruker/epost/{epost}")
 	public Bruker getBrukerByEpost(@PathVariable("epost") String epost)  {
     	epost.replaceAll("%40", "@");
     	return query.selectBruker(epost);
