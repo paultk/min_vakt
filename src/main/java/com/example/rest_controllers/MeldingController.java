@@ -43,7 +43,7 @@ public class MeldingController {
 		return query.selectUlestMeldingerToBruker(bruker.getBrukerId());
 	}
 
-	@RequestMapping(value = "/melding/sett/{id}", method = RequestMethod.POST)
+	@RequestMapping(value = "/melding/sett/{id}", method = RequestMethod.PUT)
 	public boolean setSett(@PathVariable("id") int id) {
 		return query.setMeldingSett(id);
 	}
