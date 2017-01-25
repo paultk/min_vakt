@@ -29,7 +29,13 @@ public class MeldingController {
 
 	@RequestMapping(value = "/melding/get/ulest/ant", method = RequestMethod.POST)
 	public int getAntMeldinger(@RequestBody Bruker bruker) {
-		return query.selectUlestMeldingerToBruker(bruker.getBrukerId()).length;
+		Melding[] ret = query.selectUlestMeldingerToBruker(bruker.getBrukerId());
+		if (ret != null) {
+			return ret.length;
+		}
+		else {
+			return 0;
+		}
 	}
 
 	@RequestMapping(value = "/melding/get/ulest", method = RequestMethod.POST)
