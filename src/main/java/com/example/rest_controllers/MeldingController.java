@@ -23,10 +23,16 @@ public class MeldingController {
 
 	@RequestMapping(value = "/melding/get", method = RequestMethod.POST)
 	public Melding[] getMeldinger(@RequestBody Bruker bruker) {
+//		System.out.println(bruker);
 		return query.selectMeldingerToBruker(bruker.getBrukerId());
 	}
 
-	@RequestMapping(value = "/melding/get/usett", method = RequestMethod.POST)
+	@RequestMapping(value = "/melding/get/ulest/ant", method = RequestMethod.POST)
+	public int getAntMeldinger(@RequestBody Bruker bruker) {
+		return query.selectUlestMeldingerToBruker(bruker.getBrukerId()).length;
+	}
+
+	@RequestMapping(value = "/melding/get/ulest", method = RequestMethod.POST)
 	public Melding[] getUsettMeldinger(@RequestBody Bruker bruker) {
 		return query.selectUlestMeldingerToBruker(bruker.getBrukerId());
 	}
