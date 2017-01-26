@@ -53,6 +53,14 @@ public class MeldingController {
 		else {
 			throw new AuthException("Token not authenticated");
 		}
+	public int getAntMeldinger(@RequestBody Bruker bruker) {
+		Melding[] ret = query.selectUlestMeldingerToBruker(bruker.getBrukerId());
+		if (ret != null) {
+			return ret.length;
+		}
+		else {
+			return 0;
+		}
 	}
 
 	@RequestMapping(value = "/melding/get/ulest", method = RequestMethod.POST)
@@ -74,5 +82,8 @@ public class MeldingController {
 		else {
 			throw new AuthException("Token not authenticated");
 		}
+	public boolean setSett(@PathVariable("id") int id) {
+		System.out.println(id);
+		return query.setMeldingSett(id);
 	}
 }
