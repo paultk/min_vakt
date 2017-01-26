@@ -1,3 +1,4 @@
+/*
 package com.example.rest_controllers;
 
 import com.example.database_classes.Tilgjengelighet;
@@ -10,9 +11,11 @@ import org.junit.Test;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+*/
 /**
  * Created by Håkon on 13.01.2017.
- */
+ *//*
+
 public class TilgjengelighetControllerTest {
 
     private TilgjengelighetController tilgjengelighetController = new TilgjengelighetController();
@@ -60,4 +63,4 @@ public class TilgjengelighetControllerTest {
     public void after() {
         DBConnection.afterTest();
     }
-}
+}*/

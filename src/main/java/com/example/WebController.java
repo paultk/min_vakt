@@ -49,12 +49,12 @@ public class WebController {
 
 	@RequestMapping(value="/login", method = RequestMethod.POST)
 	@ResponseBody
-	public Token login(@RequestBody Authentication auth) throws Exception {
+	public String login(@RequestBody Authentication auth) throws Exception {
 		System.out.println("POST til login!");
 		CustomAuthenticationProvider cust = new CustomAuthenticationProvider();
 		if (cust.auth(auth)) {
 			System.out.println("Autentisert");
-			return new Token(auth.getUsername());
+			return TokenManager.lagToken(auth.getUsername());
 		}
 		throw new IllegalArgumentException("Wrong user name or password");
 	}

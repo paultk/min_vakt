@@ -1,3 +1,4 @@
+/*
 package com.example.rest_controllers;
 
 import com.example.database_classes.Vakt;
@@ -10,9 +11,11 @@ import org.junit.Test;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+*/
 /**
  * Created by Knut on 13.01.2017.
- */
+ *//*
+
 public class VaktControllerTest {
 
     VaktController controller = new VaktController();
@@ -48,4 +51,4 @@ public class VaktControllerTest {
 
 
 
-}
+}*/

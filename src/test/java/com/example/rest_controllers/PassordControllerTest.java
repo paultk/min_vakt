@@ -1,3 +1,4 @@
+/*
 package com.example.rest_controllers;
 
 import com.example.database_classes.Passord;
@@ -8,9 +9,11 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
+*/
 /**
  * Created by Jens on 13-Jan-17.
- */
+ *//*
+
 public class PassordControllerTest {
 	PassordController controller = new PassordController();
 	@Test
@@ -30,4 +33,4 @@ public class PassordControllerTest {
 	public void after() {
 		DBConnection.afterTest();
 	}
-}
+}*/
