@@ -90,7 +90,10 @@ public class BrukerController {
 	public Bruker[] getBrukerByEpost(@PathVariable("epost") String epost)  {
 		epost = epost.replaceAll("&at", "@");
     	epost = epost.replaceAll("&dot", ".");
-		return new Bruker[]{query.selectBruker(epost)};
+    	Bruker[] brukerArray = new Bruker[1];
+    	brukerArray[0] = query.selectBruker(epost);
+    	return brukerArray;
+		//return new Bruker[]{query.selectBruker(epost)};
 	}
 
 	public static void main(String[] args) {
