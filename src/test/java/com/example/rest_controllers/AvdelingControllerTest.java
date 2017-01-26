@@ -29,6 +29,11 @@ public class AvdelingControllerTest {
     }
 
     @Test
+    public void testgetAllAvdeling() throws Exception {
+        Assert.assertNotNull("Can't add Avdeling to DB", avdelingController.getAvdelinger());
+    }
+
+    @Test
     public void testDeleteAvdeling() throws Exception {
         Assert.assertTrue("Can't delete Avdeling from DB", avdelingController.deleteAvdeling(avdelingController.getAvdeling(3)));
     }

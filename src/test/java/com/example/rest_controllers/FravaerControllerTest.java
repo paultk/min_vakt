@@ -21,18 +21,18 @@ public class FravaerControllerTest {
     FravaerController controller = new FravaerController();
     DateTimeFormatter aDateTimeFormatter = DateTimeFormatter.ISO_DATE_TIME;
     LocalDateTime m = LocalDateTime.parse("2008-12-18T14:30:40", aDateTimeFormatter);
-    Fravaer fravaer = new Fravaer(1, m, m, "Bam");
-    Fravaer updateFravaer = new Fravaer(1, m, m, "Kvart");
+    Fravaer fravaer = new Fravaer(2, m, m, "Bam");
+    Fravaer updateFravaer = new Fravaer(2, m, m, "Kvart");
 
 
     @Test
     public void fravaerControllerTest() throws Exception {
         Assert.assertTrue("Can't add fravaer to database", controller.insertFravaer(fravaer));
         Assert.assertNotNull("Can't update fravaer from database", controller.updateFravaer(updateFravaer));
-        Assert.assertNotNull("Can't get single fravaer from DB", controller.getFravaer(4));
-        Assert.assertNotNull("Can't get all fravaer from vaktId", controller.getFravaerFromVaktId(4));
-        Assert.assertNotNull("Can't get all fravaer from vaktId", controller.getFravaerFromBrukerId(4));
-        Assert.assertTrue("Can't delete fravaer from DB", controller.deleteFravaer(controller.getFravaer(4)));
+        Assert.assertNotNull("Can't get single fravaer from DB", controller.getFravaer(1));
+        Assert.assertNotNull("Can't get all fravaer from brukerId", controller.getFravaerFromVaktId(2));
+        Assert.assertNotNull("Can't get all fravaer from vaktId", controller.getFravaerFromBrukerId(2));
+        Assert.assertTrue("Can't delete fravaer from DB", controller.deleteFravaer(controller.getFravaer(1)));
 
     }
 
