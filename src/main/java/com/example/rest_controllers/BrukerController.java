@@ -12,6 +12,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
+import java.util.Arrays;
 
 /**
  * Created by Jens on 11-Jan-17.
@@ -145,8 +146,15 @@ public class BrukerController {
 			DateTimeFormatter aDateTimeFormatter = DateTimeFormatter.ISO_DATE_TIME;
 			Vakt[] vakter = query.selectAllVakter();
 			LocalDateTime tilTid = LocalDateTime.parse(tid, aDateTimeFormatter);
+//			System.out.println(tilTid.toString());
+//			System.out.println(Arrays.toString(vakter));
 			for (Vakt v : vakter) {
+				System.out.println("Lik tid: " + v.getTilTid().isEqual(tilTid));
+				System.out.println(v.getAvdelingId() + " = " + avdId + "?");
+				System.out.println(v.getAvdelingId() == avdId);
+				System.out.println();
 				if ((v.getAvdelingId() == avdId) && (v.getTilTid().isEqual(tilTid))) {
+					System.out.println("Funnet id: " + v.getVaktId());
 					BrukerVaktController ctrl = new BrukerVaktController();
 					return ctrl.addBrukerVakt(new BrukerVakt(0, bruker.getBrukerId(), v.getVaktId()), token);
 				}

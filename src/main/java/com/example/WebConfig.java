@@ -16,9 +16,9 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 	public void addCorsMappings(CorsRegistry registry) {
 		registry.addMapping("/**");
 	}
-	/*public void addResourceHandlers(ResourceHandlerRegistry registry) {
+	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		registry.addResourceHandler("/").addResourceLocations("/resources/static");
 		registry.addResourceHandler("/app").addResourceLocations("/resources/static/app");
 		registry.addResourceHandler("/node_modules").addResourceLocations("/resources/static/node_modules");
-	}*/
+	}
 }

@@ -643,8 +643,8 @@ public class SqlQueries extends DBConnection {
 			while (res.next()) {
 				allVakter.add(new Vakt(
 						res.getInt("vakt_id"),
-						res.getInt("avdeling_id"),
 						res.getInt("vaktansvarlig_id"),
+						res.getInt("avdeling_id"),
 						res.getTimestamp("fra_tid").toLocalDateTime(),
 						res.getTimestamp("til_tid").toLocalDateTime(),
 						res.getInt("ant_pers")
