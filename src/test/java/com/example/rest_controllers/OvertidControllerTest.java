@@ -1,7 +1,8 @@
-/*
 package com.example.rest_controllers;
 
 import com.example.database_classes.Overtid;
+import com.example.database_classes.Token;
+import com.example.security.TokenManager;
 import com.example.sql_folder.DBConnection;
 import org.junit.After;
 import org.junit.Before;
@@ -12,30 +13,31 @@ import java.sql.Savepoint;
 
 import static org.junit.Assert.*;
 
-*/
-/**
- * Created by Jens on 13-Jan-17.
- *//*
+//*
+// * Created by Jens on 13-Jan-17.
+
 
 public class OvertidControllerTest {
-	OvertidController controller = new OvertidController();
+	private OvertidController controller = new OvertidController();
+	private String token;
 	@Test
 	public void overtidControllerTest() throws Exception {
-		Overtid[] overtider = controller.getOvertider();
+		Overtid[] overtider = controller.getOvertider(token);
 		assertNotNull("Can't get overtider from DB", overtider);
-		assertNotNull("Can't get single overtid from DB", controller.getOvertid(overtider[0].getOvertidId()));
-		assertTrue("Can't delete overtid from DB", controller.deleteOvertid(overtider[overtider.length - 1]));
-		assertTrue("Can't add overtid to DB", controller.addOvertid(overtider[overtider.length - 1]));
+		assertNotNull("Can't get single overtid from DB", controller.getOvertid(overtider[0].getOvertidId(), token));
+		assertTrue("Can't delete overtid from DB", controller.deleteOvertid(overtider[overtider.length - 1], token));
+		assertTrue("Can't add overtid to DB", controller.addOvertid(overtider[overtider.length - 1], token));
 		//TODO this test is dependent on vaktid 1 existing
 		Overtid ny = new Overtid(overtider[0].getOvertidId(), 1, 10, "test");
-		assertTrue("Can't update overtid in DB", controller.updateOvertid(ny));
+		assertTrue("Can't update overtid in DB", controller.updateOvertid(ny, token));
 	}
 	@Before
-	public void first() {
+	public void first() throws Exception {
 		DBConnection.beforeTest();
+		this.token = TokenManager.lagToken("test");
 	}
 	@After
 	public void after() {
 		DBConnection.afterTest();
 	}
-}*/
+}
