@@ -603,17 +603,17 @@ public class SqlQueries extends DBConnection {
         return vakter.toArray(new Vakt[vakter.size()]);
 }
 
-	public VaktMedBruker[] selectAllVakterMonth(LocalDateTime fratid, int avdId) {
+	public VaktMedBruker[] selectAllVakterMonth(LocalDateTime tiltid, int avdId) {
 		ResultSet res = null;
 		ArrayList<VaktMedBruker> vakter = new ArrayList<>();
 
 
 		try {
 			String selectSql = "SELECT * FROM vakt LEFT OUTER JOIN bruker_vakt ON vakt.vakt_id = bruker_vakt.vakt_id " +
-					"WHERE YEAR(fra_tid) = ? AND MONTH(fra_tid) = ? AND avdeling_id = ?";
+					"WHERE YEAR(til_tid) = ? AND MONTH(til_tid) = ? AND avdeling_id = ?";
 			selectQuery = connection.prepareStatement(selectSql);
-			selectQuery.setInt(1, fratid.getYear());
-			selectQuery.setInt(2, fratid.getMonthValue());
+			selectQuery.setInt(1, tiltid.getYear());
+			selectQuery.setInt(2, tiltid.getMonthValue());
 			selectQuery.setInt(3, avdId);
 
 			res = selectQuery.executeQuery();
@@ -1532,7 +1532,7 @@ public class SqlQueries extends DBConnection {
 		query.insertOvertid(overtid2);*/
 
 		//System.out.println(query.calculateMonthlyWage(16, LocalDate.now()));
-		System.out.println(Arrays.toString(query.selectAllVakterMonth(LocalDateTime.parse("2010-12-01T12:30:00"),1)));
+		System.out.println(Arrays.toString(query.selectAllVakterMonth(LocalDateTime.parse("2017-02-01T12:30:00"),1)));
 
     }
 }
