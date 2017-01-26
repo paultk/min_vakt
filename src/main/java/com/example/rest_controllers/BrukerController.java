@@ -137,6 +137,30 @@ public class BrukerController {
 		}
 	}
 
+	@RequestMapping(value="/bruker/addtid/{tilTid}/{avdId}", method = RequestMethod.POST)
+	public boolean addBrukerTid(@RequestBody Bruker bruker, @PathVariable ("tilTid") String tid, @PathVariable("avdId") int avdId,
+								@RequestHeader (value = "token") String token) throws AuthException {
+		if (TokenManager.verifiser(token)) {
+			//legge til vakt hvis ikke finnes, ellers legge bruke til vakten
+			DateTimeFormatter aDateTimeFormatter = DateTimeFormatter.ISO_DATE_TIME;
+			Vakt[] vakter = query.selectAllVakter();
+			LocalDateTime tilTid = LocalDateTime.parse(tid, aDateTimeFormatter);
+			for (Vakt v : vakter) {
+				if ((v.getAvdelingId() == avdId) && (v.getTilTid().isEqual(tilTid))) {
+					BrukerVaktController ctrl = new BrukerVaktController();
+					return ctrl.addBrukerVakt(new BrukerVakt(0, bruker.getBrukerId(), v.getVaktId()), token);
+				}
+			}
+			VaktController ctrl = new VaktController();
+			//fratid 8 timer før tiltid
+			LocalDateTime fraTid = tilTid.minusHours(8);
+			return ctrl.insertVakt(new Vakt(bruker.getBrukerId(), avdId, fraTid, tilTid, 10), token);
+		}
+		else {
+			throw new AuthException("Token not authenticated");
+		}
+	}
+
 	/*public static void main(String[] args) {
 		BrukerController controller = new BrukerController();
 		System.out.println(controller.addBruker(new Bruker(1, 0, "Sykepleier", 1, 12345678, 100, 100, true, "admin", "admin", "admin", "Admin@@@")));

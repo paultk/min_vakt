@@ -48,18 +48,16 @@ public class MeldingController {
 	@RequestMapping(value = "/melding/get/ulest/ant", method = RequestMethod.POST)
 	public int getAntMeldinger(@RequestBody Bruker bruker, @RequestHeader (value = "token") String token) throws AuthException {
 		if (TokenManager.verifiser(token)) {
-			return query.selectUlestMeldingerToBruker(bruker.getBrukerId()).length;
+			Melding[] ret = query.selectUlestMeldingerToBruker(bruker.getBrukerId());
+			if (ret != null) {
+				return ret.length;
+			}
+			else {
+				return 0;
+			}
 		}
 		else {
 			throw new AuthException("Token not authenticated");
-		}
-	public int getAntMeldinger(@RequestBody Bruker bruker) {
-		Melding[] ret = query.selectUlestMeldingerToBruker(bruker.getBrukerId());
-		if (ret != null) {
-			return ret.length;
-		}
-		else {
-			return 0;
 		}
 	}
 
@@ -67,7 +65,6 @@ public class MeldingController {
 	public Melding[] getUsettMeldinger(@RequestBody Bruker bruker, @RequestHeader (value = "token") String token) throws AuthException {
 		if (TokenManager.verifiser(token)) {
 			return query.selectUlestMeldingerToBruker(bruker.getBrukerId());
-
 		}
 		else {
 			throw new AuthException("Token not authenticated");
@@ -78,12 +75,8 @@ public class MeldingController {
 	public boolean setSett(@PathVariable("id") int id, @RequestHeader (value = "token") String token) throws AuthException {
 		if (TokenManager.verifiser(token)) {
 			return query.setMeldingSett(id);
-		}
-		else {
+		} else {
 			throw new AuthException("Token not authenticated");
 		}
-	public boolean setSett(@PathVariable("id") int id) {
-		System.out.println(id);
-		return query.setMeldingSett(id);
 	}
 }
