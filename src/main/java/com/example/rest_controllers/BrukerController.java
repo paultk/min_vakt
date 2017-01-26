@@ -6,6 +6,7 @@ import com.example.sql_folder.SqlQueries;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -54,6 +55,24 @@ public class BrukerController {
 			e.printStackTrace();
         }
         return false;
+	}
+
+	@RequestMapping(value="/bruker/addtid/{tilTid}/{avdId}", method = RequestMethod.POST)
+	public boolean addBrukerTid(@RequestBody Bruker bruker, @PathVariable ("tilTid") String tid, @PathVariable("avdId") int avdId) {
+    	//legge til vakt hvis ikke finnes, ellers legge bruke til vakten
+		DateTimeFormatter aDateTimeFormatter = DateTimeFormatter.ISO_DATE_TIME;
+		Vakt[] vakter = query.selectAllVakter();
+		LocalDateTime tilTid = LocalDateTime.parse(tid, aDateTimeFormatter);
+		for (Vakt v : vakter) {
+			if ((v.getAvdelingId() == avdId) && (v.getTilTid().isEqual(tilTid))) {
+				BrukerVaktController ctrl = new BrukerVaktController();
+				return ctrl.addBrukerVakt(new BrukerVakt(0, bruker.getBrukerId(), v.getVaktId()));
+			}
+		}
+		VaktController ctrl = new VaktController();
+		//fratid 8 timer før tiltid
+		LocalDateTime fraTid = tilTid.minusHours(8);
+		return ctrl.insertVakt(new Vakt(bruker.getBrukerId(), avdId, fraTid, tilTid, 10));
 	}
 
 	@RequestMapping(value="/bruker/update", method=RequestMethod.POST)
