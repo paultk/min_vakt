@@ -1487,7 +1487,7 @@ public class SqlQueries extends DBConnection {
 
 	public boolean setMeldingSett(int id) {
 		try {
-			updateQuery = connection.prepareStatement("UPDATE  `g_scrum06`.`melding` SET  `sett` =  '1' " +
+			updateQuery = connection.prepareStatement("UPDATE  `g_scrum06`.`melding` SET  `sett` =  1 " +
 					"WHERE  `melding`.`melding_id` = ?");
 			updateQuery.setInt(1, id);
 			updateQuery.executeUpdate();
