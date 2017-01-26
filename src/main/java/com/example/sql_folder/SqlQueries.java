@@ -8,6 +8,7 @@ import java.time.temporal.ChronoField;
 import java.time.temporal.ChronoUnit;
 import java.time.temporal.ValueRange;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * Created by axelkvistad on 10/01/17.
@@ -608,11 +609,11 @@ public class SqlQueries extends DBConnection {
 
 
 		try {
-			String selectSql = "SELECT vakt.vakt_id,bruker_vakt.vakt_id vaktansvarlig_id, avdeling_id, fra_tid, til_tid, ant_pers, bruker_vakt.bruker_id " +
-					"FROM vakt, bruker_vakt WHERE MONTH(fra_tid) = ? AND YEAR(fra_tid) = ? AND avdeling_id = ?";
+			String selectSql = "SELECT * FROM vakt LEFT OUTER JOIN bruker_vakt ON vakt.vakt_id = bruker_vakt.vakt_id " +
+					"WHERE YEAR(fra_tid) = ? AND MONTH(fra_tid) = ? AND avdeling_id = ?";
 			selectQuery = connection.prepareStatement(selectSql);
-			selectQuery.setInt(1, fratid.getMonthValue());
-			selectQuery.setInt(2, fratid.getYear());
+			selectQuery.setInt(1, fratid.getYear());
+			selectQuery.setInt(2, fratid.getMonthValue());
 			selectQuery.setInt(3, avdId);
 
 			res = selectQuery.executeQuery();
@@ -1531,6 +1532,7 @@ public class SqlQueries extends DBConnection {
 		query.insertOvertid(overtid2);*/
 
 		//System.out.println(query.calculateMonthlyWage(16, LocalDate.now()));
+		System.out.println(Arrays.toString(query.selectAllVakterMonth(LocalDateTime.parse("2010-12-01T12:30:00"),1)));
 
     }
 }

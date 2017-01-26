@@ -30,4 +30,12 @@ public class VaktMedBruker {
     public void setBrukerId(int brukerId) {
         this.brukerId = brukerId;
     }
+
+    @Override
+    public String toString() {
+        return "VaktMedBruker{" +
+                "vakt=" + vakt +
+                ", brukerId=" + brukerId +
+                '}';
+    }
 }
