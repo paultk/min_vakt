@@ -1,3 +1,4 @@
+/*
 package com.example.rest_controllers;
 
 import com.example.database_classes.Overtid;
@@ -11,9 +12,11 @@ import java.sql.Savepoint;
 
 import static org.junit.Assert.*;
 
+*/
 /**
  * Created by Jens on 13-Jan-17.
- */
+ *//*
+
 public class OvertidControllerTest {
 	OvertidController controller = new OvertidController();
 	@Test
@@ -35,4 +38,4 @@ public class OvertidControllerTest {
 	public void after() {
 		DBConnection.afterTest();
 	}
-}
+}*/

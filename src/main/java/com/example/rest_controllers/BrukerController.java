@@ -125,6 +125,18 @@ public class BrukerController {
 		}
 	}
 
+	@RequestMapping("/bruker/epost/{epost}")
+	public Bruker getBrukerByEpost(@PathVariable("epost") String epost, @RequestHeader (value = "token") String token) throws AuthException {
+		if (TokenManager.verifiser(token)) {
+			epost = epost.replaceAll("&at", "@");
+			epost = epost.replaceAll("&dot", ".");
+			return query.selectBruker(epost);
+		}
+		else {
+			throw new AuthException("Token not authenticated");
+		}
+	}
+
 	/*public static void main(String[] args) {
 		BrukerController controller = new BrukerController();
 		System.out.println(controller.addBruker(new Bruker(1, 0, "Sykepleier", 1, 12345678, 100, 100, true, "admin", "admin", "admin", "Admin@@@")));

@@ -1,3 +1,4 @@
+/*
 package com.example.rest_controllers;
 
 import com.example.database_classes.BrukerVakt;
@@ -9,9 +10,11 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
+*/
 /**
  * Created by Jens on 13-Jan-17.
- */
+ *//*
+
 public class BrukerVaktControllerTest {
 	BrukerVaktController controller = new BrukerVaktController();
 	@Test
@@ -29,4 +32,4 @@ public class BrukerVaktControllerTest {
 	public void after() {
 		DBConnection.afterTest();
 	}
-}
+}*/
