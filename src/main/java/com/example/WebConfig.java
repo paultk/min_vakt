@@ -18,7 +18,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 	}
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		registry.addResourceHandler("/").addResourceLocations("/resources/static");
-		registry.addResourceHandler("/app").addResourceLocations("/resources/static/app");
+		registry.addResourceHandler("/app").addResourceLocations("/resources/static/app/**");
 		registry.addResourceHandler("/node_modules").addResourceLocations("/resources/static/node_modules");
 	}
 }

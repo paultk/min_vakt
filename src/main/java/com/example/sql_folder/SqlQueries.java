@@ -524,7 +524,9 @@ public class SqlQueries extends DBConnection {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			SqlCleanup.closeEverything(res, selectQuery, connection);
+			SqlCleanup.closeResSet(res);
+			SqlCleanup.closeStatement(selectQuery);
+//			SqlCleanup.closeEverything(res, selectQuery, connection);
 		}
 
 		return -1;
@@ -581,7 +583,9 @@ public class SqlQueries extends DBConnection {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            SqlCleanup.closeEverything(res, selectQuery, connection);
+        	SqlCleanup.closeResSet(res);
+        	SqlCleanup.closeStatement(selectQuery);
+//            SqlCleanup.closeEverything(res, selectQuery, connection);
         }
         return vakter.toArray(new Vakt[vakter.size()]);
     }
@@ -617,7 +621,9 @@ public class SqlQueries extends DBConnection {
     } catch (SQLException e) {
         e.printStackTrace();
     } finally {
-        SqlCleanup.closeEverything(res, selectQuery, connection);
+		SqlCleanup.closeResSet(res);
+		SqlCleanup.closeStatement(selectQuery);
+//        SqlCleanup.closeEverything(res, selectQuery, connection);
     }
         return vakter.toArray(new Vakt[vakter.size()]);
 }
@@ -645,7 +651,9 @@ public class SqlQueries extends DBConnection {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			SqlCleanup.closeEverything(res, selectQuery, connection);
+			SqlCleanup.closeResSet(res);
+			SqlCleanup.closeStatement(selectQuery);
+//			SqlCleanup.closeEverything(res, selectQuery, connection);
 		}
 		VaktMedBruker[] ret = vakter.toArray(new VaktMedBruker[vakter.size()]);
 		return ret;
@@ -674,7 +682,9 @@ public class SqlQueries extends DBConnection {
     	} catch (SQLException e) {
     		e.printStackTrace();
 		} finally {
-			SqlCleanup.closeEverything(res, selectQuery, connection);
+			SqlCleanup.closeResSet(res);
+			SqlCleanup.closeStatement(selectQuery);
+//			SqlCleanup.closeEverything(res, selectQuery, connection);
 		}
 		return null;
 	}
@@ -1112,7 +1122,9 @@ public class SqlQueries extends DBConnection {
             } catch (SQLException e) {
                 e.printStackTrace();
             } finally {
-                SqlCleanup.closeEverything(res, selectQuery, connection);
+				SqlCleanup.closeResSet(res);
+				SqlCleanup.closeStatement(selectQuery);
+//                SqlCleanup.closeEverything(res, selectQuery, connection);
             }
             return null;
         }
@@ -1404,7 +1416,9 @@ public class SqlQueries extends DBConnection {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			SqlCleanup.closeEverything(res, selectQuery, connection);
+			SqlCleanup.closeResSet(res);
+			SqlCleanup.closeStatement(selectQuery);
+//			SqlCleanup.closeEverything(res, selectQuery, connection);
 		}
 		return tilgjengelighet.toArray(new Tilgjengelighet[tilgjengelighet.size()]);
 	}

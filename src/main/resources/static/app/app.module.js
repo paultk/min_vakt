@@ -14,27 +14,28 @@ var forms_1 = require('@angular/forms');
 var http_1 = require('@angular/http');
 var ng_bootstrap_1 = require('@ng-bootstrap/ng-bootstrap');
 var app_component_1 = require('./app.component');
-var navigation_component_1 = require('./navigation.component');
-var profil_component_1 = require('./profil.component');
-var userinfo_component_1 = require('./userinfo.component');
-var login_component_1 = require('./login.component');
-var user_form_component_1 = require('./user-form.component');
-var user_service_1 = require('./user.service');
-var fravaer_service_1 = require('./fravaer.service');
-var avdeling_service_1 = require('./avdeling.service');
-var input_field_component_1 = require('./input-field.component');
-var forgot_credentials_component_1 = require('./forgot-credentials.component');
-var fravaer_component_1 = require('./fravaer.component');
-var faq_component_1 = require("./faq.component");
-var calendar_component_1 = require("./calendar.component");
-var nav_bar_component_1 = require("./nav-bar.component");
-var shift_service_1 = require("./shift.service");
+var navigation_component_1 = require('./navigation/navigation.component');
+var profil_component_1 = require('./profil/profil.component');
+var userinfo_component_1 = require('./userinfo/userinfo.component');
+var login_component_1 = require('./login/login.component');
+var user_form_component_1 = require('./user-form/user-form.component');
+var user_service_1 = require('./_services/user.service');
+var fravaer_service_1 = require('./_services/fravaer.service');
+var avdeling_service_1 = require('./_services/avdeling.service');
+var input_field_component_1 = require('./input-field/input-field.component');
+var forgot_credentials_component_1 = require('./forgot-credentials/forgot-credentials.component');
+var fravaer_component_1 = require('./fravaer/fravaer.component');
+var faq_component_1 = require("./faq/faq.component");
+var calendar_component_1 = require("./calendar/calendar.component");
+var nav_bar_component_1 = require("./calendar/nav-bar.component");
+var shift_service_1 = require("./_services/shift.service");
 // import "./rxjs-extensions";
-var notification_component_1 = require("./notification.component");
-var notification_service_1 = require("./notification.service");
-var authentication_service_1 = require('./authentication.service');
-var user_search_component_1 = require('./user-search.component');
+var notification_component_1 = require("./notification/notification.component");
+var notification_service_1 = require("./_services/notification.service");
+var authentication_service_1 = require('./_services/authentication.service');
+var user_search_component_1 = require('./userinfo/user-search.component');
 var app_routing_module_1 = require('./app-routing.module');
+var auth_guard_1 = require("./_guards/auth.guard");
 var AppModule = (function () {
     function AppModule() {
     }
@@ -72,7 +73,8 @@ var AppModule = (function () {
                 fravaer_service_1.FravaerService,
                 avdeling_service_1.AvdelingService,
                 notification_service_1.NotificationService,
-                authentication_service_1.AuthenticationService
+                authentication_service_1.AuthenticationService,
+                auth_guard_1.AuthGuard
             ],
             bootstrap: [app_component_1.AppComponent]
         }), 

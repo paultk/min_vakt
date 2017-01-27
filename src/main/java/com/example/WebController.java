@@ -37,10 +37,10 @@ public class WebController {
 		return new ModelAndView("/index.html");
 	}
 
-	@RequestMapping(value = "/login", method = RequestMethod.GET)
+	/*@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public ModelAndView login2() {
 		return new ModelAndView("/loginpage.html");
-	}
+	}*/
 
 	@RequestMapping("/user")
 	public Principal user(Principal user) {
