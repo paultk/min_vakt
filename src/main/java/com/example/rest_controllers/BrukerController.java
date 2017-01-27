@@ -142,27 +142,9 @@ public class BrukerController {
 	public boolean addBrukerTid(@RequestBody Bruker bruker, @PathVariable ("tilTid") String tid, @PathVariable("avdId") int avdId,
 								@RequestHeader (value = "token") String token) throws AuthException {
 		if (TokenManager.verifiser(token)) {
-			//legge til vakt hvis ikke finnes, ellers legge bruke til vakten
 			DateTimeFormatter aDateTimeFormatter = DateTimeFormatter.ISO_DATE_TIME;
-			Vakt[] vakter = query.selectAllVakter();
-			LocalDateTime tilTid = LocalDateTime.parse(tid, aDateTimeFormatter);
-//			System.out.println(tilTid.toString());
-//			System.out.println(Arrays.toString(vakter));
-			for (Vakt v : vakter) {
-				System.out.println("Lik tid: " + v.getTilTid().isEqual(tilTid));
-				System.out.println(v.getAvdelingId() + " = " + avdId + "?");
-				System.out.println(v.getAvdelingId() == avdId);
-				System.out.println();
-				if ((v.getAvdelingId() == avdId) && (v.getTilTid().isEqual(tilTid))) {
-					System.out.println("Funnet id: " + v.getVaktId());
-					BrukerVaktController ctrl = new BrukerVaktController();
-					return ctrl.addBrukerVakt(new BrukerVakt(0, bruker.getBrukerId(), v.getVaktId()), token);
-				}
-			}
-			VaktController ctrl = new VaktController();
-			//fratid 8 timer før tiltid
-			LocalDateTime fraTid = tilTid.minusHours(8);
-			return ctrl.insertVakt(new Vakt(bruker.getBrukerId(), avdId, fraTid, tilTid, 10), token);
+			LocalDateTime tidInn = LocalDateTime.parse(tid, aDateTimeFormatter);
+			return query.insertVaktTid(bruker, tidInn, avdId);
 		}
 		else {
 			throw new AuthException("Token not authenticated");

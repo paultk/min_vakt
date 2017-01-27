@@ -125,6 +125,25 @@ public class SqlQueries extends DBConnection {
     * BRUKER
     *
     */
+	public boolean insertVaktTid(Bruker bruker, LocalDateTime tid, int avdelingId) {
+		try {
+			selectQuery = connection.prepareStatement("SELECT * FROM vakt WHERE til_tid = ? AND avdeling_id = ?");
+			selectQuery.setTimestamp(1, Timestamp.valueOf(tid));
+			selectQuery.setInt(2, avdelingId);
+			ResultSet res = selectQuery.executeQuery();
+			if (res.next()) {
+				System.out.println("Funnet vaktid: "+res.getInt("vakt_id"));
+				return insertBrukerVakt(bruker.getBrukerId(), res.getInt("vakt_id"));
+			}
+			System.out.println("Ikke funnet");
+			LocalDateTime fraTid = tid.minusHours(8);
+			return insertVakt(new Vakt(bruker.getBrukerId(), avdelingId, fraTid, tid, 5));
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
 
     public Bruker selectBruker(String epost) {
 		try {
