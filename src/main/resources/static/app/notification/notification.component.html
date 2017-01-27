@@ -1,0 +1,71 @@
+<div [hidden]="submitted">
+  <form (ngSubmit)="onSubmit()" #heroForm="ngForm" name="heihei">
+
+      <div class="left pull-left">
+        <div class="user-form-header">
+          <h4>Mine varsler</h4>
+         </div>
+
+        <table class="notifications">
+          <thead>
+          <tr>
+            <th>Fra</th>
+            <th>Overskrift</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let notif of notifications" (click)="onSelect(notif.meldingId)" [class.selected]="notif==notification">
+              <td>{{selectUser(notif.fraBrukerId)}} {{fraUser.fornavn}} {{fraUser.etternavn}}</td>
+              <td>{{notif.overskrift}}</td>
+              <!--<td *ngFor="let u of users">{{u.fornavn}}</td>-->
+          </tr>
+          </tbody>
+        </table>
+
+
+        <textarea class= "texten2" rows="5" cols="49" name="test2">{{notification.melding}}
+        </textarea>
+
+
+
+        <!--<button type="submit" (click)="printFunksjon()"
+          class="btn btn-default btn-primary" [disabled]="!heroForm.form.valid" name="test4">Åpne melding
+        </button>-->
+      </div>
+
+
+      <div class="right pull-right">
+        <div class="user-form-header2">
+          <h4>Ny varsel</h4>
+        </div>
+
+        <br>
+        <label>Overskrift</label><br>
+        <input class= "inputen" name="overskrift" [(ngModel)]="model.overskrift"><br><br>
+
+        <label>Melding</label>
+        <textarea class= "texten" [(ngModel)] = "model.melding" rows="5" cols="49" [disabled]="send" name="test2"></textarea>
+
+        <div class="form-group">
+          <label for="fornavn">Til</label>
+              <select class="select-form form-control" id="fornavn" required [(ngModel)]="model.tilBrukerId" name="fornavn">
+                  <option *ngFor="let user of users" [value]="user.brukerId">{{user.fornavn}} {{user.etternavn}}</option>
+              </select>
+        </div>
+
+       <button type="submit"
+          class="btn btn-default btn-primary" [disabled]="!heroForm.form.valid" name="test3">Send melding
+       </button>
+
+        <div *ngIf="edited" class="alert">
+          <label class="sendt">Melding sendt!</label>
+        </div>
+
+      </div>
+
+
+  </form>
+
+
+</div>
+

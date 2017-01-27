@@ -1,0 +1,151 @@
+th, td {
+  padding-right: 100px;/*knut*/
+
+}
+
+th, tr, td{
+  border-bottom: 1px solid #ccc; /*knut*/
+  padding-left: 10px;
+  padding-right: 100px;
+  border-right: 1px solid #ccc;
+
+  width:100%;
+
+}
+
+th, tr {
+  height: 40px;
+  text-align: left; /*knut*/
+}
+
+.texten2{
+  margin-top: 20px;
+  margin-left: 20px;
+}
+
+.notifications{
+  margin-bot: 20px;
+  margin-left: 20px;
+  width: 380px;
+}
+.user-form-header {
+  background-color: #006D92;
+  color: white;
+  padding: 5px;
+  margin-bottom: 5px;
+}
+
+.user-form-content{
+  padding: 0 20px 20px 20px;
+}
+
+.user-form-header2 {
+  background-color: #006D92;
+  color: white;
+  padding: 5px;
+  margin-bottom: 5px;
+}
+
+.left {
+  width: 30em;
+  height: auto;
+  float: left;
+  border: 1px solid #ccc;
+}
+
+.right {
+  margin-right: 10em;
+  width: 30em;
+  height: auto;
+  float: left;
+  border: 1px solid #ccc;
+}
+
+.inputen{
+  width: 380px !important;
+  margin-left: 20px;
+}
+
+
+th {
+  background-color: lightgrey;
+  color: black;
+}
+
+tr:nth-child(odd) {
+  background-color: #f5f5f5
+}
+
+tr:hover {
+  background-color: #f0f0f0;
+}
+
+
+
+input[type=text]:focus {
+  width: 50%;
+}
+
+.btn {
+  float: left;
+  width: 120px;
+  box-sizing: border-box;
+  height: 40px;
+  margin-left: 20px;
+  margin-bottom: 20px;
+}
+
+table {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding-right: 100px;
+  width: 400px;
+  margin-top: 10px;
+  text-align: left;
+}
+
+
+
+.content {
+  height: 100%;
+  width: 80%;
+  float: left;
+  font-family: "Ubuntu Condensed", sans-serif;
+}
+
+.texten{
+  margin-left: 20px;
+}
+
+label{
+  margin-left: 20px;
+}
+
+#fornavn{
+  width: 380px;
+  margin-left: 20px;
+}
+
+.alert{
+  float:right;
+  margin-right: 10px;
+  text-align: center;
+}
+
+.sendt{
+  color: green;
+}
+
+.selected {
+  background-color:#8a8a8a!important;
+}
+
+tbody{
+  overflow-y: auto;
+  height: 200px;
+}
+
+tbody, thead{
+  width: 380px;
+  display: block;
+}

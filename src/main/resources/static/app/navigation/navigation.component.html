@@ -1,0 +1,72 @@
+<!-- HEADER -->
+<div class="menu">
+  <div class="container-fluid">
+    <div class="navbar-header pull-left">
+      <a href="#">MinVakt</a>
+    </div>
+    <div>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+          <a type="text" class="user-name" href="#">
+            <span class="glyphicon"></span>{{selectedUser.fornavn}} {{selectedUser.etternavn}}<!--{{selectedUser.navn}}-->
+          </a>
+        </li>
+
+        <li>
+          <a href="#">
+            <span class="glyphicon glyphicon-bell"></span>
+            Varsler<span class="badge">{{numMessages}}</span></a>
+        </li>
+
+        <li>
+          <a href="#">
+            <span class="glyphicon glyphicon-user"></span>
+            Profil</a>
+        </li>
+        <li>
+          <a href="#">
+            <span class="glyphicon glyphicon-question-sign"></span>
+            Hjelp</a>
+        </li>
+        <li>
+          <a href="#" (click)="logout()">
+            <span class="glyphicon glyphicon-log-out"></span>
+            Logg ut</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- NAVBAR -->
+<div class="navigation pull-left">
+  <div class="container-fluid">
+    <ul class="nav side-menu">
+      <li>
+        <a href="../calendar">
+          <span class="glyphicon"></span> Vaktliste
+        </a>
+      </li>
+      <li>
+        <a href="#">
+          <span class="glyphicon"></span> Brukerinfo
+        </a>
+      </li>
+      <li>
+        <a href="#">
+          <span class="glyphicon"></span> Tilgjengelighet
+        </a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<!-- CONTAINER -->
+<div class="container">
+  <!--<my-userinfo></my-userinfo>-->
+  <!--<my-profil></my-profil>-->
+  <my-fravaer></my-fravaer>
+  <!--<user-form></user-form>
+  <!--<faq></faq>-->
+  <!--notification></notification>-->
+</div>

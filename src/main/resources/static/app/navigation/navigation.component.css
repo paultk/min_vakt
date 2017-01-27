@@ -1,0 +1,146 @@
+.navigation {
+  height: 100%;
+  width: auto;
+  float: left;
+  alignment: left;
+  padding-top: 50px;
+  background-color: #006D92;
+  border-right: 4px solid #04A3ED;
+  position: fixed;
+}
+
+.user-name {
+  font-size: 13px !important;
+  background-color: #006D92;
+  color: white ;
+  text-align: right;
+}
+
+.navigation .side-menu > li > a {
+  position: relative;
+  font-size: 15px;
+  background-color: #006D92;
+  font-family: Ubuntu Condensed, sans-serif !important;
+  color: white;
+  padding: 5px 10px 5px 0;
+  margin: 20px 0;
+  /*border-right: 2px solid #006D92;*/
+  text-align: right;
+  cursor: pointer;
+}
+
+.navigation .side-menu > li > a:after {
+  display: block;
+  position: absolute;
+  left: 0;
+  bottom: -10px;
+  width: 0;
+  height: 2px;
+  background-color: #04A3ED;
+  content: "";
+  transition: width 0.2s;
+}
+
+.navigation .side-menu > li > a:hover {
+  background-color: #006D92;
+  color: #04A3ED;
+  /*border-right: 2px solid #04A3ED;*/
+}
+
+.navigation .side-menu > li > a:hover:after {
+  width: 100%;
+}
+
+/*yo
+.cmn-t-underline {
+  position: relative;
+  color: #ff3296;
+}
+.cmn-t-underline:after {
+  display: block;
+  position: absolute;
+  left: 0;
+  bottom: -10px;
+  width: 0;
+  height: 10px;
+  background-color: #98004a;
+  content: "";
+  transition: width 0.2s;
+}
+.cmn-t-underline:hover {
+  color: #98004a;
+}
+.cmn-t-underline:hover:after {
+  width: 100%;
+}
+*/
+
+
+.navigation .side-menu > li > a:active {
+  background-color : #006D92;
+  color: #04A3ED;
+  border-bottom: 2px solid #04A3ED;
+}
+
+.menu {
+  background-color: #006D92;
+  border-bottom: 4px solid #04A3ED;
+  width: 100%;
+  height: auto;
+  padding: 0;
+  position: fixed;
+  margin: 0px;
+  z-index: 1;
+  opacity: 1;
+  font-family: "Ubuntu Condensed", sans-serif;
+}
+
+.menu  .navbar-nav > li > a:active {
+  background-color : #006D92;
+  color: #04A3ED;
+}
+
+.menu  .navbar-nav >  li >  a {
+  font-size: 13px;
+  background-color: #006D92;
+  color: white;
+  padding: 10px 20px;
+
+}
+
+.menu  .navbar-nav >  li >  a:hover {
+  background-color: #006D92;
+  color: #04A3ED;
+}
+
+.navbar-header > a {
+  font-family: "Ubuntu Condensed", sans-serif;
+  color: white;
+  margin: 10px 0 0 0;
+  text-decoration: none;
+  font-size: 25px;
+  padding: 5px 10px;
+  alignment: center;
+}
+
+.navbar-header > a:hover {
+  text-decoration: none;
+  color: #04A3ED;
+}
+
+.container {
+  height: auto;
+  width: 100%;
+  float: left;
+  padding: 75px 0 0 200px;
+  font-family: "Ubuntu Condensed", sans-serif;
+}
+
+.badge{
+  background-color: #ff3232;
+  color: white;
+  font-size: xx-small;
+  position: relative;
+  margin-bottom: 12px;
+  margin-left: 2px;
+}

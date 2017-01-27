@@ -1,0 +1,45 @@
+<div class="content">
+  <div [hidden]="submitted">
+    <form (ngSubmit)="onSubmit()" #heroForm="ngForm">
+
+      <form class="form-inline">
+        <div class="form-group">
+          <div class="input-group">
+            <input id="dateform" class="form-control" placeholder="Vennligst velg en dato→"
+                         name="dp" [ngModel]="timeObject" (ngModelChange)="refreshVakter($event)"
+                   ngbDatepicker #d="ngbDatepicker">
+            <div class="input-group-addon" (click)="d.toggle()" >
+              <div class="glyphicon glyphicon-calendar" style="width: 1.2rem; height: 1rem; cursor: pointer;"></div>
+            </div>
+          </div>
+        </div>
+      </form>
+
+      <br>
+
+      <div class="datoer">
+        <div class="fra">
+          <label class="label">Fra dato</label>
+          <ngb-timepicker [(ngModel)]="fromTime" name="fraTidTime"></ngb-timepicker>
+        </div>
+        <div class="til">
+          <label class="label">Til dato</label>
+          <ngb-timepicker [(ngModel)]="toTime" name="tilTidTime"></ngb-timepicker>
+        </div>
+      </div>
+
+      <ul class="vakter">
+        <h4>Velg vakt</h4>
+        <div>Velg en dato for å se brukerens vakter den dagen</div>
+        <li *ngFor="let vakt of vaktliste" (click)="onSelect(vakt)"
+            [class.selected]="vakt === selectedVakt">
+          <span class="badge">{{vakt.vakt_id}}</span>
+          <span>{{vakt.fra_tid}}</span>
+        </li>
+      </ul>
+
+      <input-field [field]='"Kommentar"' [(fieldValue)]="model.kommentar" id="drittFelt"></input-field>
+      <button type="submit" class="btn btn-default btn-primary" [disabled]="!heroForm.form.valid">Registrer fravær</button>
+    </form>
+  </div>
+</div>

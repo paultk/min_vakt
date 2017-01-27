@@ -1,0 +1,91 @@
+h3{
+  position: relative;
+  left: 380px;
+  top: -275px;
+}
+
+.static-info {
+  float: left;
+  width: 1000px;
+  height: auto;
+  border: 1px solid #ccc;
+  overflow-x: hidden;
+}
+
+.static-header {
+  background-color: #006D92;
+  color: white;
+  padding: 5px;
+  margin-bottom: 5px;
+}
+
+.static-content {
+  padding: 0 20px 20px 20px;
+}
+
+
+
+.selected {
+  background-color: #328AA7 !important;
+  color: black;
+}
+
+.sporsmaaler {
+  top: 20px;
+  margin: 2em;
+  list-style-type: inside;
+  padding: 0;
+  width: 22em;
+}
+
+.sporsmaaler li {
+  cursor: pointer;
+  position: relative;
+  left: 0;
+  background-color: #b6d5da;
+  margin: .5em;
+  padding: .3em 0;
+  height: 1.8em;
+  border-radius: 6px;
+}
+
+.sporsmaaler li.selected:hover {
+  background-color: #328AA7 !important;
+}
+
+.sporsmaaler li:hover {
+  color: #328AA7;
+  background-color: #328AA7;
+}
+
+.sporsmaaler .text {
+  position: relative;
+  top: -3px;
+}
+
+.sporsmaaler .badge {
+  font-size: small;
+  color: black;
+  background-color: #b6d5da;
+  line-height: 1em;
+  position: relative;
+  left: -1px;
+  top: -4px;
+  height: 1.8em;
+  margin-right: .8em;
+  border-radius: 4px 0 0 4px;
+  width: 20em;
+}
+
+
+
+ul{
+  list-style-type: none;
+}
+
+.hello{
+  position: relative;
+  left: 380px;
+  top: -270px;
+  width: 500px;
+}

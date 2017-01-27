@@ -1,0 +1,133 @@
+<div>
+  <!--<nav-bar-component [headerField2]="date.getFullYear()" [headerField]="months[date.getMonth()]" ></nav-bar-component>-->
+  <nav-bar-component [headerField2]="date.getFullYear()" [(headerField)]="date" (pushed)="changeDate(date.getFullYear() +$event, date.getMonth(), date.getDate())"  ></nav-bar-component>
+  <nav-bar-component [headerField2]="months[date.getMonth()]" [(headerField)]="date" (pushed)="changeDate(date.getFullYear(), date.getMonth() + $event, date.getDate())"  ></nav-bar-component>
+  <nav-bar-component [headerField2]="date.getDate()" [(headerField)]="date" (pushed)="changeDate(date.getFullYear(), date.getMonth(), date.getDate() + $event )"  ></nav-bar-component>
+
+
+
+  <!--
+  <nav-bar-component [headerField2]="date.getFullYear()" [(headerField)]="date" (pushed)="date.setFullYear(date.getFullYear() +$event)"  ></nav-bar-component>
+  <nav-bar-component [headerField2]="months[date.getMonth()]" [(headerField)]="date" (pushed)="date.setMonth(date.getMonth() + $event)"  ></nav-bar-component>
+  <nav-bar-component [headerField2]="date.getDate()" [(headerField)]="date" (pushed)="date.setDate($event + date.getDate())"  ></nav-bar-component>
+-->
+
+  <!--<nav-bar-component [headerField]="'Week'" ></nav-bar-component>-->
+  <!--<nav-bar-component [headerField2]="date.getDate()" ></nav-bar-component>-->
+</div>
+<div>
+  <table>
+    <thead>
+    <tr>
+      <th>Bruker</th>
+      <th>23:00</th>
+      <th *ngFor="let a of tempArr; let index = index">
+        <div *ngIf="index < 10">0{{index}}:00</div>
+        <div *ngIf="index >= 10">{{index}}:00</div>
+        <!--0700-1500  1500-2300 2300-0700-->
+      </th>
+    </tr>
+    </thead>
+    <tr *ngFor="let shift of daysShifts[this.date.getDate()]; let rows = index">
+      <!--<td>{{shift.etternavn}}</td>-->
+      <td>{{usersIndexed[shift.userId].etternavn}}, {{usersIndexed[shift.userId].fornavn}}</td>
+      <td *ngFor="let b of tempArr; let index = index" >
+        <div *ngIf="index <= 8 && shift.toTime == 7" class="{{cssClasses[usersIndexed[shift.userId].stillingsBeskrivelse]}}">asd</div>
+        <div *ngIf="index >= 8 && index <= 15 && shift.toTime == 15" class="{{cssClasses[usersIndexed[shift.userId].stillingsBeskrivelse]}}">asd</div>
+        <div *ngIf="index >= 15 && index <= 23 && shift.toTime == 23" class="{{cssClasses[usersIndexed[shift.userId].stillingsBeskrivelse]}}">asd</div>
+        <!--<div *ngIf="index <= 15 && shift.toTime == 15" class="yellowDiv">asd</div>-->
+        <!--<div *ngIf="index <= 23 && shift.toTime == 23" class="yellowDiv">asd</div>-->
+        <!--<div *ngIf="index <= shift.toTime " class="yellowDiv">asd</div>-->
+        <!--<div *ngIf="index <= shift.toTime " class="yellowDiv">asd</div>-->
+        <!--<div *ngIf="index <= shift.toTime * 8" class="yellowDiv">asd</div>-->
+        <!--<div *ngIf="index <= shift.toTime * 8" class="yellowDiv">asd</div>-->
+      </td>
+    </tr>
+  </table>
+</div>
+
+<div [hidden]="shiftPercentageOk[0]"
+>
+  Det er liten prosentandel av sykepleiere eller Helsefagarbeidere på skift 2300-0700
+</div>
+<div [hidden]="shiftPercentageOk[1]"
+>
+  Det er liten prosentandel av sykepleiere eller Helsefagarbeidere på skift 0700-1500
+</div>
+<div [hidden]="shiftPercentageOk[2]"
+>
+  Det er liten prosentandel av sykepleiere eller Helsefagarbeidere på skift 1500-2300
+</div>
+<div>
+  <h2>Helsefagarbeider:<a class="yellowDiv">s</a></h2>
+  <h2>Sykepleier:<a class="greenDiv">s</a></h2>
+  <h2>Assistent:<a class="redDiv">s</a></h2>
+</div>
+<br>
+<br>
+
+Avdeling:
+<select value="dsf" id="avdeling1">
+  <option value="1">Solbakken</option>
+  <option>2</option>
+  <option>3</option>
+</select>
+<br>
+<br>
+<br>
+Ansatte for Avdeling: .....
+<div>
+  <table>
+    <thead>
+    <th>Bruker</th>
+    <th>  Ordinær tid igjen</th>
+    <th>Overtid</th>
+    <th>Stillingsprosent</th>
+    </thead>
+    <tr *ngFor="let user of allUsers" (click)="setForm(user)">
+      <!--[class.selected]="shift"-->
+
+
+      <td>{{user.etternavn}}, {{user.fornavn}}</td>
+      <td>{{user.brukerId}}</td>
+      <td>{{ordinaryTimeAndOvertime[user.brukerId]}}</td>
+      <!--<td>{{ordinaryTimeAndOvertime?[user.brukerId][1]}}</td>-->
+    </tr>
+  </table>
+
+
+  <div>
+    <table>
+      <thead>
+      <th>Ansatt</th>
+      <th>Fra</th>
+      <th>Til</th>
+      </thead>
+      <!--<tr *ngFor="let shift of shiftsUsersCanWork" (click)="setForm(shift)">
+        <td>{{usersIndexed[shift.brukerId]}}</td>
+        <td>{{shift.fromTime}}</td>
+        <td>{{shift.toTime}}</td></tr>-->
+    </table>
+  </div>
+
+  <form>
+    <input-field  [field]="'Ansatt'" [disabled]="true" [fieldValue]="(shiftInForm?.user.etternavn + ', ' + shiftInForm?.user.fornavn)"></input-field>
+
+    <label for="avdeling">Skift</label>
+    <select class="form-control"  id="avdeling"
+            required
+            name="avdelingId"
+            (ngModel)="shiftInForm.fromTime"
+    >
+      <option  [value]="'0'" selected>23:00-07:00</option>
+      <option [value]="'1'">07:00-15:00</option>
+      <option [value]="'2'">15:00-23:00</option>
+      <
+    </select>
+
+  </form>
+  <button type="button" (click)="registerShift()" >Registrer skift</button>
+  <button>check</button>
+
+
+</div>

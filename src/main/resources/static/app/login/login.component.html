@@ -1,0 +1,42 @@
+<div class="container">
+  <div class="row">
+    <form class="form-signin mg-btm" name="form" (ngSubmit)="onSubmit()" #f="ngForm">
+      <h1 class="heading-desc">MinVakt</h1>
+      <div class="social-box">
+        <h3>Logg inn for å starte din sesjon</h3>
+      </div>
+      <div class="main">
+
+        <input type="text" class="form-control" id="email" placeholder="Email" autofocus
+               [(ngModel)]="model.username" #email="ngModel" name="email" required>
+        <div [hidden]="email.valid || email.pristine"
+             class="alert alert-danger">
+          Oppgi epostadresse.
+        </div>
+        <input type="password" class="form-control" id="password" placeholder="Passord"
+               [(ngModel)]="model.password" #password="ngModel" name="password" required>
+        <div [hidden]="password.valid || password.pristine"
+             class="alert alert-danger">
+          Oppgi passord.
+        </div>
+
+        <input type="checkbox" id="huskMeg" [(ngModel)]="rememberMe" #huskMeg="ngModel" name="huskMeg">
+        <label for="huskMeg">&nbsp;Husk meg</label>
+        <span class="clearfix"></span>
+      </div>
+      <div class="login-footer">
+        <div class="row">
+          <div class="col-xs-6 col-md-6">
+            <div class="left-section">
+              Glemt brukernavn eller passord? Klikk
+              <a href="">her.</a>
+            </div>
+          </div>
+          <div class="col-xs-6 col-md-6 pull-right">
+            <button type="submit" class="btn btn-large btn-primary pull-right">Logg inn</button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

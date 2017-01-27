@@ -1,0 +1,97 @@
+<div [hidden]="submitted">
+  <form (ngSubmit)="onSubmit()" #heroForm="ngForm">
+
+    <!--VENSTRE-->
+    <div class="left pull-left">
+      <div class="user-form-header">
+        <h4>Opprett ny bruker</h4>
+      </div>
+      <div class="user-form-content">
+        <input-field class="inputs" [field]='"Fornavn"'></input-field>
+
+        <input-field class="inputs" [field]='"Etternavn"'></input-field>
+
+        <form class="form-inline">
+          <div class="date form-group">
+            <label class="form-label">Fødselsdato</label>
+            <div class="input-group">
+              <input class="date-control form-control" placeholder="yyyy-mm-dd"
+                     name="dp" [(ngModel)]="model" ngbDatepicker #d="ngbDatepicker">
+              <div class="input-group-addon" (click)="d.toggle()">
+                <div class="glyphicon glyphicon-calendar"></div>
+              </div>
+            </div>
+          </div>
+        </form>
+
+        <input-field class="inputs" [field]='"Telefonnummer"'></input-field>
+
+        <input-field class="inputs" [field]='"Epost"'></input-field>
+
+        <input-field class="inputs" [field]='"Adresse"'></input-field>
+
+        <input-field class="inputs" [field]='"By"'></input-field>
+      </div>
+    </div>
+
+    <!--HØYRE-->
+    <div class="right">
+      <div class="user-form-header2">
+        <h4>easter egg</h4>
+      </div>
+      <div class="user-form-content">
+        <div class="form-group">
+          <!--STILLING-->
+          <label for="stillingsId">Stilling</label>
+          <select class="select-form form-control" id="stillingsId"
+                  required
+                  name="stillingsId">
+            <option *ngFor="let stil of stillinger; let index = index" [value]="index">{{stil}}</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <!--STILLINGSPROSENT-->
+          <label for="stillingsProsent">Stillingsprosent</label>
+          <select class="select-form form-control" id="stillingsProsent"
+                  required
+                  name="stillingsprosent">
+            <option *ngFor="let still of stillingsProsent" [value]="still">{{still}}</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <!--AVDELING-->
+          <label for="avdeling">Avdeling</label>
+          <select class="select-form form-control" id="avdeling"
+                  required
+                  name="avdelingId">
+            <option *ngFor="let avd of avdelinger" [value]="avd">{{avd.navn}}</option>
+          </select>
+        </div>
+
+        <input-field [field]='"Timelønn"'></input-field>
+
+        <input-field [field]='"Passord"'></input-field>
+
+        <div class="form-group">
+          <!--ADMIN?-->
+          <label for="admin">Administrator?:</label><br>
+          <input type="radio" id="admin"
+                 required
+                 [(ngModel)]="model.admin" name="admin" value="true"> Ja &emsp;
+          <input type="radio" id="admin1"
+                 required
+                 [(ngModel)]="model.admin" name="admin" value="false"> Nei<br>
+        </div>
+
+        <button type="submit" (click)="printFunksjon()"
+                class="btn btn-default btn-primary"
+                [disabled]="!heroForm.form.valid">lagre bruker
+        </button>
+      </div>
+
+    </div>
+
+  </form>
+</div>

@@ -1,0 +1,64 @@
+.btn {
+  float: left;
+  width: 60px;
+  box-sizing: border-box;
+  height: 40px;
+}
+
+table {
+  display: table;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: auto;
+  margin-top: 10px;
+  text-align: left;
+  /*overflow-y: scroll;*/
+}
+
+tr {
+  width: auto;
+}
+
+th {
+  background-color: #006D92;
+  color: white;
+}
+
+.epost {
+  width: 200px !important;
+}
+
+.filler {
+  background-color: #006D92;
+  width: 16px;
+  padding: 0 !important;
+}
+
+th, td{
+  padding: 10px;
+  width: 180px;
+  border-bottom: 1px solid #ccc;
+}
+
+thead, tbody {
+  display: block;
+  width: auto;
+}
+
+tbody {
+  overflow-y: auto;
+  height: 200px;
+  overflow-x: auto;
+
+}
+
+/*
+.content {
+  height: 100%;
+  width: 80%;
+  float: left;
+  font-family: "Ubuntu Condensed", sans-serif;
+}
+*/
+
+/*SCROLLBAR*/

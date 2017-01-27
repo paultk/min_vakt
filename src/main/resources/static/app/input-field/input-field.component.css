@@ -1,0 +1,14 @@
+.container {
+  width: auto;
+  height: auto;
+  margin: 0;
+  padding: 0;
+}
+
+label {
+  float: left;
+  width: auto;
+  margin-right: 1px;
+  font-weight: bold;
+  font-size: 14px;
+}

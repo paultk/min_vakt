@@ -1,0 +1,22 @@
+<div class="static-info pull left">
+  <div class="static-header">
+    <h4>Ofte stilte spørsmål</h4>
+  </div>
+
+    <div class="static-content">
+  <ul class="sporsmaaler">
+    <li *ngFor="let sporsmaal of sporsmaaler"
+        [class.selected]="sporsmaal === valgtSpr"
+        (click)="onSelect(sporsmaal)">
+      <span class="badge">{{sporsmaal.sprs}}</span>
+    </li>
+  </ul>
+
+  <div *ngIf="valgtSpr">
+    <h3>{{valgtSpr.sprs}}</h3>
+    <div class="hello">
+      {{valgtSpr.svar}}
+    </div>
+  </div>
+  </div>
+  </div>

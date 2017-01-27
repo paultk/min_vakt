@@ -1,0 +1,43 @@
+<form>
+
+  <!--<input type="text" name="search" placeholder="Søk">-->
+  <button class="btn btn-primary btn-large">Søk</button>
+  <user-search></user-search>
+  <br>
+  <a href="#">
+    <span class="glyphicon glyphicon-plus"></span>
+    Ny bruker</a>
+</form>
+
+<table class="users table-striped table-hover">
+  <thead>
+  <tr>
+    <th>Navn</th>
+    <th>Kompetanse</th>
+    <th>Stillingsprosent</th> <!--kun for admin-->
+    <th>Telefonnummer</th>
+    <th class="epost">Epost</th>
+    <th class="filler"></th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let user of users">
+    <td>{{user.fornavn}} {{user.etternavn}}</td>
+    <td>{{user.stillingsBeskrivelse}}</td>
+    <td>{{user.stillingsProsent}}</td> <!--kun for admin-->
+    <td>{{user.telefonNr}}</td>
+    <td>{{user.epost}}</td>
+  </tr>
+  </tbody>
+</table>
+
+
+<!--
+<ul class="pagination">
+  <li><a href="#">1</a></li>
+  <li><a href="#">2</a></li>
+  <li><a href="#">3</a></li>
+  <li><a href="#">4</a></li>
+  <li><a href="#">5</a></li>
+</ul>
+-->

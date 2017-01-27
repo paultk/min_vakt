@@ -1,0 +1,21 @@
+<div class="container">
+  <div  [hidden]="submitted">
+    <label>{{field}}</label>
+      <div class="form-group">
+        <label for= {{field}}></label>
+        <input type="text" class="form-control" id="{{field}}" [disabled]="disabled"
+               required
+               [(ngModel)]="fieldValue" name="{{field}}"
+
+               (ngModelChange)="onChanges($event)"
+
+               #fieldValue2="ngModel">
+        <!--dfsdf{{fieldValue2.className}}-->
+        <!--<div [hidden]="fieldValue || fieldValue"
+             class="alert alert-danger">
+          Feltet må utfylles
+        </div>-->
+      </div>
+    <!--<button (click)="testConnect3()">test connect</button>-->
+  </div>
+</div>
