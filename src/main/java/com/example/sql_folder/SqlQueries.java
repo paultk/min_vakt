@@ -1210,12 +1210,10 @@ public class SqlQueries extends DBConnection {
     		ArrayList<FravaerMedBrukerOgVakt> fravs = new ArrayList<>();
     		while (res.next()) {
     			fravs.add(new FravaerMedBrukerOgVakt(
-    					new Fravaer(
-    							res.getInt("bruker_vakt_id"),
-								res.getTimestamp("fra_tid").toLocalDateTime(),
-    							res.getTimestamp("til_tid").toLocalDateTime(),
-    							res.getString("kommentar")
-						),
+						res.getInt("bruker_vakt_id"),
+						res.getTimestamp("fra_tid").toLocalDateTime(),
+						res.getTimestamp("til_tid").toLocalDateTime(),
+						res.getString("kommentar"),
 						res.getInt("bruker_id"),
 						res.getInt("vakt_id")
 				));
