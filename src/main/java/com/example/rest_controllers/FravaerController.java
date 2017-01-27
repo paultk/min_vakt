@@ -19,7 +19,7 @@ import javax.security.auth.message.AuthException;
         }*/
 @RestController
 public class FravaerController {
-    SqlQueries query = new SqlQueries();
+    private SqlQueries query = new SqlQueries();
 
     @RequestMapping("/fravaer/{id}")
     public Fravaer getFravaer(@PathVariable("id") Integer id, @RequestHeader (value = "token") String token) throws AuthException {

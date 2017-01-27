@@ -1,7 +1,6 @@
 package com.example.rest_controllers;
 
 import com.example.database_classes.Bruker;
-import com.example.database_classes.Token;
 import com.example.security.TokenManager;
 import com.example.sql_folder.DBConnection;
 import org.junit.After;

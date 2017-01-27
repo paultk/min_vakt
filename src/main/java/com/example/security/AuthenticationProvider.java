@@ -1,6 +1,5 @@
 package com.example.security;
 
-import com.example.database_classes.Authentication;
 import com.example.database_classes.Bruker;
 import com.example.database_classes.Passord;
 import com.example.sql_folder.SqlQueries;
@@ -8,8 +7,8 @@ import com.example.sql_folder.SqlQueries;
 /**
  * Created by Jens on 17-Jan-17.
  */
-public class CustomAuthenticationProvider {
-	public boolean auth(Authentication auth) {
+public class AuthenticationProvider {
+	public boolean authenticate(Authentication auth) {
 		SqlQueries query = new SqlQueries();
 		String username = auth.getUsername();
 		String pass = auth.getPassword();

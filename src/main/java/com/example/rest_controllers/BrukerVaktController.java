@@ -1,6 +1,5 @@
 package com.example.rest_controllers;
 
-import com.example.database_classes.Bruker;
 import com.example.database_classes.BrukerVakt;
 import com.example.security.TokenManager;
 import com.example.sql_folder.SqlQueries;
@@ -14,7 +13,7 @@ import javax.security.auth.message.AuthException;
 
 @RestController
 public class BrukerVaktController {
-	SqlQueries query = new SqlQueries();
+	private SqlQueries query = new SqlQueries();
 
 	@RequestMapping(value="/brukervakt/alle")
 	public BrukerVakt[] getBrukerVakter(@RequestHeader (value = "token") String token) throws AuthException {

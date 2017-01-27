@@ -1,11 +1,11 @@
-package com.example.database_classes;
+package com.example.security;
 
 import com.example.security.TokenManager;
 
 /**
  * Created by Jens on 19-Jan-17.
  */
-public class Token {
+class Token {
 	private String token;
 
 	public Token(){}

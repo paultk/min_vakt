@@ -3,8 +3,6 @@ package com.example.security;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
-import com.example.database_classes.Authentication;
-import com.example.database_classes.Token;
 
 import java.io.UnsupportedEncodingException;
 import java.time.LocalDateTime;
@@ -28,7 +26,7 @@ public class TokenManager {
 		System.out.println(token);
 		return token;
 	}
-	public static String getUserName(String token) {
+	private static String getUserName(String token) {
 		return JWT.decode(token).getSubject();
 	}
 	public static boolean verifiser(String token) {
@@ -50,6 +48,8 @@ public class TokenManager {
 			System.out.println(TokenManager.getUserName(token.getToken()));
 			System.out.println(TokenManager.getUserName("eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlzcyI6Im1pblZha3QiLCJleHAiOjE0ODUxOTIzMzh9.3pU0NZQRiXDot98-2NMF8ZMf-LuAZxnlhaTuNxpyBnU"));
 		}
-		catch (Exception e) {}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 }

@@ -83,7 +83,7 @@ public class PasswordSystemManager {
      * @param expectedHash
      * @return boolean (if identical hash produced: true, else: false)
      */
-    public static boolean checkPasswordMatch(String plaintextPassword, byte[] salt, byte[] expectedHash) {
+    private static boolean checkPasswordMatch(String plaintextPassword, byte[] salt, byte[] expectedHash) {
         char[] password = plaintextPassword.toCharArray();
         byte[] pwdHash = generateHash(plaintextPassword, salt);
         Arrays.fill(password, Character.MIN_VALUE);
@@ -117,7 +117,7 @@ public class PasswordSystemManager {
      * @param s
      * @return byte array
      */
-    public static byte[] hexStringToByteArray(String s) {
+    private static byte[] hexStringToByteArray(String s) {
         int len = s.length();
         byte[] bytes = new byte[len / 2];
         for (int i = 0; i < len; i += 2) {

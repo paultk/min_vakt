@@ -3,24 +3,21 @@ package com.example.rest_controllers;
 import com.example.database_classes.*;
 import com.example.security.TokenManager;
 import com.example.sql_folder.SqlQueries;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
-import javax.security.auth.login.LoginException;
 import javax.security.auth.message.AuthException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
-import java.util.Arrays;
 
 /**
  * Created by Jens on 11-Jan-17.
  */
-@CrossOrigin
+//@CrossOrigin
 @RestController
 public class BrukerController {
-    SqlQueries query = new SqlQueries();
+    private SqlQueries query = new SqlQueries();
 
     @RequestMapping("/bruker/{id}")
 	public Bruker getBruker(@RequestHeader (value = "token") String token, @PathVariable("id") Integer id) throws AuthException {

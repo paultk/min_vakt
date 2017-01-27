@@ -1,14 +1,12 @@
 package com.example;
 
-import com.example.database_classes.Authentication;
-import com.example.database_classes.Token;
-import com.example.security.CustomAuthenticationProvider;
+import com.example.security.Authentication;
+import com.example.security.AuthenticationProvider;
 import com.example.security.TokenManager;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.io.UnsupportedEncodingException;
 import java.security.Principal;
 
 /**
@@ -37,6 +35,12 @@ public class WebController {
 		return new ModelAndView("/index.html");
 	}
 
+	/*@RequestMapping(value="/notifications", method = RequestMethod.GET)
+	public ModelAndView navigation() {
+		System.out.println("notifications yo");
+		return new ModelAndView("/app/notification/notification.component.ts");
+	}*/
+
 	/*@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public ModelAndView login2() {
 		return new ModelAndView("/loginpage.html");
@@ -51,8 +55,8 @@ public class WebController {
 	@ResponseBody
 	public String login(@RequestBody Authentication auth) throws Exception {
 		System.out.println("POST til login!");
-		CustomAuthenticationProvider cust = new CustomAuthenticationProvider();
-		if (cust.auth(auth)) {
+		AuthenticationProvider cust = new AuthenticationProvider();
+		if (cust.authenticate(auth)) {
 			System.out.println("Autentisert");
 			return TokenManager.lagToken(auth.getUsername());
 		}

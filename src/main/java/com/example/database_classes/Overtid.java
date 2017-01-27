@@ -1,8 +1,5 @@
 package com.example.database_classes;
 
-import java.sql.Date;
-import java.time.LocalDateTime;
-
 /**
  * Created by paul on 10.01.17.
  */

@@ -16,7 +16,7 @@ import java.time.format.DateTimeFormatter;
 
 @RestController
 public class TilgjengelighetController {
-    SqlQueries query = new SqlQueries();
+    private SqlQueries query = new SqlQueries();
     @RequestMapping("/tilgjengelighet/{id}")
     public Tilgjengelighet getTilgjengelighet(@PathVariable("id") Integer id, @RequestHeader (value = "token") String token) throws AuthException {
         if (TokenManager.verifiser(token)) {

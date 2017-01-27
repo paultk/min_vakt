@@ -231,12 +231,11 @@ public class Bruker {
             System.out.println("Attempted password: " + plaintextPassord);
             throw new IllegalArgumentException(INVALID_PASSWORD_FORMAT);
         }
-        PasswordSystemManager passwordEncoder = new PasswordSystemManager();
-        byte[] saltBytes = passwordEncoder.generateSalt();
-        byte[] hashBytes = passwordEncoder.generateHash(plaintextPassord, saltBytes);
+        byte[] saltBytes = PasswordSystemManager.generateSalt();
+        byte[] hashBytes = PasswordSystemManager.generateHash(plaintextPassord, saltBytes);
 
-        salt = passwordEncoder.bytesToHex(saltBytes);
-        hash = passwordEncoder.bytesToHex(hashBytes);
+        salt = PasswordSystemManager.bytesToHex(saltBytes);
+        hash = PasswordSystemManager.bytesToHex(hashBytes);
     }
 
     public int getTotalMonthHours(LocalDate localDate) {

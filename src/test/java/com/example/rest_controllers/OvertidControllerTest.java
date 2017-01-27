@@ -1,15 +1,11 @@
 package com.example.rest_controllers;
 
 import com.example.database_classes.Overtid;
-import com.example.database_classes.Token;
 import com.example.security.TokenManager;
 import com.example.sql_folder.DBConnection;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-
-import java.sql.Date;
-import java.sql.Savepoint;
 
 import static org.junit.Assert.*;
 

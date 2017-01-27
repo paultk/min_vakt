@@ -12,7 +12,7 @@ import javax.security.auth.message.AuthException;
  */
 @RestController
 public class OvertidController {
-	SqlQueries query = new SqlQueries();
+	private SqlQueries query = new SqlQueries();
 
 	@RequestMapping("overtid/{id}")
 	public Overtid getOvertid(@PathVariable("id") int id, @RequestHeader (value = "token") String token) throws AuthException {

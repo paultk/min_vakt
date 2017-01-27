@@ -16,12 +16,12 @@ import java.util.Arrays;
 
 public class SqlQueries extends DBConnection {
 
-	PreparedStatement selectQuery;
-	PreparedStatement insertQuery;
-	PreparedStatement updateQuery;
-	PreparedStatement deleteQuery;
+	private PreparedStatement selectQuery;
+	private PreparedStatement insertQuery;
+	private PreparedStatement updateQuery;
+	private PreparedStatement deleteQuery;
 
-	Connection connection;
+	private Connection connection;
 
 	public SqlQueries() {
 		DBConnection.connect();
@@ -299,9 +299,7 @@ public class SqlQueries extends DBConnection {
 			return true;
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} catch (IllegalArgumentException e) {
-		    throw e;
-        }
+		}
 		return false;
     }
 	public boolean deleteBruker(int id) {
@@ -655,8 +653,7 @@ public class SqlQueries extends DBConnection {
 			SqlCleanup.closeStatement(selectQuery);
 //			SqlCleanup.closeEverything(res, selectQuery, connection);
 		}
-		VaktMedBruker[] ret = vakter.toArray(new VaktMedBruker[vakter.size()]);
-		return ret;
+		return vakter.toArray(new VaktMedBruker[vakter.size()]);
 	}
 
 
@@ -888,7 +885,7 @@ public class SqlQueries extends DBConnection {
     *
     */
 
-    public int selectPassordId(String hash, String salt) {
+    private int selectPassordId(String hash, String salt) {
         try {
             String selectSql = "SELECT passord_id FROM passord WHERE hash = ? AND salt = ?";
             selectQuery = connection.prepareStatement(selectSql);
@@ -910,8 +907,7 @@ public class SqlQueries extends DBConnection {
 			selectQuery.setInt(1, id);
 			ResultSet res = selectQuery.executeQuery();
 			if (res.next()) {
-				Passord ret = new Passord(res.getInt("passord_id"), res.getString("salt"), res.getString("hash"));
-				return ret;
+				return new Passord(res.getInt("passord_id"), res.getString("salt"), res.getString("hash"));
 			}
 		}
 		catch (Exception e) {
@@ -926,8 +922,7 @@ public class SqlQueries extends DBConnection {
 			selectQuery.setInt(1, bruker.getPassordId());
 			ResultSet res = selectQuery.executeQuery();
 			if (res.next()) {
-				Passord ret = new Passord(res.getInt("passord_id"), res.getString("salt"), res.getString("hash"));
-				return ret;
+				return new Passord(res.getInt("passord_id"), res.getString("salt"), res.getString("hash"));
 			}
 		}
 		catch (Exception e) {
@@ -1455,7 +1450,7 @@ public class SqlQueries extends DBConnection {
 			if (!res.next()) {
 				return null;
 			}
-			Melding ret = new Melding(
+			return new Melding(
 					res.getInt("melding_id"),
 					res.getInt("til_bruker_id"),
 					res.getInt("fra_bruker_id"),
@@ -1464,7 +1459,6 @@ public class SqlQueries extends DBConnection {
 					res.getTimestamp("tid_sendt").toLocalDateTime(),
 					res.getBoolean("sett")
 			);
-			return ret;
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

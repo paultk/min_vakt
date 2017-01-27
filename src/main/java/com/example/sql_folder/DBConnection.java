@@ -7,9 +7,9 @@ import java.sql.*;
  */
 public class DBConnection {
 	private static Savepoint savepoint;
-	public static Connection conn;
+	static Connection conn;
 
-	public DBConnection() {
+	DBConnection() {
 		connect();
 	}
 

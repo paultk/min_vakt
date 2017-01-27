@@ -1,11 +1,9 @@
 package com.example.rest_controllers;
 
 import com.example.database_classes.BrukerVakt;
-import com.example.database_classes.Token;
 import com.example.security.TokenManager;
 import com.example.sql_folder.DBConnection;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 

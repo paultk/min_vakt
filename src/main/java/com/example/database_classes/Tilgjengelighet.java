@@ -7,7 +7,6 @@ import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 /**
@@ -21,7 +20,13 @@ public class Tilgjengelighet {
     @JsonFormat(pattern = "YYYY-MM-dd HH:mm:ss")
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     @JsonSerialize(using = LocalDateTimeSerializer.class)
-    LocalDateTime fraTid, tilTid;
+	private
+	LocalDateTime fraTid;
+	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+	@JsonFormat(pattern = "YYYY-MM-dd HH:mm:ss")
+	@JsonDeserialize(using = LocalDateTimeDeserializer.class)
+	@JsonSerialize(using = LocalDateTimeSerializer.class)
+	private LocalDateTime tilTid;
 
 
     public Tilgjengelighet(int userId, LocalDateTime fraTid, LocalDateTime tilTid) {

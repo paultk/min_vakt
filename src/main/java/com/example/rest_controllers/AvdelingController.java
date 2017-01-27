@@ -14,7 +14,7 @@ import javax.security.auth.message.AuthException;
 
 @RestController
 public class AvdelingController {
-    SqlQueries query = new SqlQueries();
+    private SqlQueries query = new SqlQueries();
     @RequestMapping("/avdeling/{id}")
     public Avdeling getAvdeling(@PathVariable("id") Integer id, @RequestHeader (value = "token") String token) throws AuthException {
         if (TokenManager.verifiser(token)) {

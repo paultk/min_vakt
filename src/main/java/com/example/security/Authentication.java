@@ -1,4 +1,4 @@
-package com.example.database_classes;
+package com.example.security;
 
 /**
  * Created by Jens on 19-Jan-17.

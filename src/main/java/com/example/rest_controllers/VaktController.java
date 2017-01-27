@@ -19,7 +19,7 @@ import java.time.format.DateTimeFormatter;
 
 @RestController
 public class VaktController {
-    SqlQueries query = new SqlQueries();
+    private SqlQueries query = new SqlQueries();
 
     /**
      * Returns Vakt object by ID

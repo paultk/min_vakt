@@ -7,7 +7,7 @@
 
  import java.sql.*;
 
-public class SqlCleanup {
+class SqlCleanup {
 
     public static void closeResSet(ResultSet res) {
         try {
@@ -49,7 +49,7 @@ public class SqlCleanup {
         }
     }
 
-    public static void setAutoCommit(Connection forbindelse) {
+    private static void setAutoCommit(Connection forbindelse) {
         try {
             if (forbindelse != null && !forbindelse.getAutoCommit()) {
                 forbindelse.setAutoCommit(true);
@@ -71,7 +71,7 @@ public class SqlCleanup {
         }
     }
 
-    public static void writeMessage(Exception e, String message) {
+    private static void writeMessage(Exception e, String message) {
         System.err.println("*** Feil oppstått: " + message + ". ***");
         e.printStackTrace(System.err);
     }

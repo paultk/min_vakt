@@ -3,12 +3,9 @@ package com.example.rest_controllers;
 import com.example.database_classes.Stilling;
 import com.example.security.TokenManager;
 import com.example.sql_folder.SqlQueries;
-import com.fasterxml.jackson.databind.util.JSONPObject;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.security.auth.message.AuthException;
-import javax.websocket.server.PathParam;
 
 /**
  * Created by Håkon on 11.01.2017.
@@ -16,7 +13,7 @@ import javax.websocket.server.PathParam;
 
 @RestController
 public class StillingController {
-    SqlQueries query = new SqlQueries();
+    private SqlQueries query = new SqlQueries();
     @RequestMapping("/stilling/{beskrivelse}")
     public Stilling getStilling(@PathVariable("beskrivelse") String beskrivelse, @RequestHeader (value = "token") String token) throws AuthException {
         if (TokenManager.verifiser(token)) {
