@@ -43,9 +43,9 @@ public class TokenManager {
 	//Run this to create a token, copy-paste from log
 	public static void main(String[] args) {
 		try {
-			Token token = new Token("admin");
+			String token = TokenManager.lagToken("test");
 //			System.out.println(token.getToken());
-			System.out.println(TokenManager.getUserName(token.getToken()));
+			System.out.println(TokenManager.getUserName(token));
 			System.out.println(TokenManager.getUserName("eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlzcyI6Im1pblZha3QiLCJleHAiOjE0ODUxOTIzMzh9.3pU0NZQRiXDot98-2NMF8ZMf-LuAZxnlhaTuNxpyBnU"));
 		}
 		catch (Exception e) {
