@@ -1,5 +1,6 @@
 package com.example.sql_folder;
 import com.example.database_classes.*;
+import com.example.rest_controllers.FravaerController;
 
 import java.sql.*;
 import java.time.LocalDate;
@@ -528,6 +529,34 @@ public class SqlQueries extends DBConnection {
 		}
 
 		return -1;
+	}
+
+	public Bruker getBrukerFromBrukerVakt(int id) {
+		try {
+			selectQuery = connection.prepareStatement("SELECT * FROM bruker WHERE bruker_id IN " +
+					"(SELECT bruker_id FROM bruker_vakt WHERE bruker_vakt_id = ?)");
+			selectQuery.setInt(1, id);
+			ResultSet res = selectQuery.executeQuery();
+			if (res.next()) {
+				return new Bruker(
+						res.getInt("bruker_id"),
+						res.getInt("passord_id"),
+						res.getString("stilling_beskrivelse"),
+						res.getInt("avdeling_id"),
+						res.getInt("telefonnr"),
+						res.getInt("stillingsprosent"),
+						res.getDouble("timelonn"),
+						res.getBoolean("admin"),
+						res.getString("fornavn"),
+						res.getString("etternavn"),
+						res.getString("epost")
+				);
+			}
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 
     /*
@@ -1171,6 +1200,34 @@ public class SqlQueries extends DBConnection {
         }
         return null;
     }
+
+    public FravaerMedBrukerOgVakt[] selectFravaersMedBrukerOgVakt() {
+    	try {
+    		selectQuery = connection.prepareStatement("SELECT fravaer.bruker_vakt_id, fravaer.fra_tid, fravaer.til_tid, " +
+					"fravaer.kommentar, bruker_vakt.bruker_id, bruker_vakt.vakt_id FROM fravaer" +
+					" JOIN bruker_vakt ON fravaer.bruker_vakt_id = bruker_vakt.bruker_vakt_id");
+    		ResultSet res = selectQuery.executeQuery();
+    		ArrayList<FravaerMedBrukerOgVakt> fravs = new ArrayList<>();
+    		while (res.next()) {
+    			fravs.add(new FravaerMedBrukerOgVakt(
+    					new Fravaer(
+    							res.getInt("bruker_vakt_id"),
+								res.getTimestamp("fra_tid").toLocalDateTime(),
+    							res.getTimestamp("til_tid").toLocalDateTime(),
+    							res.getString("kommentar")
+						),
+						res.getInt("bruker_id"),
+						res.getInt("vakt_id")
+				));
+			}
+			return fravs.toArray(new FravaerMedBrukerOgVakt[fravs.size()]);
+
+		}
+		catch (SQLException e) {
+    		e.printStackTrace();
+		}
+		return null;
+	}
 
     /*
     *
