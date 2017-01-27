@@ -6,6 +6,7 @@ import {Authentication} from "../_models/authentication";
 import {Http, Headers} from "@angular/http";
 import {AuthenticationService} from "../_services/authentication.service";
 import 'rxjs/add/operator/map';
+import ''
 
 @Component({
   moduleId: module.id,
@@ -25,7 +26,7 @@ export class LoginComponent {
   constructor(
     private http: Http,
     private authService: AuthenticationService,
-    private router: Router
+    //private router: Router
   ){}
 
   private headers = new Headers({'Content-Type': 'application/json'});
@@ -37,7 +38,6 @@ export class LoginComponent {
         data => {
           this.authService.setCurrentUser(localStorage.getItem('currentUserEmail'))
             .subscribe((observable) => this.restOfSetUser(observable));
-          this.goToNavigation();
         },
         error => {
           this.loading = false;
@@ -47,7 +47,7 @@ export class LoginComponent {
   }
 
   goToNavigation() {
-    this.router.navigate(['/navigation']);
+    //this.router.navigate(['/navigation']);
   }
 
   restOfSetUser(users: User[]): void {
@@ -60,6 +60,10 @@ export class LoginComponent {
 
     let globalDeadMan = this.authService.getGlobalUser();
     console.log(globalDeadMan);
+
+    console.log("HALAHDLSLDH-------");
+
+    //this.goToNavigation();
   }
 
   onSubmit(): void {
