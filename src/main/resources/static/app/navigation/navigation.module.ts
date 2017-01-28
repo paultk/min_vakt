@@ -27,6 +27,7 @@ import {NotificationService} from "../_services/notification.service";
 import {AuthenticationService} from "../_services/authentication.service";
 import {NavigationRoutingModule} from "./navigation-routing.module";
 import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
+import {UserSearchcomponent} from "../userinfo/user-search.component";
 
 @NgModule({
   imports: [
@@ -50,7 +51,8 @@ import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
     NavBarComponent,
     FaqComponent,
     // LoginComponent,
-    NotificationComponent
+    NotificationComponent,
+    UserSearchcomponent
   ],
   providers: [
     UserService,
