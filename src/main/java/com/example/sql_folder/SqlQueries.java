@@ -1696,6 +1696,7 @@ public class SqlQueries extends DBConnection {
 		try {
 			deleteQuery = connection.prepareStatement("DELETE FROM melding WHERE til_bruker_id = ? OR fra_bruker_id = ?");
 			deleteQuery.setInt(1, tilBrukerId);
+			deleteQuery.setInt(2, tilBrukerId);
 			deleteQuery.executeUpdate();
 			return true;
 		}
