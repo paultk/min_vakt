@@ -79,4 +79,9 @@ public class MeldingController {
 			throw new AuthException("Token not authenticated");
 		}
 	}
+
+	@RequestMapping(value="/melding/delete", method= RequestMethod.POST)
+	public boolean deleteMelding(@RequestBody Melding melding) {
+		return query.deleteMelding(melding);
+	}
 }

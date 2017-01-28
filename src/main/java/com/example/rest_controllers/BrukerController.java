@@ -1,6 +1,9 @@
 package com.example.rest_controllers;
 
-import com.example.database_classes.*;
+import com.example.database_classes.Bruker;
+import com.example.database_classes.Fravaer;
+import com.example.database_classes.Overtid;
+import com.example.database_classes.Vakt;
 import com.example.security.TokenManager;
 import com.example.sql_folder.SqlQueries;
 import org.springframework.web.bind.annotation.*;
@@ -19,7 +22,7 @@ import java.time.temporal.ChronoUnit;
 public class BrukerController {
     private SqlQueries query = new SqlQueries();
 
-    @RequestMapping("/bruker/{id}")
+    @RequestMapping(value="/bruker/{id}", method = RequestMethod.GET)
 	public Bruker getBruker(@RequestHeader (value = "token") String token, @PathVariable("id") Integer id) throws AuthException {
     	if (TokenManager.verifiser(token)) {
 			return query.selectBruker(id);
@@ -51,7 +54,8 @@ public class BrukerController {
 	}*/
 
 	@RequestMapping(value="/bruker/delete", method=RequestMethod.POST)
-	public boolean deleteBruker(@RequestHeader (value = "token") String token, @RequestBody Bruker bruker) throws AuthException {
+	public boolean deleteBrukerId(@RequestHeader (value = "token") String token, @RequestBody Bruker bruker) throws AuthException {
+		System.out.println("yo");
 		if (TokenManager.verifiser(token)) {
 			return query.deleteBruker(bruker.getBrukerId());
 		}

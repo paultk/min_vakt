@@ -1,6 +1,5 @@
 package com.example.sql_folder;
 import com.example.database_classes.*;
-import com.example.rest_controllers.FravaerController;
 
 import java.sql.*;
 import java.time.LocalDate;
@@ -306,7 +305,7 @@ public class SqlQueries extends DBConnection {
 	public boolean deleteBruker(int id) {
 
 		try {
-			updateQuery = connection.prepareStatement("UPDATE TABLE vakt SET vaktansvarlig_id = NULL WHERE" +
+			updateQuery = connection.prepareStatement("UPDATE vakt SET vaktansvarlig_id = NULL WHERE" +
 					" vaktansvarlig_id = ?");
 			updateQuery.setInt(1, id);
 			updateQuery.executeUpdate();
@@ -322,6 +321,21 @@ public class SqlQueries extends DBConnection {
 			e.printStackTrace();
 		}
 		return false;
+	}
+	public boolean deleteBruker(Bruker bruker) {
+		try {
+			String deleteSql = "DELETE FROM bruker WHERE bruker_id = ?";
+			deleteQuery = connection.prepareStatement(deleteSql);
+			deleteQuery.setInt(1, bruker.getBrukerId());
+
+			if (deleteQuery.executeUpdate() == 1) {
+				return true;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
+
 	}
 
 	/*
@@ -1529,7 +1543,7 @@ public class SqlQueries extends DBConnection {
 
 	public Melding[] selectMeldingerToBruker(int brukerId) {
 		try {
-			selectQuery = connection.prepareStatement("SELECT * FROM melding WHERE til_bruker_id = ?");
+			selectQuery = connection.prepareStatement("SELECT * FROM melding WHERE til_bruker_id = ? ORDER BY tid_sendt DESC");
 			selectQuery.setInt(1, brukerId);
 			ResultSet res = selectQuery.executeQuery();
 			ArrayList<Melding> meldinger = new ArrayList<>();
@@ -1589,6 +1603,21 @@ public class SqlQueries extends DBConnection {
 		return false;
 	}
 
+	public boolean deleteMelding(Melding melding) {
+		try {
+			String deleteSql = "DELETE FROM melding WHERE melding_id = ?";
+			deleteQuery = connection.prepareStatement(deleteSql);
+			deleteQuery.setInt(1, melding.getMeldingId());
+
+			if (deleteQuery.executeUpdate() == 1) {
+				return true;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+
 
 	public static void main(String[] args) {
 		SqlQueries query = new SqlQueries();
@@ -1621,7 +1650,7 @@ public class SqlQueries extends DBConnection {
 		query.insertOvertid(overtid2);*/
 
 		//System.out.println(query.calculateMonthlyWage(16, LocalDate.now()));
-		System.out.println(Arrays.toString(query.selectAllVakterMonth(LocalDateTime.parse("2017-02-01T12:30:00"),1)));
+		System.out.println(Arrays.toString(query.selectAllVakterMonth(LocalDateTime.parse("2017-01-01T12:30:00"),2)));
 
     }
 }
