@@ -305,13 +305,21 @@ public class SqlQueries extends DBConnection {
 	public boolean deleteBruker(int id) {
 
 		try {
+			//slette fravær
+			deleteFravaer(id);
+			//slette overtid
+			deleteOvertid(id);
+			//slette brukervakter
+			deleteBrukerVakt(id);
+			//slette meldinger
+			deleteMeldingTil(id);
+			//sette vaktansvarlig
 			updateQuery = connection.prepareStatement("UPDATE vakt SET vaktansvarlig_id = NULL WHERE" +
 					" vaktansvarlig_id = ?");
 			updateQuery.setInt(1, id);
 			updateQuery.executeUpdate();
-			deleteQuery = connection.prepareStatement("DELETE FROM bruker_vakt WHERE bruker_vakt.bruker_id = ?");
-			deleteQuery.setInt(1, id);
-			deleteQuery.executeUpdate();
+			//slette tilgjengelighet
+			deleteTilgjengelighet(id);
 			deleteQuery = connection.prepareStatement("DELETE FROM bruker WHERE bruker.bruker_id = ?");
 			deleteQuery.setInt(1, id);
 			deleteQuery.executeUpdate();
@@ -389,9 +397,42 @@ public class SqlQueries extends DBConnection {
 		return false;
 	}
 
+	public boolean deleteBrukerVakt(int brukerId) {
+		try {
+			deleteQuery = connection.prepareStatement("DELETE FROM bruker_vakt WHERE bruker_vakt.bruker_id = ?");
+			deleteQuery.setInt(1, brukerId);
+			deleteQuery.executeUpdate();
+			return true;
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+
 	public BrukerVakt[] selectBrukerVakter() {
 		try {
 			selectQuery = connection.prepareStatement("SELECT * FROM bruker_vakt");
+			ResultSet res = selectQuery.executeQuery();
+			ArrayList<BrukerVakt> brukerVakter = new ArrayList<>();
+			while (res.next()) {
+				BrukerVakt brk = new BrukerVakt(res.getInt("bruker_vakt_id"), res.getInt("bruker_id"), res.getInt("vakt_id"));
+				brukerVakter.add(brk);
+			}
+			SqlCleanup.closeResSet(res);
+			BrukerVakt[] ret = new BrukerVakt[brukerVakter.size()];
+			return brukerVakter.toArray(ret);
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	public BrukerVakt[] selectBrukerVakter(int brukerId) {
+		try {
+			selectQuery = connection.prepareStatement("SELECT * FROM bruker_vakt WHERE bruker_id = ?");
+			selectQuery.setInt(1, brukerId);
 			ResultSet res = selectQuery.executeQuery();
 			ArrayList<BrukerVakt> brukerVakter = new ArrayList<>();
 			while (res.next()) {
@@ -1147,6 +1188,22 @@ public class SqlQueries extends DBConnection {
         return false;
     }
 
+	public boolean deleteFravaer(int brukerId) {
+		try {
+			String deleteSql = "DELETE FROM fravaer WHERE bruker_vakt_id IN (" +
+					"SELECT bruker_vakt_id FROM bruker_vakt WHERE bruker_id = ?)";
+			deleteQuery = connection.prepareStatement(deleteSql);
+			deleteQuery.setInt(1, brukerId);
+			deleteQuery.executeUpdate();
+
+			return true;
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+
     public Fravaer[] selectAllFravaer() {
             ResultSet res = null;
             try {
@@ -1374,6 +1431,23 @@ public class SqlQueries extends DBConnection {
         return false;
     }
 
+	public boolean deleteOvertid(int brukerId) {
+		try {
+			String deleteSql = "DELETE FROM overtid WHERE bruker_vakt_id IN (" +
+					"SELECT bruker_vakt_id FROM bruker_vakt WHERE bruker_id = ?)";
+			deleteQuery = connection.prepareStatement(deleteSql);
+			deleteQuery.setInt(1, brukerId);
+
+			if (deleteQuery.executeUpdate() == 1) {
+				return true;
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+
     /*
     *
     * TILGJENGELIGHET
@@ -1439,6 +1513,21 @@ public class SqlQueries extends DBConnection {
         }
         return false;
     }
+
+	public boolean deleteTilgjengelighet(int brukerId) {
+		try {
+			String deleteSql = "DELETE FROM tilgjengelighet WHERE bruker_id = ?";
+			deleteQuery = connection.prepareStatement(deleteSql);
+			deleteQuery.setInt(1, brukerId);
+
+			if (deleteQuery.executeUpdate() == 1) {
+				return true;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
 
     public boolean updateTilgjengelighet(Tilgjengelighet tilgjengelighet) {
         try {
@@ -1603,6 +1692,19 @@ public class SqlQueries extends DBConnection {
 		return false;
 	}
 
+	public boolean deleteMeldingTil(int tilBrukerId) {
+		try {
+			deleteQuery = connection.prepareStatement("DELETE FROM melding WHERE til_bruker_id = ?");
+			deleteQuery.setInt(1, tilBrukerId);
+			deleteQuery.executeUpdate();
+			return true;
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+
 	public boolean deleteMelding(Melding melding) {
 		try {
 			String deleteSql = "DELETE FROM melding WHERE melding_id = ?";
@@ -1650,7 +1752,7 @@ public class SqlQueries extends DBConnection {
 		query.insertOvertid(overtid2);*/
 
 		//System.out.println(query.calculateMonthlyWage(16, LocalDate.now()));
-		System.out.println(Arrays.toString(query.selectAllVakterMonth(LocalDateTime.parse("2017-01-01T12:30:00"),2)));
+		System.out.println(Arrays.toString(query.selectAllVakterMonth(LocalDateTime.parse("2017-02-01T12:30:00"),1)));
 
     }
 }
