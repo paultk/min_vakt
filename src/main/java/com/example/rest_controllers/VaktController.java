@@ -94,7 +94,7 @@ public class VaktController {
         if (TokenManager.verifiser(token)) {
             DateTimeFormatter aDateTimeFormatter = DateTimeFormatter.ISO_DATE_TIME;
             LocalDateTime fra = LocalDateTime.parse(fratid, aDateTimeFormatter);
-
+            System.out.println("fra: " + fra.toString());
 
             return query.selectAllVakterMonth(fra,avdId);
         }

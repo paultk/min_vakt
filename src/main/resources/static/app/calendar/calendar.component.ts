@@ -174,6 +174,7 @@ export class CalendarComponent implements OnInit {
     for (let i = 0; i < 32; i++) {
       this.daysShifts[i] = [];
     }
+
     for (let i in this.monthShifts) {
       let date = new Date(this.monthShifts[i]['vakt']['tilTid']);
       // night = toTime = 0700, day = toTime = 1500, evening = toTime = 2300
