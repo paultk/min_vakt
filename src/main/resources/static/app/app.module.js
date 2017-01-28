@@ -12,67 +12,55 @@ var core_1 = require('@angular/core');
 var platform_browser_1 = require('@angular/platform-browser');
 var forms_1 = require('@angular/forms');
 var http_1 = require('@angular/http');
-var ng_bootstrap_1 = require('@ng-bootstrap/ng-bootstrap');
 var app_component_1 = require('./app.component');
 var navigation_component_1 = require('./navigation/navigation.component');
-var profil_component_1 = require('./profil/profil.component');
-var userinfo_component_1 = require('./userinfo/userinfo.component');
 var login_component_1 = require('./login/login.component');
-var user_form_component_1 = require('./user-form/user-form.component');
-var user_service_1 = require('./_services/user.service');
-var fravaer_service_1 = require('./_services/fravaer.service');
-var avdeling_service_1 = require('./_services/avdeling.service');
-var input_field_component_1 = require('./input-field/input-field.component');
-var forgot_credentials_component_1 = require('./forgot-credentials/forgot-credentials.component');
-var fravaer_component_1 = require('./fravaer/fravaer.component');
-var faq_component_1 = require("./faq/faq.component");
-var calendar_component_1 = require("./calendar/calendar.component");
-var nav_bar_component_1 = require("./calendar/nav-bar.component");
-var shift_service_1 = require("./_services/shift.service");
-var notification_component_1 = require("./notification/notification.component");
-var notification_service_1 = require("./_services/notification.service");
 var authentication_service_1 = require('./_services/authentication.service');
-var user_search_component_1 = require('./userinfo/user-search.component');
-//import {routing} from './_routes/app.routes';
-var app_routing_module_1 = require('./_routes/app-routing.module');
+var app_routing_module_1 = require('./app-routing.module');
 var auth_guard_1 = require("./_guards/auth.guard");
+var not_found_component_1 = require("./not-found.component");
+var common_1 = require("@angular/common");
+var navigation_module_1 = require("./navigation/navigation.module");
 var AppModule = (function () {
     function AppModule() {
     }
     AppModule = __decorate([
         core_1.NgModule({
             imports: [
-                ng_bootstrap_1.NgbModule.forRoot(),
+                //  NgbModule.forRoot(),
+                common_1.CommonModule,
                 platform_browser_1.BrowserModule,
                 forms_1.FormsModule,
                 forms_1.ReactiveFormsModule,
                 http_1.HttpModule,
+                navigation_module_1.NavigationModule,
                 app_routing_module_1.AppRoutingModule
             ],
             declarations: [
                 app_component_1.AppComponent,
                 navigation_component_1.NavigationComponent,
                 login_component_1.LoginComponent,
-                userinfo_component_1.UserinfoComponent,
-                profil_component_1.ProfilComponent,
-                user_form_component_1.UserFormComponent,
-                input_field_component_1.InputFieldComponent,
-                forgot_credentials_component_1.ForgotCredentialsComponent,
-                fravaer_component_1.FravaerComponent,
-                faq_component_1.FaqComponent,
-                calendar_component_1.CalendarComponent,
-                nav_bar_component_1.NavBarComponent,
-                faq_component_1.FaqComponent,
-                notification_component_1.NotificationComponent,
-                user_search_component_1.UserSearchcomponent
+                /*UserinfoComponent,
+                 ProfilComponent,
+                 UserFormComponent,
+                 InputFieldComponent,
+                 ForgotCredentialsComponent,
+                 FravaerComponent,
+                 FaqComponent,
+                 CalendarComponent,
+                 NavBarComponent,
+                 FaqComponent,
+                 NotificationComponent,
+                 UserSearchcomponent,*/
+                not_found_component_1.PageNotFoundComponent
             ],
             providers: [
-                user_service_1.UserService,
-                fravaer_service_1.FravaerService,
-                shift_service_1.ShiftService,
-                fravaer_service_1.FravaerService,
-                avdeling_service_1.AvdelingService,
-                notification_service_1.NotificationService,
+                /*UserService,
+                 FravaerService,
+                 ShiftService,
+                 FravaerService,
+                 AvdelingService,
+                 NotificationService,*/
                 authentication_service_1.AuthenticationService,
                 auth_guard_1.AuthGuard
             ],

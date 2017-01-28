@@ -13,23 +13,23 @@
         </li>
 
         <li>
-          <a href="#">
+          <a routerLink="./meldinger">
             <span class="glyphicon glyphicon-bell"></span>
             Varsler<span class="badge">{{numMessages}}</span></a>
         </li>
 
         <li>
-          <a href="#" (click)="goToProfil()">
+          <a routerLink="./profil">
             <span class="glyphicon glyphicon-user"></span>
             Profil</a>
         </li>
         <li>
-          <a href="#">
+          <a routerLink="./faq">
             <span class="glyphicon glyphicon-question-sign"></span>
             Hjelp</a>
         </li>
         <li>
-          <a href="#" (click)="logout()">
+          <a routerLink="/login" (click)="logout()">
             <span class="glyphicon glyphicon-log-out"></span>
             Logg ut</a>
         </li>
@@ -43,18 +43,13 @@
   <div class="container-fluid">
     <ul class="nav side-menu">
       <li>
-        <a href="../calendar">
+        <a routerLink="">
           <span class="glyphicon"></span> Vaktliste
         </a>
       </li>
       <li>
-        <a href="#">
+        <a routerLink="./brukerinfo">
           <span class="glyphicon"></span> Brukerinfo
-        </a>
-      </li>
-      <li>
-        <a href="#">
-          <span class="glyphicon"></span> Tilgjengelighet
         </a>
       </li>
     </ul>
@@ -63,6 +58,7 @@
 
 <!-- CONTAINER -->
 <div class="container">
+  <router-outlet></router-outlet>
   <!--<my-userinfo></my-userinfo>-->
   <!--<my-profil></my-profil>-->
   <!--<my-fravaer></my-fravaer>-->
