@@ -89,7 +89,7 @@ public class VaktController {
         }
     }
 
-    @RequestMapping("/vakt/all/month/{tiltid}/{avdId}")
+    @RequestMapping("/vakt/all/month/{fratid}/{avdId}")
     public VaktMedBruker[] getAllVaktMonth(@PathVariable("fratid") String fratid, @PathVariable("avdId") int avdId, @RequestHeader (value = "token") String token) throws AuthException {
         if (TokenManager.verifiser(token)) {
             DateTimeFormatter aDateTimeFormatter = DateTimeFormatter.ISO_DATE_TIME;
