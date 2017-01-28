@@ -20,13 +20,13 @@ import {FaqComponent} from "./faq/faq.component";
 import {CalendarComponent} from "./calendar/calendar.component";
 import {NavBarComponent} from "./calendar/nav-bar.component";
 import {ShiftService} from "./_services/shift.service";
-// import "./rxjs-extensions";
 import {NotificationComponent} from "./notification/notification.component";
 import {NotificationService} from "./_services/notification.service";
 import {AuthenticationService} from './_services/authentication.service';
 import {UserSearchcomponent} from './userinfo/user-search.component'
 
-import {AppRoutingModule} from './app-routing.module';
+//import {routing} from './_routes/app.routes';
+import {AppRoutingModule} from './_routes/app-routing.module';
 import {AuthGuard} from "./_guards/auth.guard";
 
 @NgModule({

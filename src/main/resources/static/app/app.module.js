@@ -29,12 +29,12 @@ var faq_component_1 = require("./faq/faq.component");
 var calendar_component_1 = require("./calendar/calendar.component");
 var nav_bar_component_1 = require("./calendar/nav-bar.component");
 var shift_service_1 = require("./_services/shift.service");
-// import "./rxjs-extensions";
 var notification_component_1 = require("./notification/notification.component");
 var notification_service_1 = require("./_services/notification.service");
 var authentication_service_1 = require('./_services/authentication.service');
 var user_search_component_1 = require('./userinfo/user-search.component');
-var app_routing_module_1 = require('./app-routing.module');
+//import {routing} from './_routes/app.routes';
+var app_routing_module_1 = require('./_routes/app-routing.module');
 var auth_guard_1 = require("./_guards/auth.guard");
 var AppModule = (function () {
     function AppModule() {

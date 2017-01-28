@@ -5,8 +5,6 @@ import { User } from '../_models/user';
 import {Authentication} from "../_models/authentication";
 import {Http, Headers} from "@angular/http";
 import {AuthenticationService} from "../_services/authentication.service";
-import 'rxjs/add/operator/map';
-import ''
 
 @Component({
   moduleId: module.id,
@@ -16,17 +14,16 @@ import ''
 })
 
 export class LoginComponent {
-  model = new Authentication("root@minvakt.no", "abcDEF!#");
+  model = new Authentication("admin", "Admin@@@");
   rememberMe = false;
   loading = false;
   returnUrl: string;
 
-  theUser: User[] = [];
+  theUser: User;
 
   constructor(
-    private http: Http,
     private authService: AuthenticationService,
-    //private router: Router
+    private router: Router
   ){}
 
   private headers = new Headers({'Content-Type': 'application/json'});
@@ -47,23 +44,21 @@ export class LoginComponent {
   }
 
   goToNavigation() {
-    //this.router.navigate(['/navigation']);
+    this.router.navigate(['/navigation']);
   }
 
-  restOfSetUser(users: User[]): void {
+  restOfSetUser(user: User[]): void {
 
-    this.theUser = users.map(user => new User(user['brukerId'], user['passordId'], user['stillingsBeskrivelse'], user['telefonNr'], user['stillingsProsent'],
+    this.theUser = new User(user['brukerId'], user['passordId'], user['stillingsBeskrivelse'], user['telefonNr'], user['stillingsProsent'],
       user['timelonn'], user['admin'], user['fornavn'], user['etternavn'], user['epost'], user['avdelingId'], user['plaintextPassord'],
-      user['fodselsdato'], user['adresse'], user['by'], user['hash'], user['salt']));
+      user['fodselsdato'], user['adresse'], user['by'], user['hash'], user['salt']);
 
-    localStorage.setItem('currentUser', JSON.stringify(this.theUser[0]));
+    localStorage.setItem('currentUser', JSON.stringify(this.theUser));
 
     let globalDeadMan = this.authService.getGlobalUser();
     console.log(globalDeadMan);
 
-    console.log("HALAHDLSLDH-------");
-
-    //this.goToNavigation();
+    this.goToNavigation();
   }
 
   onSubmit(): void {

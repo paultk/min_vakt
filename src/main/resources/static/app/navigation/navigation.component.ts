@@ -1,7 +1,3 @@
-/**
- * Created by Trym Todalshaug on 18/01/2017.
- */
-
 import {Component, OnInit} from "@angular/core";
 
 import {User} from '../_models/user';
@@ -21,6 +17,7 @@ export class NavigationComponent implements OnInit{
   users: User[];
   selectedUser: User;
   numMessages = 0;
+
 
   private headers = new Headers({'Content-Type': 'application/json', 'token': localStorage.getItem('sessionToken')});
 
@@ -55,10 +52,10 @@ export class NavigationComponent implements OnInit{
 
   ngOnInit(): void {
     this.getUsers();
-    this.selectedUser = this.userService.getCurrentUser();
+    this.selectedUser = this.authService.getGlobalUser();
     console.log(this.selectedUser);
-    this.setNumMessages();
-    setInterval(() => {this.setNumMessages();}, 2000);
+  //  this.setNumMessages();
+  //  setInterval(() => {this.setNumMessages();}, 2000);
   }
 
   logout(): void {
