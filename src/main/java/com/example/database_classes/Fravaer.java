@@ -29,8 +29,6 @@ public class Fravaer {
         this.fraTid = fraTid;
         this.tilTid = tilTid;
         this.kommentar = kommentar;
-
-
     }
 
     public Fravaer() {}

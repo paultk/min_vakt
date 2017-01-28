@@ -306,6 +306,13 @@ public class SqlQueries extends DBConnection {
 	public boolean deleteBruker(int id) {
 
 		try {
+			updateQuery = connection.prepareStatement("UPDATE TABLE vakt SET vaktansvarlig_id = NULL WHERE" +
+					" vaktansvarlig_id = ?");
+			updateQuery.setInt(1, id);
+			updateQuery.executeUpdate();
+			deleteQuery = connection.prepareStatement("DELETE FROM bruker_vakt WHERE bruker_vakt.bruker_id = ?");
+			deleteQuery.setInt(1, id);
+			deleteQuery.executeUpdate();
 			deleteQuery = connection.prepareStatement("DELETE FROM bruker WHERE bruker.bruker_id = ?");
 			deleteQuery.setInt(1, id);
 			deleteQuery.executeUpdate();
