@@ -143,7 +143,7 @@ public class VaktController {
 
     @RequestMapping(value="/vakt/delete", method= RequestMethod.POST)
     public boolean deleteVakt(@RequestBody Vakt vakt, @RequestHeader (value = "token") String token) throws AuthException {
-        if (TokenManager.verifiser(token)) {
+        if (TokenManager.verifiser(token) && TokenManager.isAdmin(token)) {
             return query.deleteVakt(vakt);
 
         }

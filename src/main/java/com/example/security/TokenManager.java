@@ -16,20 +16,22 @@ public class TokenManager {
 	private static String issuer = "minVakt";
 	private static String secret = "hemmelig"; // lol // superlol
 
-	public static String lagToken(String username) throws UnsupportedEncodingException {
+	public static String lagToken(String username, boolean admin) throws UnsupportedEncodingException {
 		LocalDateTime time = LocalDateTime.now();
 		//Set timeouts here
 		time = time.plusHours(3);
 //		time = time.plusSeconds(30);
 		Date date = Date.from(time.atZone(ZoneId.systemDefault()).toInstant());
-		String token = JWT.create().withIssuer(issuer).withSubject(username).withExpiresAt(date).sign(Algorithm.HMAC256(secret));
-		System.out.println(token);
+		String token = JWT.create().withIssuer(issuer).withSubject(username).withClaim("admin", admin).withExpiresAt(date).sign(Algorithm.HMAC256(secret));
+//		System.out.println(token);
 		return token;
 	}
 	private static String getUserName(String token) {
 		return JWT.decode(token).getSubject();
 	}
-
+	public static boolean isAdmin(String token) {
+		return JWT.decode(token).getClaim("admin").asBoolean();
+	}
 	public static boolean verifiser(String token) {
 		try {
 			JWTVerifier verify = JWT.require(Algorithm.HMAC256(secret)).withIssuer(issuer).build();
@@ -44,10 +46,8 @@ public class TokenManager {
 	//Run this to create a token, copy-paste from log
 	public static void main(String[] args) {
 		try {
-			String token = TokenManager.lagToken("test");
-//			System.out.println(token.getToken());
-			System.out.println(TokenManager.getUserName(token));
-			System.out.println(TokenManager.getUserName("eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlzcyI6Im1pblZha3QiLCJleHAiOjE0ODUxOTIzMzh9.3pU0NZQRiXDot98-2NMF8ZMf-LuAZxnlhaTuNxpyBnU"));
+			System.out.println(TokenManager.lagToken("admin", true));
+			System.out.println(TokenManager.lagToken("ikkeadmin", false));
 		}
 		catch (Exception e) {
 			e.printStackTrace();

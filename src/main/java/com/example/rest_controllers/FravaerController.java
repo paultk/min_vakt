@@ -36,7 +36,7 @@ public class FravaerController {
 
     @RequestMapping(value = "/fravaer/delete", method = RequestMethod.POST)
     public boolean deleteFravaer(@RequestBody Fravaer fravaer, @RequestHeader(value = "token") String token) throws AuthException {
-        if (TokenManager.verifiser(token)) {
+        if (TokenManager.verifiser(token) && TokenManager.isAdmin(token)) {
             return query.deleteFravaer(fravaer);
         } else {
             throw new AuthException("Token not authenticated");

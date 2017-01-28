@@ -52,7 +52,7 @@ public class AvdelingControllerTest {
     @Before
     public void first() throws Exception {
         DBConnection.beforeTest();
-        this.token = TokenManager.lagToken("test");
+        this.token = TokenManager.lagToken("test", true);
     }
     @After
     public void after() {

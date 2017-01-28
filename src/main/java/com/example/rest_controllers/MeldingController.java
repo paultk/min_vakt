@@ -26,7 +26,7 @@ public class MeldingController {
 
 	@RequestMapping(value = "/melding/{id}")
 	public Melding getMelding(@PathVariable("id") int id, @RequestHeader (value = "token") String token) throws AuthException {
-		if (TokenManager.verifiser(token)) {
+		if (TokenManager.verifiser(token) && TokenManager.isAdmin(token)) {
 			return query.selectMelding(id);
 		}
 		else {

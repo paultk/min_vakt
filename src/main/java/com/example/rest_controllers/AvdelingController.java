@@ -37,7 +37,7 @@ public class AvdelingController {
 
     @RequestMapping(value="/avdeling/delete", method= RequestMethod.POST)
     public boolean deleteAvdeling(@RequestBody Avdeling avdeling, @RequestHeader (value = "token") String token) throws AuthException {
-        if (TokenManager.verifiser(token)) {
+        if (TokenManager.verifiser(token) && TokenManager.isAdmin(token)) {
             return query.deleteAvdeling(avdeling);
         } else {
             throw new AuthException("Token not authenticated");
@@ -46,7 +46,7 @@ public class AvdelingController {
 
     @RequestMapping(value="/avdeling/add", method=RequestMethod.POST)
     public boolean insertAvdeling(@RequestBody Avdeling avdeling, @RequestHeader (value = "token") String token) throws AuthException {
-        if (TokenManager.verifiser(token)) {
+        if (TokenManager.verifiser(token) && TokenManager.isAdmin(token)) {
             return query.insertAvdeling(avdeling);
         }
         else {

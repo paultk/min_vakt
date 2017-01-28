@@ -26,7 +26,7 @@ public class StillingController {
 
     @RequestMapping(value="/stilling/delete", method=RequestMethod.POST)
     public boolean deleteStilling(@RequestBody Stilling stilling, @RequestHeader (value = "token") String token) throws AuthException {
-        if (TokenManager.verifiser(token)) {
+        if (TokenManager.verifiser(token) && TokenManager.isAdmin(token)) {
             return query.deleteStilling(stilling);
         }
         else {

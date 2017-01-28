@@ -1,8 +1,10 @@
 package com.example;
 
+import com.example.database_classes.Bruker;
 import com.example.security.Authentication;
 import com.example.security.AuthenticationProvider;
 import com.example.security.TokenManager;
+import com.example.sql_folder.SqlQueries;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -55,10 +57,12 @@ public class WebController {
 	@ResponseBody
 	public String login(@RequestBody Authentication auth) throws Exception {
 		System.out.println("POST til login!");
+		SqlQueries query = new SqlQueries();
+		Bruker brk = query.selectBruker(auth.getUsername());
 		AuthenticationProvider cust = new AuthenticationProvider();
-		if (cust.authenticate(auth)) {
+		if (brk != null && cust.authenticate(auth)) {
 			System.out.println("Autentisert");
-			return TokenManager.lagToken(auth.getUsername());
+			return TokenManager.lagToken(auth.getUsername(), brk.isAdmin());
 		}
 		throw new IllegalArgumentException("Wrong user name or password");
 	}

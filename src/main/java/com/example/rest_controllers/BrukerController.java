@@ -56,7 +56,7 @@ public class BrukerController {
 	@RequestMapping(value="/bruker/delete", method=RequestMethod.POST)
 	public boolean deleteBrukerId(@RequestHeader (value = "token") String token, @RequestBody Bruker bruker) throws AuthException {
 		System.out.println("yo");
-		if (TokenManager.verifiser(token)) {
+		if (TokenManager.verifiser(token) && TokenManager.isAdmin(token)) {
 			return query.deleteBruker(bruker.getBrukerId());
 		}
 		else {
@@ -66,7 +66,7 @@ public class BrukerController {
 
 	@RequestMapping(value="/bruker/add", method=RequestMethod.POST)
 	public boolean addBruker(@RequestHeader (value = "token") String token, @RequestBody Bruker bruker) throws AuthException {
-		if (TokenManager.verifiser(token)) {
+		if (TokenManager.verifiser(token) && TokenManager.isAdmin(token)) {
 			try {
 				return query.insertBruker(bruker);
 			} catch (IllegalArgumentException e) {

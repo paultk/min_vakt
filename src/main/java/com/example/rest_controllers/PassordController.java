@@ -43,7 +43,7 @@ public class PassordController {
 	}
 	@RequestMapping(value="/passord/delete")
 	public boolean deletePassord(@RequestBody Passord passord, @RequestHeader (value = "token") String token) throws AuthException {
-		if (TokenManager.verifiser(token)) {
+		if (TokenManager.verifiser(token) && TokenManager.isAdmin(token)) {
 			return query.deletePassord(passord.getId());
 		}
 		else {
