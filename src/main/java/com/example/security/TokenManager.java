@@ -29,6 +29,7 @@ public class TokenManager {
 	private static String getUserName(String token) {
 		return JWT.decode(token).getSubject();
 	}
+
 	public static boolean verifiser(String token) {
 		try {
 			JWTVerifier verify = JWT.require(Algorithm.HMAC256(secret)).withIssuer(issuer).build();

@@ -38,7 +38,7 @@ export class NavigationComponent implements OnInit{
   }*/
 
   setNumMessages(): void {
-    this.selectedUser = this.userService.getCurrentUser();
+   // this.selectedUser = this.authService.getGlobalUser();
     const URL = 'http://localhost:8080/melding/get/ulest/ant';
     this.http.post(URL, JSON.stringify(this.selectedUser), {headers: this.headers},)
       .toPromise()
@@ -60,6 +60,5 @@ export class NavigationComponent implements OnInit{
 
   logout(): void {
     this.authService.logout();
-    this.router.navigate(['/login']);
   }
 }
