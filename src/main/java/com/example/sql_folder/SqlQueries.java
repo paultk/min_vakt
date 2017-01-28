@@ -312,7 +312,7 @@ public class SqlQueries extends DBConnection {
 			//slette brukervakter
 			deleteBrukerVakt(id);
 			//slette meldinger
-			deleteMeldingTil(id);
+			deleteMeldingTilOgFra(id);
 			//sette vaktansvarlig
 			updateQuery = connection.prepareStatement("UPDATE vakt SET vaktansvarlig_id = NULL WHERE" +
 					" vaktansvarlig_id = ?");
@@ -1692,9 +1692,9 @@ public class SqlQueries extends DBConnection {
 		return false;
 	}
 
-	public boolean deleteMeldingTil(int tilBrukerId) {
+	public boolean deleteMeldingTilOgFra(int tilBrukerId) {
 		try {
-			deleteQuery = connection.prepareStatement("DELETE FROM melding WHERE til_bruker_id = ?");
+			deleteQuery = connection.prepareStatement("DELETE FROM melding WHERE til_bruker_id = ? OR fra_bruker_id = ?");
 			deleteQuery.setInt(1, tilBrukerId);
 			deleteQuery.executeUpdate();
 			return true;
