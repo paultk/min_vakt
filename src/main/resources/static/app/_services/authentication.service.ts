@@ -41,6 +41,8 @@ export class AuthenticationService {
     localStorage.removeItem('sessionToken');
     localStorage.removeItem('currentUserEmail');
     localStorage.removeItem('currentUser');
+    localStorage.removeItem('rememberMe');
+    sessionStorage.removeItem('currentUser');
   }
 
   setCurrentUser(email: string): Observable<User[]> {
@@ -51,7 +53,13 @@ export class AuthenticationService {
   }
 
   getGlobalUser(): User {
-    let obj = JSON.parse(localStorage.getItem('currentUser'));
+    let obj: Object[];
+
+    if (localStorage.getItem('rememberMe') == "true") {
+      obj = JSON.parse(localStorage.getItem('currentUser'));
+    } else {
+      obj = JSON.parse(sessionStorage.getItem('currentUser'));
+    }
 
     return new User(obj['brukerId'], obj['passordId'], obj['stillingsBeskrivelse'], obj['telefonNr'],
       obj['stillingsProsent'], obj['timelonn'], obj['admin'], obj['fornavn'], obj['etternavn'],

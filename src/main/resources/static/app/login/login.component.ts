@@ -53,7 +53,15 @@ export class LoginComponent {
       user['timelonn'], user['admin'], user['fornavn'], user['etternavn'], user['epost'], user['avdelingId'], user['plaintextPassord'],
       user['fodselsdato'], user['adresse'], user['by'], user['hash'], user['salt']);
 
-    localStorage.setItem('currentUser', JSON.stringify(this.theUser));
+    if (this.rememberMe) {
+      localStorage.setItem('currentUser', JSON.stringify(this.theUser));
+    } else {
+      sessionStorage.setItem('currentUser', JSON.stringify(this.theUser));
+    }
+
+    localStorage.setItem('rememberMe', this.rememberMe.toString());
+    //console.log(localStorage.getItem('rememberMe'));
+
 
     let globalDeadMan = this.authService.getGlobalUser();
     console.log(globalDeadMan);
