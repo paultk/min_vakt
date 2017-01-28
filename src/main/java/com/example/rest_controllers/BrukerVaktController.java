@@ -1,6 +1,7 @@
 package com.example.rest_controllers;
 
 import com.example.database_classes.BrukerVakt;
+import com.example.database_classes.VaktBytte;
 import com.example.security.TokenManager;
 import com.example.sql_folder.SqlQueries;
 import org.springframework.web.bind.annotation.*;
@@ -34,6 +35,17 @@ public class BrukerVaktController {
 			throw new AuthException("Token not authenticated");
 		}
 	}
+
+	@RequestMapping(value="/brukervakt/bytt", method= RequestMethod.POST)
+	public boolean updateVaktBytte(@RequestBody VaktBytte bytte, @RequestHeader (value = "token") String token) throws AuthException {
+		if (TokenManager.verifiser(token)) {
+			return query.byttVaktAdmin(bytte.getBrukerId1(), bytte.getVaktId(), bytte.getBrukerId2());
+		}
+		else {
+			throw new AuthException("Token not authenticated");
+		}
+	}
+
 
 	@RequestMapping(value="/brukervakt/delete", method=RequestMethod.POST)
 	public boolean deleteBrukerVakt(@RequestBody BrukerVakt brukervakt, @RequestHeader (value = "token") String token) throws AuthException {

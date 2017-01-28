@@ -5,12 +5,12 @@ package com.example.database_classes;
  */
 public class VaktBytte {
 
-    private int brukerId1, vaktId, brukerID2Id;
+    private int brukerId1, vaktId, brukerId2;
 
-    public VaktBytte(int brukerId1, int vaktId, int brukerID2Id) {
+    public VaktBytte(int brukerId1, int vaktId, int brukerId2) {
         this.brukerId1 = brukerId1;
         this.vaktId = vaktId;
-        this.brukerID2Id = brukerID2Id;
+        this.brukerId2 = brukerId2;
     }
     public VaktBytte() {}
 
@@ -30,12 +30,12 @@ public class VaktBytte {
         this.vaktId = vaktId;
     }
 
-    public int getBrukerID2Id() {
-        return brukerID2Id;
+    public int getBrukerId2() {
+        return brukerId2;
     }
 
-    public void setBrukerID2Id(int brukerID2Id) {
-        this.brukerID2Id = brukerID2Id;
+    public void setBrukerId2(int brukerId2) {
+        this.brukerId2 = brukerId2;
     }
 
     @Override
@@ -43,7 +43,7 @@ public class VaktBytte {
         return "VaktBytte{" +
                 "brukerId1=" + brukerId1 +
                 ", vaktId=" + vaktId +
-                ", brukerID2Id=" + brukerID2Id +
+                ", brukerId2=" + brukerId2 +
                 '}';
     }
 }

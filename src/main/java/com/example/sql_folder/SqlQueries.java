@@ -621,6 +621,21 @@ public class SqlQueries extends DBConnection {
 		return null;
 	}
 
+	public boolean byttVaktAdmin(int brukerId1, int vaktId, int brukerId2) {
+		try {
+			String insertSql = "UPDATE bruker_vakt SET bruker_id = ? WHERE bruker_id = ? AND vakt_id = ? ";
+			insertQuery = connection.prepareStatement(insertSql);
+			insertQuery.setInt(1, brukerId2);
+			insertQuery.setInt(2, brukerId1);
+			insertQuery.setInt(3, vaktId);
+			insertQuery.executeUpdate();
+
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
     /*
     *
     * VAKT
@@ -1715,6 +1730,29 @@ public class SqlQueries extends DBConnection {
 			if (deleteQuery.executeUpdate() == 1) {
 				return true;
 			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+
+
+	/*
+    *
+    * VAKTBYTTE
+    *
+    */
+
+	public boolean byttVakt(int brukerId1, int vaktId, int brukerId2) {
+		try {
+			String insertSql = "INSERT INTO vakt_bytte(bruker_id1, vakt_id, bruker_id2) VALUES(?,?,?)";
+			insertQuery = connection.prepareStatement(insertSql);
+			insertQuery.setInt(1, brukerId1);
+			insertQuery.setInt(2, vaktId);
+			insertQuery.setInt(3, brukerId2);
+			insertQuery.executeUpdate();
+
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
