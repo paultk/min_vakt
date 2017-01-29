@@ -1,5 +1,6 @@
 package com.example.sql_folder;
 import com.example.database_classes.*;
+import com.example.security.PasswordSystemManager;
 
 import java.sql.*;
 import java.time.LocalDate;
@@ -227,6 +228,24 @@ public class SqlQueries extends DBConnection {
 			e.printStackTrace();
 		}
 		return null;
+	}
+
+	public boolean resetBrukerPassord(Bruker bruker) {
+
+		try {
+			PasswordEmail passwordEmail = new PasswordEmail();
+			passwordEmail.setNewPassword();
+			bruker.setPlaintextPassord(passwordEmail.getNewPassword());
+			Passord newPassord = new Passord(bruker.getSalt(), bruker.getHash());
+			insertPassord(newPassord);
+			int passId = selectPassordId(bruker.getHash(), bruker.getSalt());
+			bruker.setPassordId(passId);
+			passwordEmail.sendMail(bruker.getEpost());
+			return updateBruker(bruker);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
 	}
 
 	public boolean updateBruker(Bruker bruker) {
@@ -1856,7 +1875,10 @@ public class SqlQueries extends DBConnection {
 		query.insertOvertid(overtid2);*/
 
 		//System.out.println(query.calculateMonthlyWage(16, LocalDate.now()));
-		System.out.println(Arrays.toString(query.selectAllVakterMonth(LocalDateTime.parse("2017-02-01T12:30:00"),1)));
+		//System.out.println(Arrays.toString(query.selectAllVakterMonth(LocalDateTime.parse("2017-02-01T12:30:00"),1)));
 
+		Bruker bruker = new Bruker("Sykepleier", 3, 90133787, 100, 250,
+		true, "Axel", "Kvistad", "axel.b.kvistad@gmail.com", "abcDEF!#");
+		query.insertBruker(bruker);
     }
 }

@@ -6,6 +6,7 @@ import com.example.database_classes.Overtid;
 import com.example.database_classes.Vakt;
 import com.example.security.TokenManager;
 import com.example.sql_folder.SqlQueries;
+import com.sun.org.apache.regexp.internal.RE;
 import org.springframework.web.bind.annotation.*;
 
 import javax.security.auth.message.AuthException;
@@ -21,6 +22,8 @@ import java.time.temporal.ChronoUnit;
 @RestController
 public class BrukerController {
     private SqlQueries query = new SqlQueries();
+
+
 
     @RequestMapping(value="/bruker/{id}", method = RequestMethod.GET)
 	public Bruker getBruker(@RequestHeader (value = "token") String token, @PathVariable("id") Integer id) throws AuthException {
@@ -52,6 +55,13 @@ public class BrukerController {
     		return null;
 		}
 	}*/
+
+	@RequestMapping(value="/bruker/glemtpassord", method=RequestMethod.POST)
+	public boolean resetBrukerPassord(@RequestBody Bruker bruker) {
+		System.out.println(bruker.getEpost());
+		bruker = query.selectBruker(bruker.getEpost());
+		return query.resetBrukerPassord(bruker);
+	}
 
 	@RequestMapping(value="/bruker/delete", method=RequestMethod.POST)
 	public boolean deleteBrukerId(@RequestHeader (value = "token") String token, @RequestBody Bruker bruker) throws AuthException {

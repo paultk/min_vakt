@@ -6,6 +6,7 @@ import {Component, OnInit} from "@angular/core";
 
 import {User} from '../_models/user';
 import {UserService} from '../_services/user.service';
+import {Router, ActivatedRoute, RouterModule} from "@angular/router";
 /*var $ = require("jquery");*/
 
 @Component({
@@ -23,7 +24,9 @@ export class UserinfoComponent implements OnInit{
   private searchtext : string;
 
   constructor (
-    private userService: UserService
+    private userService: UserService,
+    private router: Router,
+    private r:ActivatedRoute
   ) {}
 
   onSelect(idNum: number): void{
@@ -87,6 +90,11 @@ export class UserinfoComponent implements OnInit{
   ngOnInit(): void {
     this.getUsers();
   }
+
+  goToUserForm() {
+    this.router.navigate(["../opprett-bruker"], { relativeTo: this.r});
+  }
+
 
 
 

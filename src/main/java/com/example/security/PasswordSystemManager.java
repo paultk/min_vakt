@@ -9,6 +9,8 @@ import java.security.SecureRandom;
 import java.security.spec.InvalidKeySpecException;
 import java.util.Arrays;
 import java.util.regex.*;
+import dk.brics.automaton.*;
+import nl.flotsam.xeger.*;
 
 /**
  * Created by axelkvistad on 12/01/17.
@@ -17,7 +19,7 @@ public class PasswordSystemManager {
 
     private static final int ITERATIONS = 10000;
     private static final int KEY_LENGTH = 256;
-    private static final String REGEX_PATTERN = "^(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%!^&+=].*[@#$%!^&+=])(?=\\S+$).{8,}$"; // at least one lowercase character, at least one uppercase character, no whitespace, at least 2 special characters, at least 8 total characters
+    private static final String REGEX_PATTERN = "^(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%!^&+=].*[@#$%!^&+=])(?=\\S+$).{8,20}$"; // at least one lowercase character, at least one uppercase character, no whitespace, at least 2 special characters, at least 8 total characters
     private static final char[] HEX_ARRAY = "0123456789ABCDEF".toCharArray();
 
     /**
@@ -127,6 +129,16 @@ public class PasswordSystemManager {
         return bytes;
     }
 
+    public static String generatePassword() {
+        String regex = "[A-Z]{3,4}[a-z]{3,4}[@#!$]{2,3}";
+        Xeger generator = new Xeger(regex);
+        String result = generator.generate();
+        if (result.matches(REGEX_PATTERN)) {
+            return result;
+        }
+        return null;
+    }
+
     public static void main(String[] args) {
         String testPassword = "abcDEF!#";
         String hashHex = "0492F50418F9D05039504B90B2F980871D5D34D340B5ABB1B0F3D5D9A12017A0";
@@ -136,6 +148,8 @@ public class PasswordSystemManager {
         byte[] saltTest = hexStringToByteArray(saltHex);
 
         String testPassword2 = "!!Aa1234";
+
+        System.out.println(generatePassword());
 
     }
 }

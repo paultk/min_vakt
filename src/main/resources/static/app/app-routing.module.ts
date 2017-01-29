@@ -9,6 +9,7 @@ import {NavigationComponent} from "./navigation/navigation.component";
 import {CalendarComponent} from "./calendar/calendar.component";
 import {AuthGuard} from "./_guards/auth.guard";
 import {PageNotFoundComponent} from "./not-found.component";
+import {ForgotCredentialsComponent} from "./forgot-credentials/forgot-credentials.component";
 
 const appRoutes: Routes = [
   {
@@ -19,12 +20,19 @@ const appRoutes: Routes = [
   },
   {
     path: 'login',
-    component: LoginComponent
+    component: LoginComponent,
+    children: [
+      {
+        path: 'glemt-passord',
+        component: ForgotCredentialsComponent,
+        outlet: 'popup'
+      }
+    ]
   },
   {
     path: '**',
     component: PageNotFoundComponent
-  },
+  }
   /*{
    path: '',
    component: NavigationComponent, // (Axel, 27.01) todo: may be removed later

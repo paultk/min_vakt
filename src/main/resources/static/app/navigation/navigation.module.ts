@@ -41,9 +41,9 @@ import {FravaerInfoComponent} from "../fravaer-info/fravaer-info.component";
     NavigationRoutingModule
   ],
   declarations: [
+    UserFormComponent,
     UserinfoComponent,
     ProfilComponent,
-    UserFormComponent,
     InputFieldComponent,
     ForgotCredentialsComponent,
     FravaerComponent,

@@ -1,8 +1,11 @@
 package com.example.database_classes;
 
 import com.example.security.PasswordSystemManager;
+import javax.mail.Message;
+import javax.mail.internet.*;
 
 import java.time.LocalDate;
+import java.util.Properties;
 
 
 /**
@@ -218,6 +221,10 @@ public class Bruker {
         hashPassord();
     }
 
+    public String getPlaintextPassord() {
+        return plaintextPassord;
+    }
+
     public String getHash() {
         return hash;
     }
@@ -240,6 +247,10 @@ public class Bruker {
 
     public int getTotalMonthHours(LocalDate localDate) {
         return(int)Math.round(37.5 * localDate.lengthOfMonth() / 7) * stillingsProsent / 100;
+    }
+
+    public void resetPassord() {
+
     }
 
     @Override
