@@ -42,6 +42,7 @@ export class FravaerComponent implements OnInit {
   }
 
   refreshVakter(newValue: any): void {
+    console.log("-------------------------------------------");
 
     this.timeObject = newValue;
 

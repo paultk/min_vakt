@@ -80,3 +80,22 @@
 .form-control #drittFelt {
   width: 50px;
 }
+
+/*STATIC INFO*/
+.static-info {
+  float: left;
+  width: 500px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+}
+
+.static-header {
+  background-color: #006D92;
+  color: white;
+  padding: 5px;
+  margin-bottom: 5px;
+}
+
+.static-content {
+  padding: 0 20px 20px 20px;
+}

@@ -1,52 +1,60 @@
 <div class="content">
-  <div [hidden]="submitted">
-    <form (ngSubmit)="onSubmit()" #heroForm="ngForm">
+  <div class="static-info">
+    <div class="static-header">
+      <h4>Registrer fravær</h4>
+    </div>
+    <div class="static-content">
+      <div [hidden]="submitted">
+        <form (ngSubmit)="onSubmit()" #fravaerForm="ngForm">
 
-      <form class="form-inline">
-        <div class="form-group">
-          <div class="input-group">
-            <input id="dateform" class="form-control" placeholder="Vennligst velg en dato→"
-                         name="dp" [ngModel]="timeObject" (ngModelChange)="refreshVakter($event)"
-                   ngbDatepicker #d="ngbDatepicker">
-            <div class="input-group-addon" (click)="d.toggle()" >
-              <div class="glyphicon glyphicon-calendar" style="width: 1.2rem; height: 1rem; cursor: pointer;"></div>
+          <div class="form-group">
+            <b>Ansatt:</b>
+            <select class="select-form form-control" id="fornavn" required [(ngModel)]="model.brukerId" name="fornavn">
+              <option *ngFor="let user of users" [value]="user.brukerId">{{user.fornavn}} {{user.etternavn}}</option>
+            </select>
+          </div>
+
+          <form class="form-inline">
+            <b>Dato:</b>
+            <br>
+            <div class="form-group">
+              <div class="input-group">
+                <input id="dateform" class="form-control" placeholder="Velg en dato →"
+                       name="dp" [ngModel]="timeObject" (ngModelChange)="refreshVakter($event)"
+                       ngbDatepicker #d="ngbDatepicker">
+                <div class="input-group-addon" (click)="d.toggle()" >
+                  <div class="glyphicon glyphicon-calendar" style="width: 1.2rem; height: 1rem; cursor: pointer;"></div>
+                </div>
+              </div>
+            </div>
+          </form>
+          <br>
+          <div class="datoer">
+            <div class="fra">
+              <b>Tidspunkt (fra):</b>
+              <ngb-timepicker [(ngModel)]="fromTime" name="fraTidTime"></ngb-timepicker>
+            </div>
+            <br>
+            <div class="til">
+              <b>Tidspunkt (til):</b>
+              <ngb-timepicker [(ngModel)]="toTime" name="tilTidTime"></ngb-timepicker>
             </div>
           </div>
-        </div>
-      </form>
 
-      <div class="form-group">
-        <label for="fornavn">Ansatt</label>
-        <select class="select-form form-control" id="fornavn" required [(ngModel)]="model.brukerId" name="fornavn">
-          <option *ngFor="let user of users" [value]="user.brukerId">{{user.fornavn}} {{user.etternavn}}</option>
-        </select>
+          <ul class="vakter">
+            <h4><b>Velg vakt</b></h4>
+            <div>Velg en dato for å se brukerens vakter den dagen</div>
+            <li *ngFor="let vakt of vaktliste" (click)="onSelect(vakt)"
+                [class.selected]="vakt === selectedVakt">
+              <span class="badge">{{vakt.vakt_id}}</span>
+              <span>{{vakt.fra_tid}}</span>
+            </li>
+          </ul>
+
+          <input-field [field]='"Kommentar:"' [(fieldValue)]="model.kommentar" id="drittFelt"></input-field>
+          <button type="submit" class="btn btn-default btn-primary" [disabled]="!fravaerForm.valid">Registrer fravær</button>
+        </form>
       </div>
-
-      <br>
-
-      <div class="datoer">
-        <div class="fra">
-          <label class="label">Tidspunkt (fra):</label>
-          <ngb-timepicker [(ngModel)]="fromTime" name="fraTidTime"></ngb-timepicker>
-        </div>
-        <div class="til">
-          <label class="label">Tidspunkt (til):</label>
-          <ngb-timepicker [(ngModel)]="toTime" name="tilTidTime"></ngb-timepicker>
-        </div>
-      </div>
-
-      <ul class="vakter">
-        <h4>Velg vakt</h4>
-        <div>Velg en dato for å se brukerens vakter den dagen</div>
-        <li *ngFor="let vakt of vaktliste" (click)="onSelect(vakt)"
-            [class.selected]="vakt === selectedVakt">
-          <span class="badge">{{vakt.vakt_id}}</span>
-          <span>{{vakt.fra_tid}}</span>
-        </li>
-      </ul>
-
-      <input-field [field]='"Kommentar"' [(fieldValue)]="model.kommentar" id="drittFelt"></input-field>
-      <button type="submit" class="btn btn-default btn-primary" [disabled]="!heroForm.form.valid">Registrer fravær</button>
-    </form>
+    </div>
   </div>
 </div>
