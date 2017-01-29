@@ -31,6 +31,7 @@ export class UserinfoComponent implements OnInit{
     for (let u of this.users){
       if(u.brukerId ==idNum){
         this.selectedUser=u;
+        this.userService.setEditUser(u);
         console.log(u);
       }
     }

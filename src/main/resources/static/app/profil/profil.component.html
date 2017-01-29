@@ -8,25 +8,25 @@
       <div class="static-content">
         <div class="name">
           <div class="first-name">
-            <input-field [field]='"Fornavn"' [disabled]="true" [(fieldValue)]="user.fornavn"></input-field>
+            <input-field [field]='"Fornavn"' [disabled]="!isAdmin" [(fieldValue)]="user.fornavn"></input-field>
           </div>
           <div class="last-name">
-            <input-field [field]='"Etternavn"' [disabled]="true" [(fieldValue)]="user.etternavn"></input-field>
+            <input-field [field]='"Etternavn"' [disabled]="!isAdmin" [(fieldValue)]="user.etternavn"></input-field>
           </div>
         </div>
         <div class="birthdate">
-          <input-field [field]='"Fødselsdato"' [disabled]="true" [(fieldValue)]="user.fodselsdato"></input-field>
+          <input-field [field]='"Fødselsdato"' [disabled]="!isAdmin" [(fieldValue)]="user.fodselsdato"></input-field>
         </div>
         <div class="stilling">
           <div class="stilling-navn">
-            <input-field [field]='"Stilling"' [disabled]="true" [(fieldValue)]="user.stillingsId"></input-field>
+            <input-field [field]='"Stilling"' [disabled]="!isAdmin" [(fieldValue)]="user.stillingsId"></input-field>
           </div>
           <div class="stillingsprosent">
-            <input-field [field]='"Stillingsprosent"' [disabled]="true" [(fieldValue)]="user.stillingsprosent"></input-field>
+            <input-field [field]='"Stillingsprosent"' [disabled]="!isAdmin" [(fieldValue)]="user.stillingsprosent"></input-field>
           </div>
         </div>
         <div class="department">
-          <input-field [field]='"Avdeling"' [disabled]="true" [(fieldValue)]="user.avdelingId"></input-field>
+          <input-field [field]='"Avdeling"' [disabled]="!isAdmin" [(fieldValue)]="user.avdelingId"></input-field>
         </div>
       </div>
     </div>

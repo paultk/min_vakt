@@ -49,6 +49,10 @@ export class NavigationComponent implements OnInit{
         console.log(res);
     })
   }
+  setEdit() : void {
+    console.log("hallo");
+    this.userService.setEditUser(this.authService.getGlobalUser());
+  }
 
   ngOnInit(): void {
     this.getUsers();

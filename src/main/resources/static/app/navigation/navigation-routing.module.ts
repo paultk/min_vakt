@@ -41,6 +41,10 @@ const navigationRoutes: Routes = [
         component: UserFormComponent
       },
       {
+        path: 'rediger-bruker',
+        component: ProfilComponent
+      },
+      {
         path: 'faq',
         component: FaqComponent
       },
