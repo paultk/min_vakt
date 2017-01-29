@@ -28,6 +28,7 @@ import {AuthenticationService} from "../_services/authentication.service";
 import {NavigationRoutingModule} from "./navigation-routing.module";
 import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import {UserSearchcomponent} from "../userinfo/user-search.component";
+import {FravaerInfoComponent} from "../fravaer-info/fravaer-info.component";
 
 @NgModule({
   imports: [
@@ -46,6 +47,7 @@ import {UserSearchcomponent} from "../userinfo/user-search.component";
     InputFieldComponent,
     ForgotCredentialsComponent,
     FravaerComponent,
+    FravaerInfoComponent,
     FaqComponent,
     CalendarComponent,
     NavBarComponent,

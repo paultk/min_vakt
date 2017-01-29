@@ -1,0 +1,41 @@
+<div  class="contents">
+  <div class="content1">
+    <form>
+
+      <!--<input type="text" name="search" placeholder="Søk">-->
+      <input name="search" id="search" [(ngModel)]="searchtext" [value]="searchtext">
+      <button class="btn btn-primary btn-large" (click)="searchUsers(tekst)">Søk</button>
+
+      <div class="buttons">
+        <a href="#">
+          <span id="ny_fravaer" class="glyphicon glyphicon-plus"></span>
+          Registrer fravær</a>
+
+        <a href="#" (click)="slett(selectedUser)" id="sl_ fravaer">
+          <span class="glyphicon glyphicon-minus"></span>
+          Slett fravær</a>
+
+      </div>
+      <br>
+    </form>
+    <!--test-->
+
+    <table class="fravaers" id="frav">
+      <thead>
+      <tr>
+        <th>Bruker</th>
+        <th>Fra</th>
+        <th>Til</th>
+      </tr>
+      </thead>
+
+      <tr *ngFor="let frav of fravaers">
+        <td>{{selectUser(frav.brukerId)}}{{fraUser.fornavn}}{{fraUser.etternavn}}</td>
+        <td> {{frav.fraTid}}</td>
+        <td> {{frav.tilTid}}</td>
+      </tr>
+
+    </table>
+  </div>
+</div>
+
