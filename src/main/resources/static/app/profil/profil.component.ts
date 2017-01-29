@@ -4,6 +4,7 @@ import {Component, OnInit} from "@angular/core";
 
 import {User} from '../_models/user';
 import {UserService} from '../_services/user.service';
+import {AuthenticationService} from "../_services/authentication.service";
 
 @Component({
   moduleId: module.id,
@@ -13,14 +14,15 @@ import {UserService} from '../_services/user.service';
 })
 
 export class ProfilComponent implements OnInit {
-  user: User;
+  user: User = new User();
   selectedUser: User;
 
   constructor(
-    private userService: UserService
+    private userService: UserService,
+    private authService: AuthenticationService
   ) {}
 
   ngOnInit(): void {
-    this.user = this.userService.getCurrentUser();
+    this.user = this.authService.getGlobalUser();
   }
 }

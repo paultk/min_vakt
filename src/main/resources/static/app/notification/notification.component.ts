@@ -121,7 +121,7 @@ export class NotificationComponent implements OnInit {
   ngOnInit(): void {
     this.user = this.authService.getGlobalUser();
     // this.user = this.userService.getCurrentUser();
-    console.log(this.user);
+    // console.log(this.user);
     this.updateMessages();
     this.updateUsers();
     this.notification = new Notification();
