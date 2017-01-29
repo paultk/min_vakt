@@ -9,26 +9,28 @@
 
           <div class="form-group">
             <b>Ansatt:</b>
-            <select class="select-form form-control" id="fornavn" required [(ngModel)]="model.brukerId" name="fornavn">
+            <select class="select-form form-control" id="fornavn" required [(ngModel)]="selectedUser" name="fornavn">
               <option *ngFor="let user of users" [value]="user.brukerId">{{user.fornavn}} {{user.etternavn}}</option>
             </select>
           </div>
+
 
           <form class="form-inline">
             <b>Dato:</b>
             <br>
             <div class="form-group">
               <div class="input-group">
-                <input id="dateform" class="form-control" placeholder="Velg en dato →"
+                <input id="dateform" class="form-control" (focus)="d.open()" placeholder="Velg en dato →"
                        name="dp" [ngModel]="timeObject" (ngModelChange)="refreshVakter($event)"
                        ngbDatepicker #d="ngbDatepicker">
-                <div class="input-group-addon" (click)="d.toggle()" >
-                  <div class="glyphicon glyphicon-calendar" style="width: 1.2rem; height: 1rem; cursor: pointer;"></div>
+                <div class="input-group-addon" (click)="d.toggle()" style="cursor: pointer;">
+                  <div class="glyphicon glyphicon-calendar" style="width: 1.2rem; height: 1rem;"></div>
                 </div>
               </div>
             </div>
           </form>
-          <br>
+          (Evt. skriv dato på formen yyyy-MM-DD)
+          <br><br>
           <div class="datoer">
             <div class="fra">
               <b>Tidspunkt (fra):</b>

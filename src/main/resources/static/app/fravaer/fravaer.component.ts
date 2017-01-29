@@ -24,12 +24,15 @@ export class FravaerComponent implements OnInit {
 
   users: User[] = [];
 
+  date: {year: number, month: number};
+
   timeObject: any;
   fromTime = {hour: 6, minute: 0};
   toTime = {hour: 12, minute: 0};
 
   vaktliste: Vakt[];
   selectedVakt: Vakt;
+  selectedUser: User;
 
   completeDateFrom = [""];
   completeDateTo = [""];
@@ -38,11 +41,9 @@ export class FravaerComponent implements OnInit {
 
   onSelect(vakt: Vakt): void {
     this.selectedVakt = vakt;
-    this.model.vaktId = this.selectedVakt.vakt_id;
   }
 
   refreshVakter(newValue: any): void {
-    console.log("-------------------------------------------");
 
     this.timeObject = newValue;
 
@@ -88,17 +89,22 @@ export class FravaerComponent implements OnInit {
       .then(() => console.log(this.vaktliste));
   }
 
+  updateUsers() : void {
+    this.userService.getUsers1().subscribe(ret => this.users = this.userService.mapUsersFromObs(ret));
+  }
+
   onSubmit(): void {
     if (this.selectedVakt == null) {
       return;
     }
+    if (!this.fravaerService.checkBrukerVakt(this.selectedUser.brukerId, this.selectedVakt.vakt_id)) {
+      alert("Valgt ansatt deltok ikke i denne vakten!");
+      return;
+    }
+
     this.submitted = true;
     console.log(this.model);
     this.fravaerService.registerFravaer(this.model);
-  }
-
-  updateUsers() : void {
-    this.userService.getUsers1().subscribe(ret => this.users = this.userService.mapUsersFromObs(ret));
   }
 
   ngOnInit() {
