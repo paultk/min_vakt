@@ -14,6 +14,16 @@ import javax.security.auth.message.AuthException;
 public class VaktBytteController {
     private SqlQueries query = new SqlQueries();
 
+    @RequestMapping(value="/vaktbytte/get/alle", method = RequestMethod.POST)
+    public VaktBytte[] getVaktBytter(@RequestHeader(value = "token") String token) throws AuthException {
+        if (TokenManager.verifiser(token)) {
+            return query.getVaktBytter();
+        }
+        else {
+            throw new AuthException("Token not authenticated");
+        }
+    }
+
     @RequestMapping(value="/vaktbytte/bytt", method= RequestMethod.POST)
     public boolean updateVaktBytte(@RequestBody VaktBytte bytte, @RequestHeader(value = "token") String token) throws AuthException {
         if (TokenManager.verifiser(token)) {

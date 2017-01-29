@@ -1792,6 +1792,26 @@ public class SqlQueries extends DBConnection {
 		return false;
 	}
 
+	public VaktBytte[] getVaktBytter() {
+		try {
+			selectQuery = connection.prepareStatement("SELECT * FROM vakt_bytte");
+			ResultSet res = selectQuery.executeQuery();
+			ArrayList<VaktBytte> vktbt = new ArrayList<>();
+			while (res.next()) {
+				vktbt.add(new VaktBytte(
+						res.getInt("vaktBytteId"),
+						res.getInt("bruker_Id1"),
+						res.getInt("vakt_id"),
+						res.getInt("bruker_id2")
+				));
+			}
+			return vktbt.toArray(new VaktBytte[vktbt.size()]);
+		}
+		catch(SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 
 	public static void main(String[] args) {
 		SqlQueries query = new SqlQueries();
