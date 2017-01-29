@@ -32,6 +32,9 @@ export class AvdelingService {
       //.then(res => res.json().data as Avdeling[])
       .catch(this.handleError);
   }
+  getAvdelingen(id: number): Promise<Avdeling> {
+    return this.getAvdelinger().then(ret => ret.find(ret => ret.avdelingId === id));
+  }
 
   getAvdelinger(): Promise<Avdeling[]> {
     const URL = `http://localhost:8080/avdeling/all`;

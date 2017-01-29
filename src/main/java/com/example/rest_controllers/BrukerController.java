@@ -92,6 +92,7 @@ public class BrukerController {
 
 	@RequestMapping(value="/bruker/update", method=RequestMethod.POST)
 	public boolean updateBruker(@RequestHeader (value = "token") String token, @RequestBody Bruker bruker) throws AuthException {
+		System.out.println(bruker);
 		if (TokenManager.verifiser(token)) {
 			return query.updateBruker(bruker);
 		}

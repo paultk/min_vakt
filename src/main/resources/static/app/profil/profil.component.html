@@ -14,19 +14,19 @@
             <input-field [field]='"Etternavn"' [disabled]="!isAdmin" [(fieldValue)]="user.etternavn"></input-field>
           </div>
         </div>
-        <div class="birthdate">
+        <!--<div class="birthdate">
           <input-field [field]='"Fødselsdato"' [disabled]="!isAdmin" [(fieldValue)]="user.fodselsdato"></input-field>
-        </div>
+        </div>-->
         <div class="stilling">
           <div class="stilling-navn">
-            <input-field [field]='"Stilling"' [disabled]="!isAdmin" [(fieldValue)]="user.stillingsId"></input-field>
+            <input-field [field]='"Stilling"' [disabled]="!isAdmin" [(fieldValue)]="user.stillingsBeskrivelse"></input-field>
           </div>
           <div class="stillingsprosent">
-            <input-field [field]='"Stillingsprosent"' [disabled]="!isAdmin" [(fieldValue)]="user.stillingsprosent"></input-field>
+            <input-field [field]='"Stillingsprosent"' [disabled]="!isAdmin" [(fieldValue)]="user.stillingsProsent"></input-field>
           </div>
         </div>
         <div class="department">
-          <input-field [field]='"Avdeling"' [disabled]="!isAdmin" [(fieldValue)]="user.avdelingId"></input-field>
+          <input-field [field]='"Avdeling"' [disabled]="!isAdmin" [(fieldValue)]="avdeling.navn"></input-field>
         </div>
       </div>
     </div>
@@ -44,14 +44,6 @@
             <input-field [field]='"Epost:"' [(fieldValue)]="user.epost"></input-field>
           </div>
         </div>
-        <div class="residence-info">
-          <div class="address">
-            <input-field [field]='"Adresse:"' [(fieldValue)]="user.adresse"></input-field>
-          </div>
-          <div class="city">
-            <input-field [field]='"By:"' [(fieldValue)]="user.by"></input-field>
-          </div>
-        </div>
         <div class="password">
           <div class="password-one">
             <input-field [field]='"Passord:"' [(fieldValue)]="user.plaintextPassord"></input-field>
@@ -60,7 +52,7 @@
             <input-field [field]='"Gjenta passord:"' [(fieldValue)]="user.plaintextPassord"></input-field>
           </div>
         </div>
-        <button type="submit" class="btn btn-default btn-primary">Oppdater profil
+        <button type="submit" class="btn btn-default btn-primary" (click)="submit()">Oppdater profil
         </button>
       </div>
     </div>

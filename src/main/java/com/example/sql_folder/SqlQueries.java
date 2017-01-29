@@ -250,7 +250,7 @@ public class SqlQueries extends DBConnection {
 
 	public boolean updateBruker(Bruker bruker) {
 		try {
-			updateQuery = connection.prepareStatement("UPDATE  bruker SET  passord_id =  ?,\n" +
+			updateQuery = connection.prepareStatement("UPDATE  bruker SET \n" +
 					"stilling_beskrivelse =  ?,\n" +
 					"avdeling_id =  ?,\n" +
 					"fornavn =  ?,\n" +

@@ -60,13 +60,13 @@
   padding: 0 20px;
 }
 
-.contact-info, .password-one {
+.contact-info {
   width: auto;
   height: auto;
   float: left;
 }
 
-.residence-info, .password-two {
+.residence-info, .password-two, .password-one {
   width: auto;
   height: auto;
   float: left;

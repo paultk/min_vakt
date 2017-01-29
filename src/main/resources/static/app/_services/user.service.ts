@@ -30,6 +30,12 @@ export class UserService {
   setEditUser(user:User):void {
     this.editUser = user;
   }
+  updateUser(user:User): Observable<any> {
+    console.log(user);
+    const URL = 'http://localhost:8080/bruker/update';
+    return this.http.post(URL, JSON.stringify(user), {headers:this.headers}).map((response: Response) =>
+      response.json());
+  }
 
   addUser(user: User): void {
     const URL = 'http://localhost:8080/bruker/add';
