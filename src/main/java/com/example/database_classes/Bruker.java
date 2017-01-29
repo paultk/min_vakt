@@ -218,7 +218,7 @@ public class Bruker {
 
     public void setPlaintextPassord(String plaintextPassord) {
         this.plaintextPassord = plaintextPassord;
-        hashPassord();
+        //hashPassord();
     }
 
     public String getPlaintextPassord() {
@@ -247,10 +247,6 @@ public class Bruker {
 
     public int getTotalMonthHours(LocalDate localDate) {
         return(int)Math.round(37.5 * localDate.lengthOfMonth() / 7) * stillingsProsent / 100;
-    }
-
-    public void resetPassord() {
-
     }
 
     @Override

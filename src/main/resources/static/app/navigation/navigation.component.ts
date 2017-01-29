@@ -39,7 +39,9 @@ export class NavigationComponent implements OnInit{
 
   setNumMessages(): void {
    // this.selectedUser = this.authService.getGlobalUser();
+
     const URL = 'http://localhost:8080/melding/get/ulest/ant';
+    console.log(this.selectedUser.brukerId);
     this.http.post(URL, JSON.stringify(this.selectedUser), {headers: this.headers},)
       .toPromise()
       .then((res) => {

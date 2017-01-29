@@ -69,6 +69,8 @@ export class UserService {
     return Promise.resolve(returnPromise);
   }
 
+
+
   resetUserPassword(user: User): void {
     const URL = 'http://localhost:8080/bruker/glemtpassord';
 
@@ -82,6 +84,8 @@ export class UserService {
   getUser(id: number): Promise<User> {
     return this.getUsers().then(users => users.find(user => user.brukerId === id));
   }
+
+
 
   getUserByEmail(email: string): Promise<User[]> {
     const URL = `http://localhost:8080/bruker/epost/${email}`;
