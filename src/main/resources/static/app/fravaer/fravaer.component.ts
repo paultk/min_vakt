@@ -1,8 +1,10 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 
 import { Fravaer } from '../_models/fravaer';
 import {Vakt} from '../_models/vakt';
 import {FravaerService} from "../_services/fravaer.service";
+import {User} from "../_models/user";
+import {UserService} from "../_services/user.service";
 
 @Component({
   moduleId: module.id,
@@ -11,11 +13,16 @@ import {FravaerService} from "../_services/fravaer.service";
   styleUrls: [ 'fravaer.component.css' ]
 })
 
-export class FravaerComponent {
+export class FravaerComponent implements OnInit {
 
-  constructor(private fravaerService: FravaerService) {}
+  constructor(
+    private fravaerService: FravaerService,
+    private userService: UserService
+  ) {}
 
-  model = new Fravaer(45, "Mandag", "Torsdag", "Dette er en kommentar");
+  model = new Fravaer();
+
+  users: User[] = [];
 
   timeObject: any;
   fromTime = {hour: 6, minute: 0};
@@ -87,5 +94,13 @@ export class FravaerComponent {
     this.submitted = true;
     console.log(this.model);
     this.fravaerService.registerFravaer(this.model);
+  }
+
+  updateUsers() : void {
+    this.userService.getUsers1().subscribe(ret => this.users = this.userService.mapUsersFromObs(ret));
+  }
+
+  ngOnInit() {
+    this.updateUsers();
   }
 }

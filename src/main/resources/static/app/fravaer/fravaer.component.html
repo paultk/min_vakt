@@ -15,6 +15,13 @@
         </div>
       </form>
 
+      <div class="form-group">
+        <label for="fornavn">Ansatt</label>
+        <select class="select-form form-control" id="fornavn" required [(ngModel)]="model.brukerId" name="fornavn">
+          <option *ngFor="let user of users" [value]="user.brukerId">{{user.fornavn}} {{user.etternavn}}</option>
+        </select>
+      </div>
+
       <br>
 
       <div class="datoer">
