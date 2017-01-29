@@ -34,4 +34,13 @@ public class VaktBytteController {
         }
     }
 
+    @RequestMapping(value="/vaktbytte/delete", method= RequestMethod.POST)
+    public boolean deleteVaktBytte(@RequestBody VaktBytte bytte, @RequestHeader(value = "token") String token) throws AuthException {
+        if (TokenManager.verifiser(token)) {
+            return query.deleteVaktBytte(bytte.getVaktBytteId());
+        }
+        else {
+            throw new AuthException("Token not authenticated");
+        }
+    }
 }

@@ -657,7 +657,6 @@ public class SqlQueries extends DBConnection {
 			insertQuery.setInt(3, vaktId);
 			insertQuery.executeUpdate();
 
-
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -1811,6 +1810,19 @@ public class SqlQueries extends DBConnection {
 			e.printStackTrace();
 		}
 		return null;
+	}
+
+	public boolean deleteVaktBytte(int id) {
+		try {
+			deleteQuery = connection.prepareStatement("DELETE FROM vakt_bytte WHERE vaktBytteId = ?");
+			deleteQuery.setInt(1, id);
+			deleteQuery.executeUpdate();
+			return true;
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
 	}
 
 	public static void main(String[] args) {
