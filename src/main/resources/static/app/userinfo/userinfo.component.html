@@ -1,35 +1,46 @@
-<form>
+<div class="contents">
+  <form>
+    <!--<input type="text" name="search" placeholder="Søk">-->
+    <input id="sok" name="search" [(ngModel)]="searchtext" [value]="searchtext">
 
-  <!--<input type="text" name="search" placeholder="Søk">-->
-  <button class="btn btn-primary btn-large">Søk</button>
-  <user-search></user-search>
-  <br>
-  <a routerLink="../opprett-bruker">
-    <span class="glyphicon glyphicon-plus"></span>
-    Ny bruker</a>
-</form>
+    <button class="btn btn-primary btn-large" (click)="searchUsers(tekst)">Søk</button>
+    <br>
+    <div class="buttons">
+      <a href="#">
+        <span id="ny_bruker" class="glyphicon glyphicon-plus"></span>
+        Ny bruker</a>
+      <a href="#">
+        <span id= "reg_bruker" class="glyphicon glyphicon-edit"></span>
+        Redigere bruker</a>
+      <a href="#" (click)="slett(selectedUser)" id="sl_ bruker">
+        <span class="glyphicon glyphicon-minus"></span>
+        Slett bruker</a>
+    </div>
+  </form>
 
-<table class="users table-striped table-hover">
-  <thead>
-  <tr>
-    <th>Navn</th>
-    <th>Kompetanse</th>
-    <th>Stillingsprosent</th> <!--kun for admin-->
-    <th>Telefonnummer</th>
-    <th class="epost">Epost</th>
-    <th class="filler"></th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr *ngFor="let user of users">
-    <td>{{user.fornavn}} {{user.etternavn}}</td>
-    <td>{{user.stillingsBeskrivelse}}</td>
-    <td>{{user.stillingsProsent}}</td> <!--kun for admin-->
-    <td>{{user.telefonNr}}</td>
-    <td>{{user.epost}}</td>
-  </tr>
-  </tbody>
-</table>
+  <table class="users table-striped table-hover" >
+    <thead>
+    <tr>
+      <th class="first">Navn</th>
+      <th>Kompetanse</th>
+      <th>Stillingsprosent</th> <!--kun for admin-->
+      <th>Telefonnummer</th>
+      <th class="epost">Epost</th>
+      <th class="filler"></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let user of users" (click)="onSelect(user.brukerId)" [class.selected]="user==selectedUser">
+      <td>{{user.fornavn}} {{user.etternavn}}</td>
+      <td>{{user.stillingsBeskrivelse}}</td>
+      <td>{{user.stillingsProsent}}</td> <!--kun for admin-->
+      <td>{{user.telefonNr}}</td>
+      <td>{{user.epost}}</td>
+    </tr>
+    </tbody>
+  </table>
+
+</div>
 
 
 <!--
