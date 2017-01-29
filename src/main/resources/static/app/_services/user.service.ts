@@ -8,6 +8,7 @@ import {Observable} from "rxjs";
 
 @Injectable()
 export class UserService {
+  private editUser: User;
 
   private UsersURL = 'http://localhost:8080/bruker/alle';
   constructor(
@@ -22,6 +23,13 @@ export class UserService {
   }
 
   testConnect2() {}
+
+  getEditUser() : User {
+    return this.editUser;
+  }
+  setEditUser(user:User):void {
+    this.editUser = user;
+  }
 
   addUser(user: User): void {
     const URL = 'http://localhost:8080/bruker/add';
@@ -89,6 +97,8 @@ export class UserService {
       .post(URL, JSON.stringify(user), {headers: this.headers},).map((response: Response) =>
         response.json());
   }
+
+
 
   /*Brukes i profil.component.ts*/
   getCurrentUser(): User {

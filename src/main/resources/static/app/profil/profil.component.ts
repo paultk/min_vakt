@@ -16,6 +16,7 @@ import {AuthenticationService} from "../_services/authentication.service";
 export class ProfilComponent implements OnInit {
   user: User = new User();
   selectedUser: User;
+  isAdmin: boolean;
 
   constructor(
     private userService: UserService,
@@ -23,6 +24,8 @@ export class ProfilComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.user = this.authService.getGlobalUser();
+    this.user = this.userService.getEditUser();
+    this.isAdmin = this.user.admin;
+
   }
 }
