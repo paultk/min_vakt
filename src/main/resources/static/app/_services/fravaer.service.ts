@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
-import { Http, Headers } from '@angular/http';
+import {Http, Headers, Response} from '@angular/http';
 
 import {Fravaer} from "../_models/fravaer";
 import 'rxjs/add/operator/toPromise';
 import {JsonTestClass} from "../_models/json-test-class";
 import {Vakt} from "../_models/vakt";
+import {Observable} from "rxjs";
 
 @Injectable()
 export class FravaerService {
@@ -53,6 +54,30 @@ export class FravaerService {
       .toPromise()
       .then(res => res.json().data as Fravaer[])
       .catch(this.handleError);
+  }
+
+  getFravaers(): Promise<Fravaer[]> {
+    const URL = 'http://localhost:8080/fravaer/medbrukerogvakt';
+    let returnPromise: Fravaer[] = [];
+    let as: Object[] = [];
+
+    this.http.get(URL, {headers: this.headers},).toPromise()
+      .then(response => as = (JSON.parse(response['_body'])))
+      .then(() => as.forEach(
+        frav => returnPromise.push(new Fravaer(frav['brukerVaktId'], frav['fraTid'], frav['tilTid'],
+          frav['kommentar'], frav['brukerId'], frav['vaktId']))
+      ))
+      .catch(this.handleError);
+    return Promise.resolve(returnPromise);
+  }
+  getFravaers1(): Observable<Fravaer[]> {
+    const URL = 'http://localhost:8080/fravaer/medbrukerogvakt';
+    return this.http.get(URL, {headers: this.headers},).map((response: Response) =>
+      response.json());
+  }
+  mapFravFromObs(fravaers:Fravaer[]) : Fravaer[] {
+    return fravaers.map(frav => new Fravaer(frav['brukerVaktId'], frav['fraTid'], frav['tilTid'],
+      frav['kommentar'], frav['brukerId'], frav['vaktId']));
   }
 
   getVaktliste(): Promise<any> {

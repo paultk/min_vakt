@@ -15,7 +15,7 @@ export class FravaerComponent {
 
   constructor(private fravaerService: FravaerService) {}
 
-  model = new Fravaer(45, 49, "Mandag", "Torsdag", "Dette er en kommentar");
+  model = new Fravaer(45, "Mandag", "Torsdag", "Dette er en kommentar");
 
   timeObject: any;
   fromTime = {hour: 6, minute: 0};
