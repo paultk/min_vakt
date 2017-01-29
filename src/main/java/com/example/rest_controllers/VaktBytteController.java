@@ -14,7 +14,7 @@ import javax.security.auth.message.AuthException;
 public class VaktBytteController {
     private SqlQueries query = new SqlQueries();
 
-    @RequestMapping(value="/vaktbytte/get/alle", method = RequestMethod.POST)
+    @RequestMapping(value="/vaktbytte/get/alle", method = RequestMethod.GET)
     public VaktBytte[] getVaktBytter(@RequestHeader(value = "token") String token) throws AuthException {
         if (TokenManager.verifiser(token)) {
             return query.getVaktBytter();
