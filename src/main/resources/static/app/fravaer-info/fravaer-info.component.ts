@@ -26,6 +26,7 @@ export class FravaerInfoComponent implements OnInit {
   fravaer:Fravaer;
   fravaers :Fravaer[] = [ new Fravaer ];
   searchtext : String;
+  isAdmin: boolean;
 
   constructor(private fravaerService:FravaerService,
               private userService:UserService) {
@@ -96,6 +97,7 @@ export class FravaerInfoComponent implements OnInit {
     });
     this.getFravaers();
     this.fraUser = new User();
+    this.isAdmin = this.user.admin;
   }
 
   selectUser(id : number){

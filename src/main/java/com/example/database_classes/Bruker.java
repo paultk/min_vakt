@@ -1,11 +1,8 @@
 package com.example.database_classes;
 
 import com.example.security.PasswordSystemManager;
-import javax.mail.Message;
-import javax.mail.internet.*;
 
 import java.time.LocalDate;
-import java.util.Properties;
 
 
 /**

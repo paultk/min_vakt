@@ -17,11 +17,12 @@ import {Router, ActivatedRoute, RouterModule} from "@angular/router";
 })
 
 export class UserinfoComponent implements OnInit{
-
+  private user: User = [ new User() ];
   private users: User[] = [ new User() ];
   private selectedUser: User = new User();
   private edited = false;
   private searchtext : string;
+  private isAdmin : boolean;
 
   constructor (
     private userService: UserService,
@@ -89,6 +90,7 @@ export class UserinfoComponent implements OnInit{
 
   ngOnInit(): void {
     this.getUsers();
+    this.isAdmin = this.user.admin;
   }
 
   goToUserForm() {
