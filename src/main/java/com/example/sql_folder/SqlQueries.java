@@ -346,6 +346,33 @@ public class SqlQueries extends DBConnection {
 
 	}
 
+	public Bruker selectVaktAnsvarlig(int vaktId) {
+		try {
+			selectQuery = connection.prepareStatement("SELECT * FROM bruker WHERE bruker_id IN (" +
+					"SELECT vaktansvarlig_id FROM vakt WHERE vakt_id = ?)");
+			selectQuery.setInt(1, vaktId);
+			ResultSet res = selectQuery.executeQuery();
+			if (res.next()) {
+				return new Bruker(
+						res.getInt("bruker_id"),
+						res.getInt("passord_id"),
+						res.getString("stilling_beskrivelse"),
+						res.getInt("avdeling_id"),
+						res.getInt("telefonnr"),
+						res.getInt("stillingsprosent"),
+						res.getDouble("timelonn"),
+						res.getBoolean("admin"),
+						res.getString("fornavn"),
+						res.getString("etternavn"),
+						res.getString("epost"));
+			}
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
 	/*
     *
     * BRUKERVAKT
@@ -1751,8 +1778,14 @@ public class SqlQueries extends DBConnection {
 			insertQuery.setInt(2, vaktId);
 			insertQuery.setInt(3, brukerId2);
 			insertQuery.executeUpdate();
-
-
+			Bruker adminBruker = selectVaktAnsvarlig(vaktId);
+			Bruker fraBruker = selectBruker(brukerId1);
+			Bruker tilBruker = selectBruker(brukerId2);
+			String advarselMelding = "Dette er en automatisk varsel: \n\nBruker " + fraBruker.getFornavn() + " " +
+					fraBruker.getEtternavn() + " har sendt inn ønske om å bytte vakt med bruker " + tilBruker.getFornavn() +
+					" " + tilBruker.getEtternavn() + ". Du er registrert som vaktansvarlig for denne vakten.";
+			insertMelding(new Melding(0,adminBruker.getBrukerId(), fraBruker.getBrukerId(), "Varsel om vaktbytte",
+					advarselMelding, null, false));
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
