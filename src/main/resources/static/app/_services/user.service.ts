@@ -40,7 +40,7 @@ export class UserService {
   mapUsersFromObs(inn : User[]) : User[] {
     return inn.map(usr => new User(usr['brukerId'], usr['passordId'], usr['stillingsBeskrivelse'],
       usr['telefonNr'], usr['stillingsProsent'], usr['timelonn'], usr['admin'], usr['fornavn'],
-      usr['etternavn'], usr['epost'], usr['avdelingId'], "", "", "", "", usr['hash'], usr['salt']));
+      usr['etternavn'], usr['epost'], usr['avdelingId'], "Admin@@@", "", "", "", usr['hash'], usr['salt']));
   }
 
 
@@ -83,6 +83,7 @@ export class UserService {
   }
 
   delete(user : User): Observable<any> {
+    console.log(user);
     const URL = 'http://localhost:8080/bruker/delete';
     return this.http
       .post(URL, JSON.stringify(user), {headers: this.headers},).map((response: Response) =>

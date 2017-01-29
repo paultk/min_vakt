@@ -7,12 +7,12 @@
     <br>
     <div class="buttons">
       <a routerLink="../opprett-bruker">
-        <span class="glyphicon glyphicon-plus"></span>
+        <span id="ny_bruker" class="glyphicon glyphicon-plus"></span>
         Ny bruker</a>
-      <a href="#">
+      <a>
         <span id= "red_bruker" class="glyphicon glyphicon-edit"></span>
         Redigere bruker</a>
-      <a href="#" (click)="slett(selectedUser)" id="sl_ bruker">
+      <a (click)="slett(selectedUser)" id="sl_ bruker">
         <span class="glyphicon glyphicon-minus"></span>
         Slett bruker</a>
     </div>

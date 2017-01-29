@@ -79,6 +79,14 @@ export class FravaerService {
     return fravaers.map(frav => new Fravaer(frav['brukerVaktId'], frav['fraTid'], frav['tilTid'],
       frav['kommentar'], frav['brukerId'], frav['vaktId']));
   }
+  delete(frav : Fravaer): Observable<any> {
+    console.log(frav);
+    const URL = 'http://localhost:8080/fravaer/delete';
+    return this.http
+      .post(URL, JSON.stringify(frav), {headers: this.headers},).map((response: Response) =>
+        response.json());
+  }
+
 
   getVaktliste(): Promise<any> {
     const URL = 'http://localhost:8080/vakt/all';

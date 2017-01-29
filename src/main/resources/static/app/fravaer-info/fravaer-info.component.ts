@@ -47,6 +47,17 @@ export class FravaerInfoComponent implements OnInit {
         console.log(funnet);
     });
   }
+  onSelect(frav: Fravaer): void{
+    this.selectedFravaer = frav;
+
+  }
+  slett(frav: Fravaer): void {
+    this.fravaerService.delete(frav).subscribe(ret => {
+      this.getFravaers();
+    });
+
+  }
+
   getFravaers() : void {
     this.fravaerService.getFravaers1().subscribe((obs) => this.fravaers = this.fravaerService.mapFravFromObs(obs));
   }

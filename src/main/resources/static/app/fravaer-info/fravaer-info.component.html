@@ -11,7 +11,7 @@
           <span id="ny_fravaer" class="glyphicon glyphicon-plus"></span>
           Registrer fravær</a>
 
-        <a href="#" (click)="slett(selectedUser)" id="sl_ fravaer">
+        <a (click)="slett(selectedFravaer)" id="sl_ fravaer">
           <span class="glyphicon glyphicon-minus"></span>
           Slett fravær</a>
 
@@ -29,7 +29,7 @@
       </tr>
       </thead>
 
-      <tr *ngFor="let frav of fravaers">
+      <tr *ngFor="let frav of fravaers" (click)="onSelect(frav)" [class.selected]="frav==selectedFravaer">
         <td>{{selectUser(frav.brukerId)}}{{fraUser.fornavn}}{{fraUser.etternavn}}</td>
         <td> {{frav.fraTid}}</td>
         <td> {{frav.tilTid}}</td>
