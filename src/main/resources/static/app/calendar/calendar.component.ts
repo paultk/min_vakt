@@ -10,9 +10,6 @@ import {isNullOrUndefined} from "util";
 //todo: Alphabetize users displayed
 //todo: change shifts
 
-
-
-
 @Component({
   moduleId: module.id,
   selector: 'calendar-component',
@@ -58,11 +55,8 @@ export class CalendarComponent implements OnInit {
 
   restOfInit(users: User[]): void {
 
-
     this.allUsers = users.map(user => new User(user['brukerId'], null, user['stillingsBeskrivelse'], null, user['stillingsProsent'],
       null, null, user['fornavn'], user['etternavn'], user['epost'], user['avdelingId']
-
-
     ));
     console.log(this.allUsers);
   }
@@ -81,13 +75,13 @@ export class CalendarComponent implements OnInit {
 
     this.date = new Date();
 
-    this.shiftInForm = new Shift(new User(null, null, null, null, null, null, null, 'Fornavn', 'Etternavn'), 0, 0)
+    this.shiftInForm = new Shift(new User(null, null, null, null, null, null, null, 'Fornavn', 'Etternavn'), 0, 0);
 
 
     this.userService.getUsers1()
       .subscribe(
         (observable) => this.restOfInit(observable)
-      )    ;
+      );
     // this.restOfInit();
     // this.takenShift = this.shiftService.getShifts(new Date(1221));
     this.shiftsUsersCanWork = this.shiftService.getShiftsUsersCanWork(null);

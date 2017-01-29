@@ -30,7 +30,7 @@ export class NavigationComponent implements OnInit{
 ) {}
 
   getUsers(): void {
-    // this.userService.getUsers().then(users => this.users = users);
+     this.userService.getUsers().then(users => this.users = users);
   }
 
   /*goToCalendar() {
