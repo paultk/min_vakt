@@ -29,7 +29,7 @@ export class CalendarComponent implements OnInit {
 
 
   // array where index = userId
-  usersIndexed: User[] = [];
+  usersIndexed: User[] = [ new User() ];
 
   // todo: fix avdelsId to match administrator
   static avdelingsId = 2;
@@ -43,7 +43,7 @@ export class CalendarComponent implements OnInit {
   shiftsUsersCanWork: Shift[];
   shiftInForm: Shift;
   date: Date;
-  allUsers: User[] = [];
+  allUsers: User[] = [ new User() ];
   tempArr = new Array(24);
   months = ['Januar', 'Februar', 'Mars', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Desember'];
 

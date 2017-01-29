@@ -54,8 +54,8 @@ export class NavigationComponent implements OnInit{
     this.getUsers();
     this.selectedUser = this.authService.getGlobalUser();
     console.log(this.selectedUser);
-  //  this.setNumMessages();
-  //  setInterval(() => {this.setNumMessages();}, 2000);
+   this.setNumMessages();
+   setInterval(() => {this.setNumMessages();}, 2000);
   }
 
   logout(): void {

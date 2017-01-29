@@ -17,10 +17,10 @@ import {UserService} from '../_services/user.service';
 
 export class UserinfoComponent implements OnInit{
 
-  users: User[];
-  selectedUser: User;
-  edited = false;
-  searchtext : string;
+  private users: User[] = [ new User() ];
+  private selectedUser: User = new User();
+  private edited = false;
+  private searchtext : string;
 
   constructor (
     private userService: UserService

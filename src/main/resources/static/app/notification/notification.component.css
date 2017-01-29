@@ -19,7 +19,7 @@ th, tr {
 }
 
 .texten2{
-  margin-top: 20px;
+  margin-top: 15px;
   margin-left: 20px;
 }
 
@@ -51,6 +51,7 @@ th, tr {
   height: auto;
   float: left;
   border: 1px solid #ccc;
+  margin-left: 20px;
 }
 
 .right {
@@ -59,6 +60,7 @@ th, tr {
   height: auto;
   float: left;
   border: 1px solid #ccc;
+  margin-left: 30px;
 }
 
 .inputen{
@@ -101,6 +103,7 @@ table {
   padding-right: 100px;
   width: 400px;
   margin-top: 10px;
+  margin-bottom: 10px;
   text-align: left;
 }
 
@@ -136,6 +139,10 @@ label{
   color: green;
 }
 
+.sendt1{
+  color:red;
+}
+
 .selected {
   background-color:#8a8a8a!important;
 }
@@ -148,4 +155,18 @@ tbody{
 tbody, thead{
   width: 380px;
   display: block;
+}
+
+#forfrisk{
+
+  width: 60px;
+}
+
+.top, .bottom {
+  height: 600px;
+  margin: 10px;
+  background-color: whitesmoke;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 10px;
 }

@@ -18,6 +18,7 @@ public class TokenManager {
 
 	public static String lagToken(String username, boolean admin) throws UnsupportedEncodingException {
 		LocalDateTime time = LocalDateTime.now();
+		//TODO set actual timeouts?
 		//Set timeouts here
 		time = time.plusHours(3);
 //		time = time.plusSeconds(30);
