@@ -19,12 +19,14 @@
         </div>-->
         <div class="stilling">
           <div class="stilling-navn">
-            <input-field [field]='"Stilling"' [disabled]="!isAdmin" [(fieldValue)]="user.stillingsBeskrivelse"></input-field>
+            <select class="select-form form-control" id="stilling" required [(ngModel)]="user.stillingsBeskrivelse" name="navn">
+              <option *ngFor="let stil of stillinger" [value]="stil.beskrivelse">{{stil.beskrivelse}}</option>
+            </select>
           </div>
           <div class="stillingsprosent">
             <input-field [field]='"Stillingsprosent"' [disabled]="!isAdmin" [(fieldValue)]="user.stillingsProsent"></input-field>
           </div>
-          <div class="stillingsprosent">
+          <div class="timelonn">
             <input-field [field]='"Timelønn"' [disabled]="!isAdmin" [(fieldValue)]="user.timelonn"></input-field>
           </div>
         </div>

@@ -7,6 +7,7 @@ import {UserService} from '../_services/user.service';
 import {AuthenticationService} from "../_services/authentication.service";
 import {Avdeling} from "../_models/avdeling";
 import {AvdelingService} from "../_services/avdeling.service";
+import {Stilling} from "../_models/stilling";
 
 @Component({
   moduleId: module.id,
@@ -19,6 +20,7 @@ export class ProfilComponent implements OnInit {
   private user: User = new User();
   private isAdmin: boolean;
   private avdelinger : Avdeling[] = [ new Avdeling() ];
+  private stillinger : Stilling[] = [ new Stilling("Assistent"), new Stilling("Helsefagarbeider"), new Stilling("Sykepleier") ];
   private pass1 : string;
   private pass2 : string;
 
@@ -30,10 +32,10 @@ export class ProfilComponent implements OnInit {
 
   submit() : void {
     // console.log(this.user);
-    if (this.pass1 != "" && this.pass2 != "" && this.pass1 === this.pass2) {
-      // this.user.plaintextPassord=this.pass1;
-      //TODO denne skal oppdatere passord
-    }
+    // if (this.pass1 != "" && this.pass2 != "" && this.pass1 === this.pass2) {
+    //   // this.user.plaintextPassord=this.pass1;
+    //   //TODO denne skal oppdatere passord
+    // }
     this.userService.updateUser(this.user).subscribe(ret => console.log(ret));
   }
 

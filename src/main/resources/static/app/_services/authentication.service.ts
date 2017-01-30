@@ -52,6 +52,10 @@ export class AuthenticationService {
       response.json());
   }
 
+  setGlobalUser(user : User) : void {
+
+  }
+
   getGlobalUser(): User {
     let obj: Object[];
 

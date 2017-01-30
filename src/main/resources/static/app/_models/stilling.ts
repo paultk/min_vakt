@@ -4,7 +4,6 @@
 
 export class Stilling {
   constructor (
-    public stillingId: number,
-    public beskrivelse: String
+    public beskrivelse?: String
   ){}
 }
