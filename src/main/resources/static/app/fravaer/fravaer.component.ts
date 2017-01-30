@@ -5,6 +5,7 @@ import {Vakt} from '../_models/vakt';
 import {FravaerService} from "../_services/fravaer.service";
 import {User} from "../_models/user";
 import {UserService} from "../_services/user.service";
+import {Router} from "@angular/router";
 
 @Component({
   moduleId: module.id,
@@ -17,12 +18,14 @@ export class FravaerComponent implements OnInit {
 
   constructor(
     private fravaerService: FravaerService,
-    private userService: UserService
+    private userService: UserService,
+    private router: Router
   ) {}
 
   model = new Fravaer();
 
   users: User[] = [];
+  brukervaktListe: Fravaer[] = [];
 
   date: {year: number, month: number};
 
@@ -93,21 +96,39 @@ export class FravaerComponent implements OnInit {
     this.userService.getUsers1().subscribe(ret => this.users = this.userService.mapUsersFromObs(ret));
   }
 
+  getBrukerVakter(): void {
+    this.fravaerService.getBrukerVakts1().subscribe((obs) => this.brukervaktListe = this.fravaerService.mapBVFromObs(obs));
+  }
+
   onSubmit(): void {
     if (this.selectedVakt == null || this.selectedUser == null) {
       return;
     }
-    if (!this.fravaerService.checkBrukerVakt(this.selectedUser.brukerId, this.selectedVakt.vakt_id)) {
+
+    let tempListe: Fravaer[] = [];
+
+    for (let bv of this.brukervaktListe) {
+      tempListe[bv.vaktId] = bv;
+    }
+    let riktigVakt = tempListe[this.selectedVakt.vakt_id]
+
+    console.log(riktigVakt);
+
+    if (riktigVakt == null) {
       alert("Valgt ansatt deltok ikke i denne vakten!");
       return;
     }
 
+    this.model.brukerVaktId = riktigVakt.brukerVaktId;
+
     this.submitted = true;
     console.log(this.model);
     this.fravaerService.registerFravaer(this.model);
+    this.router.navigate(['../fravaer']);
   }
 
   ngOnInit() {
     this.updateUsers();
+    this.getBrukerVakter();
   }
 }

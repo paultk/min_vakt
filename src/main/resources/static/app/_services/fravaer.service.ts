@@ -141,28 +141,14 @@ export class FravaerService {
     return Promise.resolve(returnPromise);
   }
 
-  checkBrukerVakt(brukerId: number, vaktId: number): Boolean {
-    const URL = `http://localhost:8080/brukervakt/alle`;
-    let returnPromise: Fravaer[] = [];
-    let as: Object[] = [];
-    let brukervaktListe: Fravaer[] = [];
+  getBrukerVakts1(): Observable<Fravaer[]> {
+    const URL = 'http://localhost:8080/brukervakt/alle';
+    return this.http.get(URL, {headers: this.headers},).map((response: Response) =>
+      response.json());
+  }
 
-    this.http.get(URL, { headers: this.headers }).toPromise().then(response =>
-      as = (JSON.parse(response['_body'])))
-      .then(
-        () =>
-          as.forEach(fravaer =>
-            returnPromise.push(new Fravaer(fravaer['vaktId'], fravaer['brukerId'], fravaer['brukerVaktId']
-            ))
-
-          )).catch(this.handleError);
-
-    let response = Promise.resolve(returnPromise);
-    Promise.resolve(response).then(res => brukervaktListe = res);
-    if (brukervaktListe.filter(fravaer => fravaer.brukerId === brukerId) != null &&
-      (brukervaktListe.filter(fravaer => fravaer.vaktId === vaktId))) {
-      return true;
-    }
-    return false;
+  mapBVFromObs(fravaers:Fravaer[]) : Fravaer[] {
+    return fravaers.map(frav => new Fravaer(frav['brukerVaktId'], null, null,
+      null, frav['brukerId'], frav['vaktId']));
   }
 }
