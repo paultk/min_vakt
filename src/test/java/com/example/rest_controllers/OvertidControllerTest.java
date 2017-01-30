@@ -24,7 +24,7 @@ public class OvertidControllerTest {
 		assertTrue("Can't delete overtid from DB", controller.deleteOvertid(overtider[overtider.length - 1], token));
 		assertTrue("Can't add overtid to DB", controller.addOvertid(overtider[overtider.length - 1], token));
 		//TODO this test is dependent on vaktid 1 existing
-		Overtid ny = new Overtid(overtider[0].getOvertidId(), 1, 10, "test");
+		Overtid ny = new Overtid(overtider[0].getOvertidId(), 3, 10, "test");
 		assertTrue("Can't update overtid in DB", controller.updateOvertid(ny, token));
 	}
 	@Before

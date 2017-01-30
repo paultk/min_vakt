@@ -1,6 +1,5 @@
 package com.example.sql_folder;
 import com.example.database_classes.*;
-import com.example.security.PasswordSystemManager;
 
 import java.sql.*;
 import java.time.LocalDate;
@@ -9,7 +8,6 @@ import java.time.temporal.ChronoField;
 import java.time.temporal.ChronoUnit;
 import java.time.temporal.ValueRange;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 /**
  * Created by axelkvistad on 10/01/17.
@@ -1480,7 +1478,7 @@ public class SqlQueries extends DBConnection {
 
     public boolean updateOvertid(Overtid overtid) {
         try {
-            String updateSql = "UPDATE overtid SET ant_timer = ?, kommentar = ? WHERE overtid_id = ?";
+            String updateSql = "UPDATE overtid SET ant_timer = ?, kommentar = ? WHERE overtid_id = ? ";
             updateQuery = connection.prepareStatement(updateSql);
 
 

@@ -10,6 +10,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -20,13 +21,16 @@ import java.time.format.DateTimeFormatter;
 public class VaktControllerTest {
 
     private VaktController controller = new VaktController();
+    private DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 	private DateTimeFormatter aDateTimeFormatter = DateTimeFormatter.ISO_DATE_TIME;
 	private LocalDateTime m = LocalDateTime.parse("2010-12-18T14:30:40", aDateTimeFormatter);
     private LocalDateTime n = LocalDateTime.parse("2010-12-18T14:30:41", aDateTimeFormatter);
+    private LocalDate m2 = LocalDate.parse("2008-12-18", dtf);
+    private LocalDate n2 = LocalDate.parse("2018-12-18", dtf);
 	private Vakt vakt = new Vakt(200, 1, 1 ,m , m, 350);
 	private Vakt nyVakt = new Vakt(1, 1, 1 ,m , m, 400);
-	private String t = "2008-12-18T14:30:40";
-	private String s = "2018-12-18T14:30:41";
+	private String t = "2008-12-18";
+	private String s = "2010-12-18T14:30:40";
 	private Avdeling avdeling = new Avdeling(1, "Test");
 	private Bruker bruker = new Bruker(7, 11, "Assistent", 1, 1, 1, 1, true, "test", "test", "test", "Admin@@@");
 	private String token;
@@ -39,7 +43,7 @@ public class VaktControllerTest {
         Assert.assertNotNull("Can't get vakter on brukerid from database", controller.getVakter(bruker, token));
         Assert.assertNotNull("Can't get vakter on a date from DB", controller.getVakterAvdeling(avdeling, token));
         Assert.assertNotNull("Can't get vakter on a user with month/year from DB", controller.getVakterBrukerCurMonth(1,12,2010, token));
-        Assert.assertNotNull("Can't get vakter on a month and avdid from DB", controller.getAllVaktMonth(t,1, token));
+        Assert.assertNotNull("Can't get vakter on a month and avdid from DB", controller.getAllVaktMonth(s,1, token));
         Assert.assertNotNull("Can't get vakter on a date from DB", controller.getAllVaktDate(t,token));
         vakter[0].setAntPers(999);
         Assert.assertTrue("Can't update vakt from DB", controller.updateVakt(vakter[0], token));
