@@ -54,14 +54,12 @@ export class NotificationService {
       .catch(this.handleError);
   }
 
-  delete(notification : Notification): void {
+  delete(notification : Notification): Observable<any> {
     const URL = 'http://localhost:8080/melding/delete';
     console.log("from notificationService -delete");
-    this.http
-      .post(URL, JSON.stringify(notification), {headers: this.headers},)
-      .toPromise()
-      .then(res => res.json().data)
-      .catch(this.handleError);
+    return this.http
+      .post(URL, JSON.stringify(notification), {headers: this.headers},).map((response: Response) =>
+        response.json());
   }
 
   /*getNotifications(user : User): Promise<Notification[]> {

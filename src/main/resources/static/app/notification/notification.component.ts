@@ -45,7 +45,6 @@ export class NotificationComponent implements OnInit {
   }
 
   onSelect(idNum: number): void{
-    console.log('onSelect() ' + idNum);
     this.notifService.setLest(idNum);
     for (let u of this.notifications){
       if(u.meldingId ==idNum){
@@ -64,13 +63,14 @@ export class NotificationComponent implements OnInit {
   }
 
   slett(notification: Notification): void {
-    this.notifService.delete(notification);
+    this.notifService.delete(notification).subscribe(res => {
+      this.updateMessages();
+    });
 
     setTimeout(function(){
       this.clearText();
     }.bind(this), 100);
 
-    this.updateMessages();
 
     this.edited2 = true;
     //wait 3 Seconds and hide
