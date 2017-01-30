@@ -24,9 +24,14 @@
           <div class="stillingsprosent">
             <input-field [field]='"Stillingsprosent"' [disabled]="!isAdmin" [(fieldValue)]="user.stillingsProsent"></input-field>
           </div>
+          <div class="stillingsprosent">
+            <input-field [field]='"Timelønn"' [disabled]="!isAdmin" [(fieldValue)]="user.timelonn"></input-field>
+          </div>
         </div>
         <div class="department">
-          <input-field [field]='"Avdeling"' [disabled]="!isAdmin" [(fieldValue)]="avdeling.navn"></input-field>
+          <select class="select-form form-control" id="avdeling" required [(ngModel)]="user.avdelingId" name="navn">
+            <option *ngFor="let avd of avdelinger" [value]="avd.avdelingId">{{avd.navn}}</option>
+          </select>
         </div>
       </div>
     </div>
@@ -49,7 +54,7 @@
             <input-field [field]='"Passord:"' [(fieldValue)]="user.plaintextPassord"></input-field>
           </div>
           <div class="password-two">
-            <input-field [field]='"Gjenta passord:"' [(fieldValue)]="user.plaintextPassord"></input-field>
+            <input-field [field]='"Gjenta passord:"' [(fieldValue)]="pass2"></input-field>
           </div>
         </div>
         <button type="submit" class="btn btn-default btn-primary" (click)="submit()">Oppdater profil

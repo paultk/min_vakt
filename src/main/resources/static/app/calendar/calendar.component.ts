@@ -137,7 +137,7 @@ export class CalendarComponent implements OnInit {
     }
   }
 
-  ordinaryTimeAndOvertime = {};
+  ordinaryTimeAndOvertime =  [ new Object() ] ;
   // 0 = HelsefagArbeider(30 %), 1 = Sykepleier(20%), 2 = Assistent
   // Three shifts a day
   percentageList = [[0,0,0], [0,0,0], [0,0,0]];

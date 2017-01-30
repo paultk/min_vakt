@@ -16,9 +16,11 @@ import {AvdelingService} from "../_services/avdeling.service";
 })
 
 export class ProfilComponent implements OnInit {
-  user: User = new User();
-  isAdmin: boolean;
-  avdeling : Avdeling = new Avdeling();
+  private user: User = new User();
+  private isAdmin: boolean;
+  private avdelinger : Avdeling[] = [ new Avdeling() ];
+  private pass1 : string;
+  private pass2 : string;
 
   constructor(
     private userService: UserService,
@@ -27,12 +29,17 @@ export class ProfilComponent implements OnInit {
   ) {}
 
   submit() : void {
-    console.log(this.userService.updateUser(this.user));
+    // console.log(this.user);
+    if (this.pass1 != "" && this.pass2 != "" && this.pass1 === this.pass2) {
+      // this.user.plaintextPassord=this.pass1;
+      //TODO denne skal oppdatere passord
+    }
+    this.userService.updateUser(this.user).subscribe(ret => console.log(ret));
   }
 
   ngOnInit(): void {
     this.user = this.userService.getEditUser();
     this.isAdmin = this.user.admin;
-    this.avdService.getAvdelingen(this.user.avdelingId).then(res => this.avdeling = res);
+    this.avdService.getAvdelinger().then(ret => this.avdelinger = ret);
   }
 }
