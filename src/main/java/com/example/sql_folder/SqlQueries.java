@@ -982,6 +982,25 @@ public class SqlQueries extends DBConnection {
         return null;
     }
 
+
+    public boolean updatePassord(int brukerId, Passord passord) {
+    	try {
+    		String sql = "UPDATE passord SET hash = ?, salt = ? WHERE passord_id IN " +
+					"(SELECT passord_id FROM bruker WHERE bruker_id = ?)";
+    		updateQuery = connection.prepareStatement(sql);
+    		updateQuery.setString(1, passord.getHash());
+    		updateQuery.setString(2, passord.getSalt());
+    		updateQuery.setInt(3, brukerId);
+
+    		if (updateQuery.executeUpdate() == 1) {
+    			return true;
+			}
+		} catch (SQLException e) {
+    		e.printStackTrace();
+		}
+		return false;
+	}
+
     public boolean updateStilling(Stilling stilling){
 
         try {
