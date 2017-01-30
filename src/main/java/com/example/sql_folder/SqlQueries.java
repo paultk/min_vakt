@@ -1142,7 +1142,7 @@ public class SqlQueries extends DBConnection {
     public Fravaer selectFravaer(int brukerId) {
 
         try {
-            String selectSql = "SELECT * FROM fravaer WHERE bruker_vakt_id IN (SELECT bruker_vakt_id FROM bruker_vakt WHERE vakt_id = ?)";
+            String selectSql = "SELECT * FROM fravaer WHERE bruker_vakt_id IN (SELECT bruker_vakt_id FROM bruker_vakt WHERE bruker_id = ?)";
             selectQuery = connection.prepareStatement(selectSql);
             selectQuery.setInt(1, brukerId);
             ResultSet res = selectQuery.executeQuery();
@@ -1210,7 +1210,8 @@ public class SqlQueries extends DBConnection {
 
     public boolean updateFravaer(Fravaer fravaer) {
         try {
-            String updateSql = "UPDATE fravaer SET fra_tid =  ?,til_tid =  ?,kommentar =  ? WHERE  bruker_vakt_id = ?";
+            String updateSql = "UPDATE fravaer SET fra_tid =  ?,til_tid =  ?,kommentar =  ? WHERE  bruker_vakt_id = ?" +
+					" AND fra_tid = ? AND til_tid = ?";
 
             updateQuery = connection.prepareStatement(updateSql);
 
@@ -1222,6 +1223,8 @@ public class SqlQueries extends DBConnection {
             updateQuery.setTimestamp(2, tilTid);
             updateQuery.setString(3, fravaer.getKommentar());
             updateQuery.setInt(4,fravaer.getBrukerVaktId());
+			updateQuery.setTimestamp(5, Timestamp.valueOf(fravaer.getFraTid()));
+			updateQuery.setTimestamp(6, Timestamp.valueOf(fravaer.getTilTid()));
 
             if (updateQuery.executeUpdate() == 1) {
                 return true;
@@ -1234,9 +1237,11 @@ public class SqlQueries extends DBConnection {
 
     public boolean deleteFravaer(Fravaer fravaer) {
         try {
-            String deleteSql = "DELETE FROM fravaer WHERE bruker_vakt_id = ?";
+            String deleteSql = "DELETE FROM fravaer WHERE bruker_vakt_id = ? AND fra_tid = ? AND til_tid = ?";
             deleteQuery = connection.prepareStatement(deleteSql);
             deleteQuery.setInt(1, fravaer.getBrukerVaktId());
+            deleteQuery.setTimestamp(2, Timestamp.valueOf(fravaer.getFraTid()));
+            deleteQuery.setTimestamp(3, Timestamp.valueOf(fravaer.getTilTid()));
             deleteQuery.executeUpdate();
 
             return true;
