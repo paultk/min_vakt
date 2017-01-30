@@ -47,12 +47,10 @@ export class NavigationComponent implements OnInit{
       .then((res) => {
         this.numMessages = parseInt(res.text());
     })
-      .catch((res) => {
-        console.log(res);
-    })
+      .catch((res) => {})
   }
   setEdit() : void {
-    console.log("hallo");
+    // console.log("hallo");
     this.userService.setEditUser(this.authService.getGlobalUser());
   }
   hide() : boolean {
