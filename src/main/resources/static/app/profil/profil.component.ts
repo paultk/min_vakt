@@ -56,7 +56,7 @@ export class ProfilComponent implements OnInit {
 
   ngOnInit(): void {
     this.user = this.userService.getEditUser();
-    this.isAdmin = this.user.admin;
+    this.isAdmin = this.authService.getGlobalUser().admin;
     this.avdService.getAvdelinger().then(ret => this.avdelinger = ret);
   }
 }

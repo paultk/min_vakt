@@ -55,6 +55,9 @@ export class NavigationComponent implements OnInit{
     console.log("hallo");
     this.userService.setEditUser(this.authService.getGlobalUser());
   }
+  hide() : boolean {
+    return this.numMessages != 0;
+  }
 
   ngOnInit(): void {
     this.getUsers();

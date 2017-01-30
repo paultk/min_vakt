@@ -15,7 +15,8 @@
         <li>
           <a routerLink="./meldinger">
             <span class="glyphicon glyphicon-bell"></span>
-            Varsler<span class="badge">{{numMessages}}</span></a>
+            Varsler<span class="badge" id="badge" *ngIf="hide()">{{numMessages}}</span>
+            <span class="badge" id="noBadge" *ngIf="!hide()">{{numMessages}}</span></a>
         </li>
 
         <li>
