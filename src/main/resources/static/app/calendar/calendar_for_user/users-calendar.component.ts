@@ -3,6 +3,7 @@ import {ShiftService} from "../../_services/shift.service";
 import {UserService} from "../../_services/user.service";
 import {User} from "../../_models/user";
 import {Shift} from "../../_models/shift";
+import {AuthenticationService} from "../../_services/authentication.service";
 
 
 //todo: possibly fix the way percentage of workers handles shift display
@@ -22,6 +23,7 @@ import {Shift} from "../../_models/shift";
 export class UsersCalendarComponent implements OnInit {
   constructor(
     private shiftService: ShiftService,
+    private authenticationService: AuthenticationService,
     private userService: UserService
   ) {
   }
@@ -301,6 +303,6 @@ export class UsersCalendarComponent implements OnInit {
 
   //todo: needs to reference actual user
   getCurrentUser(): User{
-    return this.usersIndexed[1];
+    return this.authenticationService.getGlobalUser();
   }
 }

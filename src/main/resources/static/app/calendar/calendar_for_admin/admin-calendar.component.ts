@@ -4,6 +4,7 @@ import {Shift} from "../../_models/shift";
 import {ShiftService} from "../../_services/shift.service";
 import {UserService} from "../../_services/user.service";
 import {User} from "../../_models/user";
+import {AuthenticationService} from "../../_services/authentication.service";
 
 //todo: possibly fix the way percentage of workers handles shift display
 //todo: Alphabetize users displayed
@@ -22,6 +23,7 @@ import {User} from "../../_models/user";
 export class AdminCalendarComponent implements OnInit {
   constructor(
     private shiftService: ShiftService,
+    private authenticationService: AuthenticationService,
     private userService: UserService
   ) {
   }
@@ -279,6 +281,6 @@ export class AdminCalendarComponent implements OnInit {
   }
 
   getCurrentUser(): User{
-    return this.usersIndexed[1];
+    return this.authenticationService.getGlobalUser();
   }
 }
