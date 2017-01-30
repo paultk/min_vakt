@@ -8,3 +8,4 @@ export class Vakt {
     public ant_pers?: number
   ) {}
 }
+

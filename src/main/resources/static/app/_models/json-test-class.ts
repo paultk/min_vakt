@@ -3,3 +3,4 @@ export class JsonTestClass{
   public message: string
 ){}
 }
+

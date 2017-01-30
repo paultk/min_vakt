@@ -8,3 +8,4 @@ export class Avdeling {
     public navn?: string
   ){}
 }
+

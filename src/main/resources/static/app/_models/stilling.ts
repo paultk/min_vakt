@@ -7,3 +7,4 @@ export class Stilling {
     public beskrivelse?: String
   ){}
 }
+

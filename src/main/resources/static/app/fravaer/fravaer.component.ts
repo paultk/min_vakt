@@ -94,7 +94,7 @@ export class FravaerComponent implements OnInit {
   }
 
   onSubmit(): void {
-    if (this.selectedVakt == null) {
+    if (this.selectedVakt == null || this.selectedUser == null) {
       return;
     }
     if (!this.fravaerService.checkBrukerVakt(this.selectedUser.brukerId, this.selectedVakt.vakt_id)) {

@@ -7,3 +7,4 @@ export class Authentication {
     public password : string
   ) {}
 }
+

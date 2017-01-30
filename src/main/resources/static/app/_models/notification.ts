@@ -12,3 +12,4 @@ export class Notification {
     public sett?: boolean
   ){}
 }
+
