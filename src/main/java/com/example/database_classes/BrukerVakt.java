@@ -8,6 +8,7 @@ public class BrukerVakt {
     private int brukerVaktId, brukerId, vaktId;
 
     public BrukerVakt(int brukerVaktId, int brukerId, int vaktId) {
+        this.brukerVaktId = brukerVaktId;
         this.brukerId = brukerId;
         this.vaktId = vaktId;
     }
@@ -36,5 +37,14 @@ public class BrukerVakt {
 
     public void setVaktId(int vaktId) {
         this.vaktId = vaktId;
+    }
+
+    @Override
+    public String toString() {
+        return "BrukerVakt{" +
+                "brukerVaktId=" + brukerVaktId +
+                ", brukerId=" + brukerId +
+                ", vaktId=" + vaktId +
+                '}';
     }
 }
