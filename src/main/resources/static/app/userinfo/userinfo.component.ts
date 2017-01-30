@@ -7,6 +7,7 @@ import {Component, OnInit} from "@angular/core";
 import {User} from '../_models/user';
 import {UserService} from '../_services/user.service';
 import {Router, ActivatedRoute, RouterModule} from "@angular/router";
+import {AuthenticationService} from "../_services/authentication.service";
 /*var $ = require("jquery");*/
 
 @Component({
@@ -27,7 +28,8 @@ export class UserinfoComponent implements OnInit{
   constructor (
     private userService: UserService,
     private router: Router,
-    private r:ActivatedRoute
+    private r:ActivatedRoute,
+    private authService: AuthenticationService
   ) {}
 
   onSelect(idNum: number): void{
@@ -90,7 +92,9 @@ export class UserinfoComponent implements OnInit{
 
   ngOnInit(): void {
     this.getUsers();
+    this.user = this.authService.getGlobalUser();
     this.isAdmin = this.user.admin;
+    console.log(this.user)
   }
 
   goToUserForm() {

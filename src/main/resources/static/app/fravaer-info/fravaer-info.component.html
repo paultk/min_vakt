@@ -7,11 +7,11 @@
       <button class="btn btn-primary btn-large" (click)="searchUsers(tekst)">Søk</button>
 
       <div class="buttons">
-        <a routerLink="../fravaer" [hidden]="isAdmin">
+        <a routerLink="../fravaer" [hidden]="!isAdmin">
           <span id="ny_fravaer" class="glyphicon glyphicon-plus"></span>
           Registrer fravær</a>
 
-        <a (click)="slett(selectedFravaer)" id="sl_ fravaer">
+        <a (click)="slett(selectedFravaer)" id="sl_ fravaer" [hidden]="!isAdmin">
           <span class="glyphicon glyphicon-minus"></span>
           Slett fravær</a>
 

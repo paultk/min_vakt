@@ -8,6 +8,7 @@ import {User} from '../_models/user';
 import {UserService} from '../_services/user.service';
 import {FravaerService} from '../_services/fravaer.service';
 import {Fravaer} from '../_models/fravaer'
+import {AuthenticationService} from "../_services/authentication.service";
 /*var $ = require("jquery");*/
 
 @Component({
@@ -29,7 +30,8 @@ export class FravaerInfoComponent implements OnInit {
   isAdmin: boolean;
 
   constructor(private fravaerService:FravaerService,
-              private userService:UserService) {
+              private userService:UserService,
+              private authService: AuthenticationService) {
   }
 
   searchFravaer(): void {
@@ -90,7 +92,7 @@ export class FravaerInfoComponent implements OnInit {
   }
 
   ngOnInit():void {
-    this.user = this.userService.getCurrentUser();
+    this.user = this.authService.getGlobalUser();
     // this.fravaerService.getFravaers().then(fravaers => this.fravaers = fravaers);
     this.userService.getUsers1().subscribe(ret => {
       this.users = this.userService.mapUsersFromObs(ret);
@@ -98,6 +100,8 @@ export class FravaerInfoComponent implements OnInit {
     this.getFravaers();
     this.fraUser = new User();
     this.isAdmin = this.user.admin;
+    console.log("here")
+    console.log(this.user)
   }
 
   selectUser(id : number){

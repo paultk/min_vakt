@@ -6,13 +6,13 @@
     <button class="btn btn-primary btn-large" (click)="searchUsers(tekst)">Søk</button>
     <br>
     <div class="buttons">
-      <a routerLink="../opprett-bruker" [hidden]="isAdmin">
+      <a routerLink="../opprett-bruker" [hidden]="!isAdmin">
         <span id="ny_bruker" class="glyphicon glyphicon-plus"></span>
         Ny bruker</a>
-      <a routerLink="../rediger-bruker" [hidden]="isAdmin">
+      <a routerLink="../rediger-bruker" [hidden]="!isAdmin">
         <span id= "red_bruker" class="glyphicon glyphicon-edit"></span>
         Redigere bruker</a>
-      <a (click)="slett(selectedUser)" id="sl_ bruker" [hidden]="isAdmin">
+      <a (click)="slett(selectedUser)" id="sl_ bruker" [hidden]="!isAdmin">
         <span class="glyphicon glyphicon-minus"></span>
         Slett bruker</a>
     </div>
