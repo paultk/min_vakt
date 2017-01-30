@@ -8,7 +8,7 @@
       <ul class="nav navbar-nav navbar-right">
         <li>
           <a type="text" class="user-name" href="#">
-            <span class="glyphicon"></span>{{selectedUser.fornavn}} {{selectedUser.etternavn}}<!--{{selectedUser.navn}}-->
+            <span class="glyphicon"></span>{{this.authService.getGlobalUser().fornavn}} {{this.authService.getGlobalUser().etternavn}}<!--{{selectedUser.navn}}-->
           </a>
         </li>
 

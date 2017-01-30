@@ -3,6 +3,7 @@ import {User} from "../_models/user";
 import {Shift} from "../_models/shift";
 import {ShiftService} from "../_services/shift.service";
 import {UserService} from "../_services/user.service";
+import {AuthenticationService} from "../_services/authentication.service";
 declare var $:JQueryStatic;
 
 //todo: possibly fix the way percentage of workers handles shift display
@@ -22,7 +23,8 @@ declare var $:JQueryStatic;
 export class CalendarComponent implements OnInit {
   constructor(
     private shiftService: ShiftService,
-    private userService: UserService
+    private userService: UserService,
+    private authService: AuthenticationService
   ) {}
 
   hidden: boolean = false;
@@ -58,7 +60,7 @@ export class CalendarComponent implements OnInit {
   vaktansvarligIds: number[][]= [];
 
   // array where index = userId
-  usersIndexed: User[] = [];
+  usersIndexed: User[] = [ new User(), new User(), new User(), new User() ];
 
   // todo: fix avdelsId to match administrator
   static avdelingsId = 2;
@@ -319,6 +321,6 @@ export class CalendarComponent implements OnInit {
   }
 
   getCurrentUser(): User{
-    return this.usersIndexed[1];
+    return this.authService.getGlobalUser();
   }
 }

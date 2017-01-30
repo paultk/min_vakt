@@ -47,9 +47,10 @@ export class AuthenticationService {
   }
 
   setCurrentUser(email: string): Observable<User[]> {
+    let heads = new Headers({'Content-Type': 'application/json', 'token': localStorage.getItem('sessionToken')});
     const URL = `http://localhost:8080/bruker/epost/${email}`;
 
-    return this.http.get(URL, {headers: this.headers},).map((response: Response) =>
+    return this.http.get(URL, {headers: heads},).map((response: Response) =>
       response.json());
   }
   updateGlobalUser() : void {
@@ -66,7 +67,7 @@ export class AuthenticationService {
 
 
   getGlobalUser(): User {
-    let obj: Object[];
+    let obj: Object;
 
     if (localStorage.getItem('rememberMe') == "true") {
       obj = JSON.parse(localStorage.getItem('currentUser'));

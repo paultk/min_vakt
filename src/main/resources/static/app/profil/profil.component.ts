@@ -33,13 +33,8 @@ export class ProfilComponent implements OnInit {
     private avdService : AvdelingService
   ) {}
 
-  logout() {
-  }
-
   submit() : void {
-    console.log(this.pass1 + this.pass2);
     this.userService.updateUser(this.user).subscribe(ret => {
-      console.log(ret);
       this.authService.updateGlobalUser();
     });
   }
@@ -48,7 +43,6 @@ export class ProfilComponent implements OnInit {
     if (this.pass1 != "" && this.pass2 != "" && this.pass1 == this.pass2) {
       this.user.plaintextPassord=this.pass1;
       this.userService.updatePassword(this.user).subscribe(ret => {
-        console.log(ret);
         this.authService.logout();
       });
     }

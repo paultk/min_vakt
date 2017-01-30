@@ -15,7 +15,6 @@ import {AuthenticationService} from "../_services/authentication.service";
 
 export class NavigationComponent implements OnInit{
   users: User[];
-  selectedUser: User;
   numMessages = 0;
 
 
@@ -41,8 +40,8 @@ export class NavigationComponent implements OnInit{
    // this.selectedUser = this.authService.getGlobalUser();
 
     const URL = 'http://localhost:8080/melding/get/ulest/ant';
-    console.log(this.selectedUser.brukerId);
-    this.http.post(URL, JSON.stringify(this.selectedUser), {headers: this.headers},)
+    console.log(this.authService.getGlobalUser().brukerId);
+    this.http.post(URL, JSON.stringify(this.authService.getGlobalUser()), {headers: this.headers},)
       .toPromise()
       .then((res) => {
         this.numMessages = parseInt(res.text());
@@ -59,8 +58,6 @@ export class NavigationComponent implements OnInit{
 
   ngOnInit(): void {
     this.getUsers();
-    this.selectedUser = this.authService.getGlobalUser();
-    console.log(this.selectedUser);
    this.setNumMessages();
    setInterval(() => {this.setNumMessages();}, 2000);
   }

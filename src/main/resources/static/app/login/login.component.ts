@@ -29,6 +29,7 @@ export class LoginComponent {
   private headers = new Headers({'Content-Type': 'application/json'});
 
   login() {
+    this.authService.logout();
     this.loading = true;
     this.authService.login(this.model)
       .subscribe(
