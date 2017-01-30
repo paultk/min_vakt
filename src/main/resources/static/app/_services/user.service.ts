@@ -31,8 +31,13 @@ export class UserService {
     this.editUser = user;
   }
   updateUser(user:User): Observable<any> {
-    console.log(user);
     const URL = 'http://localhost:8080/bruker/update';
+    return this.http.post(URL, JSON.stringify(user), {headers:this.headers}).map((response: Response) =>
+      response.json());
+  }
+  updatePassword(user:User): Observable<any> {
+    console.log(user.plaintextPassord);
+    const URL = 'http://localhost:8080/bruker/updatepassord';
     return this.http.post(URL, JSON.stringify(user), {headers:this.headers}).map((response: Response) =>
       response.json());
   }

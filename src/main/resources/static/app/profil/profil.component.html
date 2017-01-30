@@ -19,7 +19,7 @@
         </div>-->
         <div class="stilling">
           <div class="stilling-navn">
-            <select class="select-form form-control" id="stilling" required [(ngModel)]="user.stillingsBeskrivelse" name="navn">
+            <select class="select-form form-control" id="stilling" [disabled]="!isAdmin" required [(ngModel)]="user.stillingsBeskrivelse" name="navn">
               <option *ngFor="let stil of stillinger" [value]="stil.beskrivelse">{{stil.beskrivelse}}</option>
             </select>
           </div>
@@ -31,7 +31,7 @@
           </div>
         </div>
         <div class="department">
-          <select class="select-form form-control" id="avdeling" required [(ngModel)]="user.avdelingId" name="navn">
+          <select class="select-form form-control" id="avdeling" [disabled]="!isAdmin" required [(ngModel)]="user.avdelingId" name="navn">
             <option *ngFor="let avd of avdelinger" [value]="avd.avdelingId">{{avd.navn}}</option>
           </select>
         </div>
@@ -53,13 +53,15 @@
         </div>
         <div class="password">
           <div class="password-one">
-            <input-field [field]='"Passord:"' [(fieldValue)]="user.plaintextPassord"></input-field>
+            <input-field [field]='"Passord:"' [(fieldValue)]="pass1"></input-field>
           </div>
           <div class="password-two">
             <input-field [field]='"Gjenta passord:"' [(fieldValue)]="pass2"></input-field>
           </div>
         </div>
-        <button type="submit" class="btn btn-default btn-primary" (click)="submit()">Oppdater profil
+        <button type="submit" class="btn btn-default btn-primary" (click)="submit()" routerLink="">Oppdater profil
+      </button>
+        <button type="submit" class="btn btn-default btn-primary" id="endrPass" (click)="changePass()" routerLink="/login">Oppdater passord
         </button>
       </div>
     </div>

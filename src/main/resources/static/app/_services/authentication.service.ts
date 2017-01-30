@@ -8,10 +8,11 @@ import {Observable} from "rxjs";
 
 import {Authentication} from "../_models/authentication";
 import {User} from "../_models/user";
+import {UserService} from "./user.service";
 
 @Injectable()
 export class AuthenticationService {
-  constructor(private http: Http) {}
+  constructor(private http: Http, private userService : UserService) {}
 
   private headers = new Headers({'Content-Type': 'application/json', 'token': localStorage.getItem('sessionToken')});
 
@@ -51,10 +52,18 @@ export class AuthenticationService {
     return this.http.get(URL, {headers: this.headers},).map((response: Response) =>
       response.json());
   }
-
-  setGlobalUser(user : User) : void {
-
+  updateGlobalUser() : void {
+    let currentUser = this.getGlobalUser();
+    this.userService.getUsers1().subscribe(res => {
+      currentUser = res.find(user => user.brukerId === currentUser.brukerId);
+      if (localStorage.getItem('rememberMe') == "true") {
+        localStorage.setItem('currentUser', JSON.stringify(currentUser));
+      } else {
+        sessionStorage.setItem('currentUser', JSON.stringify(currentUser));
+      }
+    })
   }
+
 
   getGlobalUser(): User {
     let obj: Object[];

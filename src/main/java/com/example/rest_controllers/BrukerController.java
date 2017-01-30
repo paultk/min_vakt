@@ -1,9 +1,7 @@
 package com.example.rest_controllers;
 
-import com.example.database_classes.Bruker;
-import com.example.database_classes.Fravaer;
-import com.example.database_classes.Overtid;
-import com.example.database_classes.Vakt;
+import com.example.database_classes.*;
+import com.example.security.PasswordSystemManager;
 import com.example.security.TokenManager;
 import com.example.sql_folder.SqlQueries;
 import com.sun.org.apache.regexp.internal.RE;
@@ -102,6 +100,23 @@ public class BrukerController {
 			return query.updateBruker(bruker);
 		}
 		else {
+			throw new AuthException("Token not authenticated");
+		}
+	}
+	@RequestMapping(value = "/bruker/updatepassord", method = RequestMethod.POST)
+	public boolean updatePassord(@RequestBody Bruker bruker, @RequestHeader (value = "token") String token) throws Exception {
+		System.out.println(bruker.getPlaintextPassord());
+		if (TokenManager.verifiser(token)) {
+			if (PasswordSystemManager.checkPasswordValidity(bruker.getPlaintextPassord())) {
+				byte[] salt = PasswordSystemManager.generateSalt();
+				byte[] hash = PasswordSystemManager.generateHash(bruker.getPlaintextPassord(), salt);
+				Passord pass = new Passord(PasswordSystemManager.bytesToHex(salt), PasswordSystemManager.bytesToHex(hash));
+				return query.updatePassord(bruker.getBrukerId(), pass);
+			}
+			else {
+				throw new Exception("Password not valid");
+			}
+		} else {
 			throw new AuthException("Token not authenticated");
 		}
 	}

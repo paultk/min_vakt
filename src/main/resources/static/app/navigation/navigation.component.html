@@ -7,15 +7,16 @@
     <div>
       <ul class="nav navbar-nav navbar-right">
         <li>
-          <a type="text" class="user-name">
-            <span class="glyphicon"></span>{{selectedUser.fornavn}} {{selectedUser.etternavn}}<!--{{selectedUser.navn}}-->
+          <a type="text" class="user-name" href="#">
+            <span class="glyphicon"></span>{{this.authService.getGlobalUser().fornavn}} {{this.authService.getGlobalUser().etternavn}}<!--{{selectedUser.navn}}-->
           </a>
         </li>
 
         <li>
           <a routerLink="./meldinger">
             <span class="glyphicon glyphicon-bell"></span>
-            Varsler<span class="badge">{{numMessages}}</span></a>
+            Varsler<span class="badge" id="badge" *ngIf="hide()">{{numMessages}}</span>
+            <span class="badge" id="noBadge" *ngIf="!hide()">{{numMessages}}</span></a>
         </li>
 
         <li>
