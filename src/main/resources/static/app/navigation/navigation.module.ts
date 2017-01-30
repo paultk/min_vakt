@@ -29,6 +29,7 @@ import {NavigationRoutingModule} from "./navigation-routing.module";
 import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import {UserSearchcomponent} from "../userinfo/user-search.component";
 import {FravaerInfoComponent} from "../fravaer-info/fravaer-info.component";
+import {VaktBytteComponent} from "../vakt_bytte/vakt-bytte.component";
 
 @NgModule({
   imports: [
@@ -54,6 +55,7 @@ import {FravaerInfoComponent} from "../fravaer-info/fravaer-info.component";
     FaqComponent,
     // LoginComponent,
     NotificationComponent,
+    VaktBytteComponent,
     UserSearchcomponent
   ],
   providers: [

@@ -10,6 +10,7 @@ import {NgModule} from "@angular/core";
 import {UserinfoComponent} from "../userinfo/userinfo.component";
 import {AuthGuard} from "../_guards/auth.guard";
 import {FravaerInfoComponent} from "../fravaer-info/fravaer-info.component";
+import {VaktBytteComponent} from "../vakt_bytte/vakt-bytte.component";
 /**
  * Created by axelkvistad on 27/01/17.
  */
@@ -59,6 +60,10 @@ const navigationRoutes: Routes = [
       {
         path: 'brukerinfo',
         component: UserinfoComponent
+      },
+      {
+        path: 'vaktbytte',
+        component: VaktBytteComponent
       }
 
     ]

@@ -70,7 +70,7 @@ export class UserFormComponent implements OnInit {
    */
 
   ngOnInit(): void {
-    this.model = USERS[0];
     this.getAvdelinger();
+   // this.model = this.userService.getEditUser();
   }
 }

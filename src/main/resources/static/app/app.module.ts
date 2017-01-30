@@ -49,7 +49,7 @@ import {VaktBytteComponent} from "./vakt_bytte/vakt-bytte.component";
     AppComponent,
     NavigationComponent,
     LoginComponent,
-    VaktBytteComponent,
+   // VaktBytteComponent,
     /*UserinfoComponent,
      ProfilComponent,
      UserFormComponent,
