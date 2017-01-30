@@ -45,7 +45,7 @@ public class VaktController {
     @RequestMapping("/vakt/all/{date}")
     public Vakt[] getAllVaktDate(@PathVariable("date") String date, @RequestHeader (value = "token") String token) throws AuthException {
         if (TokenManager.verifiser(token)) {
-            DateTimeFormatter dtf = DateTimeFormatter.ISO_DATE_TIME;
+            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
             LocalDate test = LocalDate.parse(date, dtf);
             //LocalDateTime ldt = LocalDateTime.parse(date, dtf);
             LocalDateTime ldt = test.atStartOfDay();
