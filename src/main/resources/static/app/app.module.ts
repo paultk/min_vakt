@@ -36,7 +36,6 @@ import {VaktBytteComponent} from "./vakt_bytte/vakt-bytte.component";
 
 @NgModule({
   imports: [
-    //NgbModule.forRoot(),
     CommonModule,
     BrowserModule,
     FormsModule,
@@ -49,28 +48,9 @@ import {VaktBytteComponent} from "./vakt_bytte/vakt-bytte.component";
     AppComponent,
     NavigationComponent,
     LoginComponent,
-   // VaktBytteComponent,
-    /*UserinfoComponent,
-     ProfilComponent,
-     UserFormComponent,
-     InputFieldComponent,
-     ForgotCredentialsComponent,
-     FravaerComponent,
-     FaqComponent,
-     CalendarComponent,
-     NavBarComponent,
-     FaqComponent,
-     NotificationComponent,
-     UserSearchcomponent,*/
     PageNotFoundComponent
   ],
   providers: [
-    /*UserService,
-     FravaerService,
-     ShiftService,
-     FravaerService,
-     AvdelingService,
-     NotificationService,*/
     AuthenticationService,
     AuthGuard
   ],

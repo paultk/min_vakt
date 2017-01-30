@@ -27,7 +27,6 @@ var AppModule = (function () {
     AppModule = __decorate([
         core_1.NgModule({
             imports: [
-                //NgbModule.forRoot(),
                 common_1.CommonModule,
                 platform_browser_1.BrowserModule,
                 forms_1.FormsModule,
@@ -40,28 +39,9 @@ var AppModule = (function () {
                 app_component_1.AppComponent,
                 navigation_component_1.NavigationComponent,
                 login_component_1.LoginComponent,
-                // VaktBytteComponent,
-                /*UserinfoComponent,
-                 ProfilComponent,
-                 UserFormComponent,
-                 InputFieldComponent,
-                 ForgotCredentialsComponent,
-                 FravaerComponent,
-                 FaqComponent,
-                 CalendarComponent,
-                 NavBarComponent,
-                 FaqComponent,
-                 NotificationComponent,
-                 UserSearchcomponent,*/
                 not_found_component_1.PageNotFoundComponent
             ],
             providers: [
-                /*UserService,
-                 FravaerService,
-                 ShiftService,
-                 FravaerService,
-                 AvdelingService,
-                 NotificationService,*/
                 authentication_service_1.AuthenticationService,
                 auth_guard_1.AuthGuard
             ],

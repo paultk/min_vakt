@@ -33,19 +33,6 @@ const appRoutes: Routes = [
     path: '**',
     component: PageNotFoundComponent
   }
-  /*{
-   path: '',
-   component: NavigationComponent, // (Axel, 27.01) todo: may be removed later
-   canActivate: [AuthGuard]
-   },
-   {
-   path: 'login',
-   component: LoginComponent
-   },
-   {
-   path: '**',
-   component: PageNotFoundComponent
-   }*/
 ];
 @NgModule({
   imports: [ RouterModule.forRoot(appRoutes, { useHash: true }) ],
