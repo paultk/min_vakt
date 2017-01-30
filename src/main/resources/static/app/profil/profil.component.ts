@@ -8,6 +8,9 @@ import {AuthenticationService} from "../_services/authentication.service";
 import {Avdeling} from "../_models/avdeling";
 import {AvdelingService} from "../_services/avdeling.service";
 import {Stilling} from "../_models/stilling";
+import {Authentication} from "../_models/authentication";
+import {LoginComponent} from "../login/login.component";
+import {Router} from "@angular/router";
 
 @Component({
   moduleId: module.id,
@@ -21,8 +24,8 @@ export class ProfilComponent implements OnInit {
   private isAdmin: boolean;
   private avdelinger : Avdeling[] = [ new Avdeling() ];
   private stillinger : Stilling[] = [ new Stilling("Assistent"), new Stilling("Helsefagarbeider"), new Stilling("Sykepleier") ];
-  private pass1 : string;
-  private pass2 : string;
+  private pass1 : string = "";
+  private pass2 : string = "";
 
   constructor(
     private userService: UserService,
@@ -30,13 +33,25 @@ export class ProfilComponent implements OnInit {
     private avdService : AvdelingService
   ) {}
 
+  logout() {
+  }
+
   submit() : void {
-    // console.log(this.user);
-    // if (this.pass1 != "" && this.pass2 != "" && this.pass1 === this.pass2) {
-    //   // this.user.plaintextPassord=this.pass1;
-    //   //TODO denne skal oppdatere passord
-    // }
-    this.userService.updateUser(this.user).subscribe(ret => console.log(ret));
+    console.log(this.pass1 + this.pass2);
+    this.userService.updateUser(this.user).subscribe(ret => {
+      console.log(ret);
+      this.authService.updateGlobalUser();
+    });
+  }
+
+  changePass() : void {
+    if (this.pass1 != "" && this.pass2 != "" && this.pass1 == this.pass2) {
+      this.user.plaintextPassord=this.pass1;
+      this.userService.updatePassword(this.user).subscribe(ret => {
+        console.log(ret);
+        this.authService.logout();
+      });
+    }
   }
 
   ngOnInit(): void {
