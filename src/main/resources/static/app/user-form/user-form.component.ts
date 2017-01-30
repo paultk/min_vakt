@@ -32,7 +32,7 @@ export class UserFormComponent implements OnInit {
    avdeling = ['St. Olavs Hospital', 'Sentrum sykehus', 'Lade hjelpehjem', 'Ranheim eldreboliger'];
    */
 
-  model = USERS[1];
+  model = USERS[0];
 
   submitted = false;
 
@@ -70,6 +70,7 @@ export class UserFormComponent implements OnInit {
    */
 
   ngOnInit(): void {
+    this.model = USERS[0];
     this.getAvdelinger();
   }
 }

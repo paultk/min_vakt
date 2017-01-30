@@ -77,12 +77,11 @@
         <div class="form-group">
           <!--ADMIN?-->
           <label for="admin">Administrator?:</label><br>
-          <input type="radio" id="admin"
-                 required
-                 [(ngModel)]="model.admin" name="admin" value="true"> Ja &emsp;
+          <input id="admin" type="checkbox" [(ngModel)]="model.admin" value="model.admin" [ngModelOptions]="{standalone: true}">
+          <!--<input type="radio" id="admin"
+                 [(ngModel)]="model.admin" name="admin" value="admin"> Administrator &emsp;
           <input type="radio" id="admin1"
-                 required
-                 [(ngModel)]="model.admin" name="admin" value="false"> Nei<br>
+                 [(ngModel)]="model.admin" name="admin" value="false"> Nei<br>-->
         </div>
 
         <button type="submit" (click)="printFunksjon()"
