@@ -29,7 +29,7 @@ public class FravaerControllerTest {
     public void fravaerControllerTest() throws Exception {
         Assert.assertTrue("Can't add fravaer to database", controller.insertFravaer(fravaer, token));
         Assert.assertNotNull("Can't update fravaer from database", controller.updateFravaer(updateFravaer, token));
-        Assert.assertNotNull("Can't get single fravaer from DB", controller.getFravaer(12, token));
+        Assert.assertNotNull("Can't get single fravaer from DB", controller.getFravaer(1, token));
         Assert.assertNotNull("Can't get all fravaer from brukerId", controller.getFravaerFromVaktId(2, token));
         Assert.assertNotNull("Can't get all fravaer from vaktId", controller.getFravaerFromBrukerId(2, token));
         Assert.assertTrue("Can't delete fravaer from DB", controller.deleteFravaer(controller.getFravaer(1, token), token));

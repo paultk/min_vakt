@@ -21,11 +21,13 @@ public class TilgjengelighetControllerTest {
 	private DateTimeFormatter aDateTimeFormatter = DateTimeFormatter.ISO_DATE_TIME;
 	private LocalDateTime m = LocalDateTime.parse("2008-12-18T14:30:40", aDateTimeFormatter);
 	private LocalDateTime n = LocalDateTime.parse("2018-12-18T14:30:40", aDateTimeFormatter);
+    private LocalDateTime o = LocalDateTime.parse("2020-12-18T14:30:49", aDateTimeFormatter);
+    private LocalDateTime u = LocalDateTime.parse("2020-12-18T14:30:50", aDateTimeFormatter);
 	private String t = "2008-12-18T14:30:40";
 	private String s = "2018-12-18T14:30:40";
 
 	private Tilgjengelighet tilgjengelighet = new Tilgjengelighet(1, m, n);
-	private Tilgjengelighet updateTilgjengelighet = new Tilgjengelighet(1, m, n);
+	private Tilgjengelighet updateTilgjengelighet = new Tilgjengelighet(7, o, u);
 
 	private String token;
 
@@ -37,7 +39,7 @@ public class TilgjengelighetControllerTest {
 
     @Test
     public void testDeleteTilgjengelighet() throws Exception {
-        Assert.assertTrue("Can't delete tilgjengelighet from DB", tilgjengelighetController.deleteTilgjengelighet(tilgjengelighetController.getTilgjengelighet(1, token), token));
+        Assert.assertTrue("Can't delete tilgjengelighet from DB", tilgjengelighetController.deleteTilgjengelighet(tilgjengelighetController.getTilgjengelighet(7, token), token));
     }
 
     @Test

@@ -22,6 +22,7 @@ public class VaktControllerTest {
     private VaktController controller = new VaktController();
 	private DateTimeFormatter aDateTimeFormatter = DateTimeFormatter.ISO_DATE_TIME;
 	private LocalDateTime m = LocalDateTime.parse("2010-12-18T14:30:40", aDateTimeFormatter);
+    private LocalDateTime n = LocalDateTime.parse("2010-12-18T14:30:41", aDateTimeFormatter);
 	private Vakt vakt = new Vakt(200, 1, 1 ,m , m, 350);
 	private Vakt nyVakt = new Vakt(1, 1, 1 ,m , m, 400);
 	private String t = "2008-12-18T14:30:40";
@@ -40,7 +41,8 @@ public class VaktControllerTest {
         Assert.assertNotNull("Can't get vakter on a user with month/year from DB", controller.getVakterBrukerCurMonth(1,12,2010, token));
         Assert.assertNotNull("Can't get vakter on a month and avdid from DB", controller.getAllVaktMonth(t,1, token));
         Assert.assertNotNull("Can't get vakter on a date from DB", controller.getAllVaktDate(t,token));
-        Assert.assertTrue("Can't update vakt from DB", controller.updateVakt(nyVakt, token));
+        vakter[0].setAntPers(999);
+        Assert.assertTrue("Can't update vakt from DB", controller.updateVakt(vakter[0], token));
         //System.out.println(Arrays.toString(controller.getAllVaktDate(t,s)));
         Assert.assertTrue("Can't delete vakt from DB", controller.deleteVakt(vakter[vakter.length - 1], token));
     }
