@@ -41,17 +41,15 @@ export class NotificationService {
       .get('http://localhost:8080/test', { headers: this.headers })
       .toPromise()
       .then(res => console.log(res))
-      .catch(this.handleError);
+      .catch(ret => this.handleError(ret));
   }
 
-  addNotification(notification : Notification): void {
+  addNotification(notification : Notification): Observable<any> {
     const URL = 'http://localhost:8080/melding/add';
     console.log("from notificationService");
-    this.http
-      .post(URL, JSON.stringify(notification), {headers: this.headers},)
-      .toPromise()
-      .then(res => res.json().data)
-      .catch(this.handleError);
+    return this.http
+      .post(URL, JSON.stringify(notification), {headers: this.headers},).map((response: Response) =>
+    response.json()).catch(ret => this.handleError(ret));
   }
 
   delete(notification : Notification): Observable<any> {
@@ -59,7 +57,7 @@ export class NotificationService {
     console.log("from notificationService -delete");
     return this.http
       .post(URL, JSON.stringify(notification), {headers: this.headers},).map((response: Response) =>
-        response.json());
+        response.json()).catch(ret => this.handleError(ret));
   }
 
   /*getNotifications(user : User): Promise<Notification[]> {
@@ -78,7 +76,7 @@ export class NotificationService {
     this.http.post(URL, "", { headers:this.headers },)
       .toPromise()
       .then(res => res.json().data)
-      .catch(this.handleError);
+      .catch(ret => this.handleError(ret));
   }
 
   getNotifications(user : User): Promise<Notification[]> {
@@ -93,7 +91,7 @@ export class NotificationService {
         notif => returnPromise.push(new Notification(notif['meldingId'], notif['tilBrukerId'], notif['fraBrukerId'],
           notif['overskrift'], notif['melding'], notif['tid_sendt'], notif['sett'])
         )))
-      .catch(this.handleError);
+      .catch(ret => this.handleError(ret));
     return Promise.resolve(returnPromise);
   }
   getNotifications1(user : User): Observable<Notification[]> {

@@ -52,7 +52,7 @@ export class NotificationComponent implements OnInit {
         this.tekst = u.melding;
         this.overskr = u.overskrift;
         this.dato = u.tidSendt;
-        console.log(u);
+        // console.log(u);
       }
     }
 
@@ -84,10 +84,9 @@ export class NotificationComponent implements OnInit {
     this.model.fraBrukerId = this.user.brukerId;
     console.log(this.model);
     // this.submitted = true;
-    this.notifService.addNotification(this.model);
-
-    this.updateMessages();
-
+    this.notifService.addNotification(this.model).subscribe(ret => {
+      this.updateMessages();
+    });
     this.edited = true;
     //wait 3 Seconds and hide
     setTimeout(function() {
