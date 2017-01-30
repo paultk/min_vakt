@@ -1,133 +1,255 @@
-<div>
-  <!--<nav-bar-component [headerField2]="date.getFullYear()" [headerField]="months[date.getMonth()]" ></nav-bar-component>-->
-  <nav-bar-component [headerField2]="date.getFullYear()" [(headerField)]="date" (pushed)="changeDate(date.getFullYear() +$event, date.getMonth(), date.getDate())"  ></nav-bar-component>
-  <nav-bar-component [headerField2]="months[date.getMonth()]" [(headerField)]="date" (pushed)="changeDate(date.getFullYear(), date.getMonth() + $event, date.getDate())"  ></nav-bar-component>
-  <nav-bar-component [headerField2]="date.getDate()" [(headerField)]="date" (pushed)="changeDate(date.getFullYear(), date.getMonth(), date.getDate() + $event )"  ></nav-bar-component>
+<div class="contents">
+  <div class="top">
+    <nav-bar-component [headerField2]="date.getFullYear()" [(headerField)]="date"
+                       (pushed)="changeDate(date.getFullYear() +$event, date.getMonth(), date.getDate())"></nav-bar-component>
+
+    <nav-bar-component [headerField2]="months[date.getMonth()]" [(headerField)]="date"
+                       (pushed)="changeDate(date.getFullYear(), date.getMonth() + $event, date.getDate())"></nav-bar-component>
+
+    <nav-bar-component [headerField2]="date.getDate()" [(headerField)]="date"
+                       (pushed)="changeDate(date.getFullYear(), date.getMonth(), date.getDate() + $event )"></nav-bar-component>
 
 
-
-  <!--
-  <nav-bar-component [headerField2]="date.getFullYear()" [(headerField)]="date" (pushed)="date.setFullYear(date.getFullYear() +$event)"  ></nav-bar-component>
-  <nav-bar-component [headerField2]="months[date.getMonth()]" [(headerField)]="date" (pushed)="date.setMonth(date.getMonth() + $event)"  ></nav-bar-component>
-  <nav-bar-component [headerField2]="date.getDate()" [(headerField)]="date" (pushed)="date.setDate($event + date.getDate())"  ></nav-bar-component>
--->
-
-  <!--<nav-bar-component [headerField]="'Week'" ></nav-bar-component>-->
-  <!--<nav-bar-component [headerField2]="date.getDate()" ></nav-bar-component>-->
-</div>
-<div>
-  <table>
-    <thead>
-    <tr>
-      <th>Bruker</th>
-      <th>23:00</th>
-      <th *ngFor="let a of tempArr; let index = index">
-        <div *ngIf="index < 10">0{{index}}:00</div>
-        <div *ngIf="index >= 10">{{index}}:00</div>
-        <!--0700-1500  1500-2300 2300-0700-->
-      </th>
-    </tr>
-    </thead>
-    <tr *ngFor="let shift of daysShifts[this.date.getDate()]; let rows = index">
-      <!--<td>{{shift.etternavn}}</td>-->
-      <td>{{usersIndexed[shift.userId].etternavn}}, {{usersIndexed[shift.userId].fornavn}}</td>
-      <td *ngFor="let b of tempArr; let index = index" >
-        <div *ngIf="index <= 8 && shift.toTime == 7" class="{{cssClasses[usersIndexed[shift.userId].stillingsBeskrivelse]}}">asd</div>
-        <div *ngIf="index >= 8 && index <= 15 && shift.toTime == 15" class="{{cssClasses[usersIndexed[shift.userId].stillingsBeskrivelse]}}">asd</div>
-        <div *ngIf="index >= 15 && index <= 23 && shift.toTime == 23" class="{{cssClasses[usersIndexed[shift.userId].stillingsBeskrivelse]}}">asd</div>
-        <!--<div *ngIf="index <= 15 && shift.toTime == 15" class="yellowDiv">asd</div>-->
-        <!--<div *ngIf="index <= 23 && shift.toTime == 23" class="yellowDiv">asd</div>-->
-        <!--<div *ngIf="index <= shift.toTime " class="yellowDiv">asd</div>-->
-        <!--<div *ngIf="index <= shift.toTime " class="yellowDiv">asd</div>-->
-        <!--<div *ngIf="index <= shift.toTime * 8" class="yellowDiv">asd</div>-->
-        <!--<div *ngIf="index <= shift.toTime * 8" class="yellowDiv">asd</div>-->
-      </td>
-    </tr>
-  </table>
-</div>
-
-<div [hidden]="shiftPercentageOk[0]"
->
-  Det er liten prosentandel av sykepleiere eller Helsefagarbeidere på skift 2300-0700
-</div>
-<div [hidden]="shiftPercentageOk[1]"
->
-  Det er liten prosentandel av sykepleiere eller Helsefagarbeidere på skift 0700-1500
-</div>
-<div [hidden]="shiftPercentageOk[2]"
->
-  Det er liten prosentandel av sykepleiere eller Helsefagarbeidere på skift 1500-2300
-</div>
-<div>
-  <h2>Helsefagarbeider:<a class="yellowDiv">s</a></h2>
-  <h2>Sykepleier:<a class="greenDiv">s</a></h2>
-  <h2>Assistent:<a class="redDiv">s</a></h2>
-</div>
-<br>
-<br>
-
-Avdeling:
-<select value="dsf" id="avdeling1">
-  <option value="1">Solbakken</option>
-  <option>2</option>
-  <option>3</option>
-</select>
-<br>
-<br>
-<br>
-Ansatte for Avdeling: .....
-<div>
-  <table>
-    <thead>
-    <th>Bruker</th>
-    <th>  Ordinær tid igjen</th>
-    <th>Overtid</th>
-    <th>Stillingsprosent</th>
-    </thead>
-    <tr *ngFor="let user of allUsers" (click)="setForm(user)">
-      <!--[class.selected]="shift"-->
-
-
-      <td>{{user.etternavn}}, {{user.fornavn}}</td>
-      <td>{{user.brukerId}}</td>
-      <td>{{ordinaryTimeAndOvertime[user.brukerId]}}</td>
-      <!--<td>{{ordinaryTimeAndOvertime?[user.brukerId][1]}}</td>-->
-    </tr>
-  </table>
-
-
-  <div>
-    <table>
+    <table class="time table-striped table-hover">
       <thead>
-      <th>Ansatt</th>
-      <th>Fra</th>
-      <th>Til</th>
+      <tr>
+        <th class="bruker">Bruker</th>
+        <th class="hour">23:00</th>
+        <th class="hour" *ngFor="let a of tempArr; let index = index">
+          <div *ngIf="index < 10">0{{index}}:00</div>
+          <div *ngIf="index >= 10">{{index}}:00</div>
+          <!--0700-1500  1500-2300 2300-0700-->
+        </th>
+        <th class="slett"></th>
+        <th class="filler"></th>
+      </tr>
       </thead>
-      <!--<tr *ngFor="let shift of shiftsUsersCanWork" (click)="setForm(shift)">
-        <td>{{usersIndexed[shift.brukerId]}}</td>
-        <td>{{shift.fromTime}}</td>
-        <td>{{shift.toTime}}</td></tr>-->
+
+      <tbody>
+      <tr *ngFor="let shift of daysShifts[this.date.getDate()]; let rows = index">
+        <!--<td>{{shift.etternavn}}</td>-->
+        <td class="bruker">{{usersIndexed[shift.userId].etternavn}}, {{usersIndexed[shift.userId].fornavn}}</td>
+        <td *ngFor="let b of tempArr; let index = index">
+          <div *ngIf="index <= 8 && shift.toTime == 7"
+               class="{{cssClasses[usersIndexed[shift.userId].stillingsBeskrivelse]}}">
+          </div>
+          <div *ngIf="index >= 8 && index <= 15 && shift.toTime == 15"
+               class="{{cssClasses[usersIndexed[shift.userId].stillingsBeskrivelse]}}">
+          </div>
+          <div *ngIf="index >= 15 && index <= 24 && shift.toTime == 23"
+               class="{{cssClasses[usersIndexed[shift.userId].stillingsBeskrivelse]}}">
+          </div>
+
+        </td>
+        <td></td>
+        <td class="slett">
+          <button class="btn1 btn btn-primary">Slett vakt</button>
+        </td>
+      </tr>
+      <tr *ngIf="vaktansvarligIds[date.getDate()] != undefined">
+        <td>VaktAsvarlig:</td>
+        <td *ngIf="usersIndexed[vaktansvarligIds[date.getDate()][7]]">
+          {{usersIndexed[vaktansvarligIds[date.getDate()][7]].etternavn}},
+          {{usersIndexed[vaktansvarligIds[date.getDate()][7]].fornavn}}
+        </td>
+        <td *ngIf="usersIndexed[vaktansvarligIds[date.getDate()][15]]">
+          {{usersIndexed[vaktansvarligIds[date.getDate()][15]].etternavn}},
+          {{usersIndexed[vaktansvarligIds[date.getDate()][15]].fornavn}}
+        </td>
+        <td *ngIf="usersIndexed[vaktansvarligIds[date.getDate()][23]]">
+          {{usersIndexed[vaktansvarligIds[date.getDate()][23]].etternavn}},
+          {{usersIndexed[vaktansvarligIds[date.getDate()][23]].fornavn}}
+        </td>
+      </tr>
+      </tbody>
     </table>
+
+    <div class="color-code" id="colorcode">
+      <div class="yellow-div">
+        <p>Helsefagarbeider</p>
+      </div>
+      <div class="green-div">
+        <p>Assistent</p>
+      </div>
+      <div class="red-div">
+        <p>Sykepleier</p>
+      </div>
+    </div>
+
+    <div [hidden]="shiftPercentageOk[0]">
+      <a class="varsel glyphicon glyphicon-warning-sign">
+        Det er liten prosentandel av sykepleiere eller Helsefagarbeidere på skift 2300-0700
+      </a>
+    </div>
+    <div [hidden]="shiftPercentageOk[1]">
+      <a class="varsel glyphicon glyphicon-warning-sign">
+        Det er liten prosentandel av sykepleiere eller Helsefagarbeidere på skift 0700-1500
+      </a>
+    </div>
+    <div [hidden]="shiftPercentageOk[2]">
+      <a class="varsel glyphicon glyphicon-warning-sign">
+        Det er liten prosentandel av sykepleiere eller Helsefagarbeidere på skift 1500-2300
+      </a>
+    </div>
+
+    <div class="bytt-vakt">
+      <ngb-accordion #acc="ngbAccordion" activeIds="" class="acc">
+        <ngb-panel>
+          <template ngbPanelTitle>
+            <span class="acc-title">Bytt vakt</span>
+          </template>
+          <template ngbPanelContent>
+            <div class="form-class">
+              <form>
+                <label for="bytt-select1">Vakt å bytte</label>
+                <select class="bytt-select1 form-control" id="bytt-select1" [(ngModel)]="vaktForBytte1.user" name="first">
+                  <option *ngFor="let shift of daysShifts[date.getDate()]">{{usersIndexed[shift.userId].etternavn}},
+                    {{usersIndexed[shift.userId].fornavn}}
+                  </option>
+                </select>
+                <!--Denne skal bort etterhvert
+                <select class="bytt-select form-control" id="bytt-select2" [(ngModel)]="vaktForBytte2.user" name="first">
+                  <option *ngFor="let shift of daysShifts[date.getDate()]">{{usersIndexed[shift.userId].etternavn}},
+                    {{usersIndexed[shift.userId].fornavn}}
+                  </option>
+                </select>
+              -->
+                <button class="btn2 btn btn-primary btn-large" (click)="switchShifts()">Bytt</button>
+              </form>
+            </div>
+          </template>
+        </ngb-panel>
+      </ngb-accordion>
+    </div>
+  </div> <!--top-->
+
+  <div class="accordion-container">
+    <ngb-accordion #acc="ngbAccordion" activeIds="" class="acc">
+      <ngb-panel class="ngbpanel">
+        <template ngbPanelTitle>
+          <span class="acc-title">Registrer tilgjengelighet</span>
+        </template>
+        <template ngbPanelContent>
+          <div class="middle">
+            <div class="tab2">
+              <label for="tilgjengelige-for-dag">Tilgjengelige denne dagen</label><br>
+              <table class="availability table-striped table-hover" id="tilgjengelige-for-dag">
+                <thead>
+                <tr>
+                  <th class="bruker">Ansatt</th>
+                  <th>Fra</th>
+                  <th class="last">Til</th>
+                  <th class="filler"></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let available of availables[date.toISOString().substr(0,10)]">
+                  <td class="bruker">{{available[0].etternavn}}, {{available[0].fornavn}}</td>
+                  <td>{{available[1].substr(11, 5)}}</td>
+                  <td class="last">{{available[2].substr(11, 5)}}</td>
+                </tr>
+                </tbody>
+                <!--<tr *ngFor="let shift of shiftsUsersCanWork" (click)="setForm(shift)">
+                  <td>{{usersIndexed[shift.brukerId]}}</td>
+                  <td>{{shift.fromTime}}</td>
+                  <td>{{shift.toTime}}</td></tr>-->
+              </table>
+            </div>
+
+            <div class="reg-tilgjengelighet">
+              <label>Fra</label>
+              <select class="form-control" [(ngModel)]="availableHour1">
+                <option value="23:00:00">23:00</option>
+                <option value="07:00:00">07:00</option>
+                <option value="15:00:00">15:00</option>
+              </select>
+
+              <label>Til</label>
+              <select class="form-control" [(ngModel)]="availableHour2">
+                <option value="07:00:00">15:00</option>
+                <option value="15:00:00">07:00</option>
+                <option value="23:00:00">23:00</option>
+              </select>
+              <button class="btn3 btn btn-primary btn-large" (click)="registerAvailability()">Registrer</button>
+
+              <div *ngIf="availabilityClicked">
+                <h1>clicked</h1>
+                <div *ngIf="availabilityOk">
+                  <h1>Tilgjengelighet ble registrert</h1>
+                </div>
+                <div *ngIf="!availabilityOk">
+                  <h1>Noe gikk galt! Skyt IT-gutta</h1>
+                </div>
+              </div>
+            </div>
+          </div> <!--middle-->
+        </template>
+      </ngb-panel>
+      <ngb-panel class="ngbpanel">
+        <template ngbPanelTitle>
+          <span class="acc-title2">Registrer ny vakt</span>
+        </template>
+        <template ngbPanelContent>
+          <div class="bottom">
+            <form class="shift1">
+              <label for="avdeling1">Avdeling</label>
+              <select value="dsf" class="form-control"
+                      id="avdeling1" required>
+                <option value="1">Solbakken</option>
+                <option>2</option>
+                <option>3</option>
+              </select>
+            </form>
+
+
+            <div class="tab1">
+              <label for="bruker-for-avdeling">Brukere for avdeling</label>
+              <table class="users table-striped table-hover" id="bruker-for-avdeling">
+                <thead>
+                <tr>
+                  <th class="bruker">Bruker</th>
+                  <th class="row2">Ordinær tid igjen</th>
+                  <th>Overtid</th>
+                  <th class="last">Stillingsprosent</th>
+                  <th class="filler"></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let user of allUsers" (click)="setForm(user)">
+                  <!--[class.selected]="shift"-->
+
+                  <td class="bruker">{{user.etternavn}}, {{user.fornavn}}</td>
+                  <td>{{user.brukerId}}</td>
+                  <td>{{ordinaryTimeAndOvertime[user.brukerId]}}</td>
+                  <td class="last">{{user.stillingsProsent}}</td>
+                  <!--<td>{{ordinaryTimeAndOvertime?[user.brukerId][1]}}</td>-->
+                </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <form class="shift">
+              <input-field [field]="'Ansatt'" [disabled]="true"
+                           [fieldValue]="(shiftInForm?.user.etternavn + ', ' + shiftInForm?.user.fornavn)"></input-field>
+
+              <label for="avdeling">Skift</label>
+              <select class="selects form-control" id="avdeling"
+                      required
+                      name="avdelingId"
+                      [(ngModel)]="shiftInForm.toTime" name="toTime">
+                <option [value]="'0'" selected>23:00-07:00</option>
+                <option [value]="'1'">07:00-15:00</option>
+                <option [value]="'2'">15:00-23:00</option>
+              </select>
+
+              <button class="btn4 btn btn-primary btn-large" type="button" (click)="registerShift()">Registrer skift
+              </button>
+              <button class="btn4 btn btn-primary btn-large" (click)="check()">check</button>
+            </form>
+          </div> <!--Bottom-->
+        </template>
+      </ngb-panel>
+    </ngb-accordion>
   </div>
-
-  <form>
-    <input-field  [field]="'Ansatt'" [disabled]="true" [fieldValue]="(shiftInForm?.user.etternavn + ', ' + shiftInForm?.user.fornavn)"></input-field>
-
-    <label for="avdeling">Skift</label>
-    <select class="form-control"  id="avdeling"
-            required
-            name="avdelingId"
-            (ngModel)="shiftInForm.fromTime"
-    >
-      <option  [value]="'0'" selected>23:00-07:00</option>
-      <option [value]="'1'">07:00-15:00</option>
-      <option [value]="'2'">15:00-23:00</option>
-      <
-    </select>
-
-  </form>
-  <button type="button" (click)="registerShift()" >Registrer skift</button>
-  <button>check</button>
-
 
 </div>

@@ -8,7 +8,7 @@
       <ul class="nav navbar-nav navbar-right">
         <li>
           <a type="text" class="user-name" href="#">
-            <span class="glyphicon"></span>{{this.authService.getGlobalUser().fornavn}} {{this.authService.getGlobalUser().etternavn}}<!--{{selectedUser.navn}}-->
+            <span class="glyphicon"></span>{{selectedUser.fornavn}} {{selectedUser.etternavn}}<!--{{selectedUser.navn}}-->
           </a>
         </li>
 
@@ -20,7 +20,7 @@
         </li>
 
         <li>
-          <a routerLink="./profil" (click)="setEdit()">
+          <a routerLink="./profil">
             <span class="glyphicon glyphicon-user"></span>
             Profil</a>
         </li>
@@ -50,12 +50,12 @@
       </li>
       <li>
         <a routerLink="./brukerinfo">
-          <span class="glyphicon"></span> Ansattinfo
+          <span class="glyphicon"></span> Brukerinfo
         </a>
       </li>
       <li>
-        <a routerLink="./fravaerinfo">
-          <span class="glyphicon"></span> Fravær
+        <a routerLink="">
+          <span class="glyphicon"></span> Vaktbytte
         </a>
       </li>
     </ul>
@@ -64,11 +64,15 @@
 
 <!-- CONTAINER -->
 <div class="container">
-  <router-outlet></router-outlet>
+  <!--<router-outlet></router-outlet>-->
   <!--<my-userinfo></my-userinfo>-->
   <!--<my-profil></my-profil>-->
-  <!--<my-fravaer-info></my-fravaer-info>-->
-  <!--<user-form></user-form>
+  <!--<my-fravaer></my-fravaer>-->
+  <!--<user-form></user-form>-->
+  <!--<calendar-component></calendar-component>-->
+  <!--<admin-calendar-component></admin-calendar-component>-->
+  <!--<users-calendar-component></users-calendar-component>-->
+  <vakt-bytte></vakt-bytte>
   <!--<faq></faq>-->
   <!--notification></notification>-->
 </div>

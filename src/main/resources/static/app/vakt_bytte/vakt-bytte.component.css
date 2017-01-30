@@ -1,0 +1,55 @@
+.content {
+  background-color: whitesmoke;
+  margin: 10px;
+  padding: 10px;
+  border-collapse: collapse;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.vakt-bytte-table {
+  display: table;
+  width: auto;
+  height: auto;
+  border: 1px solid #ccc;
+  margin: 20px 0;
+  background-color: white;
+}
+
+th {
+  background-color: #006D92;
+  color: white;
+  width: 100px;
+  height: 30px;
+  padding: 5px;
+}
+
+td {
+  width: 100px;
+  border: 1px solid #ccc;
+  padding: 5px;
+}
+
+.bruker {
+  width: 200px !important;
+}
+
+.dato {
+  width: 150px !important;
+}
+
+.knapp {
+  width: 100px !important;
+}
+
+.filler {
+  width: 17px !important;
+}
+
+.btn2 {
+  font-size: 10px;
+}
+
+.btn1 {
+  margin-top: 10px;
+}

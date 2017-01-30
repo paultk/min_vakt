@@ -21,6 +21,7 @@ var auth_guard_1 = require("./_guards/auth.guard");
 var not_found_component_1 = require("./not-found.component");
 var common_1 = require("@angular/common");
 var navigation_module_1 = require("./navigation/navigation.module");
+var vakt_bytte_component_1 = require("./vakt_bytte/vakt-bytte.component");
 var AppModule = (function () {
     function AppModule() {
     }
@@ -40,6 +41,7 @@ var AppModule = (function () {
                 app_component_1.AppComponent,
                 navigation_component_1.NavigationComponent,
                 login_component_1.LoginComponent,
+                vakt_bytte_component_1.VaktBytteComponent,
                 /*UserinfoComponent,
                  ProfilComponent,
                  UserFormComponent,

@@ -6,9 +6,9 @@ export class Shift {
     public toTime?: number,
     public userId?: number,
     public vaktAnsvarlig?: number,
+    public vaktId?: number
 
   ){}
 
 
 }
-

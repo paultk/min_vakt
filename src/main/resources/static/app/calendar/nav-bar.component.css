@@ -1,19 +1,61 @@
+/*.navbar {
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  height: auto;
+  width: 100%;
+  display: block;
+  border: 1px solid #ccc;
+  border-radius: 0;
+  background-color: #006D92;
+}*/
 
-@media screen and (min-width:768px){
-  .navbar-brand-centered {
-    position: absolute;
-    left: 50%;
-    display: block;
-    width: 160px;
-    text-align: center;
-    background-color: #eee;
-  }
-  .navbar>.container .navbar-brand-centered,
-  .navbar>.container-fluid .navbar-brand-centered {
-    margin-left: -80px;
-  }
+.container {
+  height: auto;
+  width: 100%;
+  text-align: center;
+  margin: auto;
+  background-color: #006D92;
+  border: 1px solid #ccc;
+  border-radius: 4px;
 }
 
-.glyphicon{
-  font-size: 50px;
+.navbar {
+  margin: 0 auto;
+  height: auto;
+  width: 200px;
+  float: none;
+  background-color: #006D92;
+}
+
+.box {
+  margin: auto;
+  display: block;
+  float: left;
+  width: 80px;
+  height: 100%;
+  color: white;
+  font-size: 14px;
+  vertical-align: middle;
+  text-align: center;
+  padding: 16px;
+  background-color: #006D92;
+}
+
+.glyphicon {
+  float: none;
+  font-size: 25px;
+  color: white;
+  cursor: pointer;
+  width: auto;
+  height: 100%;
+  vertical-align: middle;
+  margin: auto 0 !important;
+  border-bottom: 2px solid #006D92 !important;
+}
+
+.glyphicon:hover {
+  background-color: #006D92;
+  color: #04A3ED;
+  border-bottom: 2px solid #006D92 !important;
 }

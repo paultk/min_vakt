@@ -32,6 +32,7 @@ import {AuthGuard} from "./_guards/auth.guard";
 import {PageNotFoundComponent} from "./not-found.component";
 import {CommonModule} from "@angular/common";
 import {NavigationModule} from "./navigation/navigation.module";
+import {VaktBytteComponent} from "./vakt_bytte/vakt-bytte.component";
 
 @NgModule({
   imports: [
@@ -48,6 +49,7 @@ import {NavigationModule} from "./navigation/navigation.module";
     AppComponent,
     NavigationComponent,
     LoginComponent,
+    VaktBytteComponent,
     /*UserinfoComponent,
      ProfilComponent,
      UserFormComponent,
