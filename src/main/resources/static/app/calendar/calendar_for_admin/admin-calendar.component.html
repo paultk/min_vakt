@@ -91,46 +91,18 @@
         Det er liten prosentandel av sykepleiere eller Helsefagarbeidere på skift 1500-2300
       </a>
     </div>
-
-    <div class="bytt-vakt">
-      <ngb-accordion #acc="ngbAccordion" activeIds="" class="acc">
-        <ngb-panel>
-          <template ngbPanelTitle>
-            <span class="acc-title">Bytt vakt</span>
-          </template>
-          <template ngbPanelContent>
-            <div class="form-class">
-              <form>
-                <label for="bytt-select1">Vakt å bytte</label>
-                <select class="bytt-select1 form-control" id="bytt-select1" [(ngModel)]="vaktForBytte1.user" name="first">
-                  <option *ngFor="let shift of daysShifts[date.getDate()]">{{usersIndexed[shift.userId].etternavn}},
-                    {{usersIndexed[shift.userId].fornavn}}
-                  </option>
-                </select>
-                <!--Denne skal bort etterhvert
-                <select class="bytt-select form-control" id="bytt-select2" [(ngModel)]="vaktForBytte2.user" name="first">
-                  <option *ngFor="let shift of daysShifts[date.getDate()]">{{usersIndexed[shift.userId].etternavn}},
-                    {{usersIndexed[shift.userId].fornavn}}
-                  </option>
-                </select>
-              -->
-                <button class="btn2 btn btn-primary btn-large" (click)="switchShifts()">Bytt</button>
-              </form>
-            </div>
-          </template>
-        </ngb-panel>
-      </ngb-accordion>
-    </div>
   </div> <!--top-->
+
 
   <div class="accordion-container">
     <ngb-accordion #acc="ngbAccordion" activeIds="" class="acc">
       <ngb-panel class="ngbpanel">
         <template ngbPanelTitle>
-          <span class="acc-title">Registrer tilgjengelighet</span>
+          <span class="acc-title2">Registrer ny vakt</span>
         </template>
         <template ngbPanelContent>
-          <div class="middle">
+          <div class="bottom">
+
             <div class="tab2">
               <label for="tilgjengelige-for-dag">Tilgjengelige denne dagen</label><br>
               <table class="availability table-striped table-hover" id="tilgjengelige-for-dag">
@@ -156,48 +128,11 @@
               </table>
             </div>
 
-            <div class="reg-tilgjengelighet">
-              <label>Fra</label>
-              <select class="form-control" [(ngModel)]="availableHour1">
-                <option value="23:00:00">23:00</option>
-                <option value="07:00:00">07:00</option>
-                <option value="15:00:00">15:00</option>
-              </select>
-
-              <label>Til</label>
-              <select class="form-control" [(ngModel)]="availableHour2">
-                <option value="07:00:00">15:00</option>
-                <option value="15:00:00">07:00</option>
-                <option value="23:00:00">23:00</option>
-              </select>
-              <button class="btn3 btn btn-primary btn-large" (click)="registerAvailability()">Registrer</button>
-
-              <div *ngIf="availabilityClicked">
-                <h1>clicked</h1>
-                <div *ngIf="availabilityOk">
-                  <h1>Tilgjengelighet ble registrert</h1>
-                </div>
-                <div *ngIf="!availabilityOk">
-                  <h1>Noe gikk galt! Skyt IT-gutta</h1>
-                </div>
-              </div>
-            </div>
-          </div> <!--middle-->
-        </template>
-      </ngb-panel>
-      <ngb-panel class="ngbpanel">
-        <template ngbPanelTitle>
-          <span class="acc-title2">Registrer ny vakt</span>
-        </template>
-        <template ngbPanelContent>
-          <div class="bottom">
             <form class="shift1">
               <label for="avdeling1">Avdeling</label>
               <select value="dsf" class="form-control"
                       id="avdeling1" required>
                 <option value="1">Solbakken</option>
-                <option>2</option>
-                <option>3</option>
               </select>
             </form>
 
@@ -244,12 +179,11 @@
 
               <button class="btn4 btn btn-primary btn-large" type="button" (click)="registerShift()">Registrer skift
               </button>
-              <button class="btn4 btn btn-primary btn-large" (click)="check()">check</button>
             </form>
           </div> <!--Bottom-->
         </template>
       </ngb-panel>
     </ngb-accordion>
   </div>
-
+  <!--------------------------------------------------------------------------------------------------------------------->
 </div>

@@ -1,10 +1,9 @@
-import {Component, Input, OnInit, ViewChild, ElementRef} from "@angular/core";
-import {User} from "../_models/user";
-import {Shift} from "../_models/shift";
-import {ShiftService} from "../_services/shift.service";
-import {UserService} from "../_services/user.service";
-import {AuthenticationService} from "../_services/authentication.service";
-declare var $:JQueryStatic;
+import {Component, Input, OnInit} from "@angular/core";
+import {ShiftService} from "../../_services/shift.service";
+import {UserService} from "../../_services/user.service";
+import {User} from "../../_models/user";
+import {Shift} from "../../_models/shift";
+
 
 //todo: possibly fix the way percentage of workers handles shift display
 //todo: Alphabetize users displayed
@@ -15,34 +14,19 @@ declare var $:JQueryStatic;
 
 @Component({
   moduleId: module.id,
-  selector: 'calendar-component',
-  templateUrl: 'calendar.component.html',
-  styleUrls: [ 'calendar.component.css']
+  selector: 'users-calendar-component',
+  templateUrl: 'users-calendar.component.html',
+  styleUrls: [ 'users-calendar.component.css']
 })
 
-export class CalendarComponent implements OnInit {
+export class UsersCalendarComponent implements OnInit {
   constructor(
     private shiftService: ShiftService,
-    private userService: UserService,
-    private authService: AuthenticationService
-  ) {}
+    private userService: UserService
+  ) {
+  }
 
-  hidden: boolean = false;
-
-  //Javascript for hiding/showing divs
-  /*@ViewChild('selectElem') el:ElementRef;
-  $('#select-id').bind('change', function(event) {
-    var i= $('#yourselectorid').val();
-
-    if(i=="sometext") { // equal to a selection option
-      $('#divid').show();
-    }
-    else if(i=="othertext") {
-      $('#divid').hide(); // hide the first one
-      $('#divid2').show(); // show the other one
-
-    }
-  });*/
+  userHaveShiftThisDay = false;
 
   availableHour1= '23:00:00';
   availableHour2= '07:00:00';
@@ -52,15 +36,14 @@ export class CalendarComponent implements OnInit {
   nullUser: User = new User(null, null, null, null, null, null, null, '', '');
 
   vaktForBytte1 = new Shift(this.nullUser, 0, 0);
-  vaktForBytte2 = new Shift(this.nullUser, 0, 0);
 
-  byttVakt = true;
+  byttVakt = false;
   cssClasses: string[] =[];
 
   vaktansvarligIds: number[][]= [];
 
   // array where index = userId
-  usersIndexed: User[] = [ new User(), new User(), new User(), new User() ];
+  usersIndexed: User[] = [];
 
   // todo: fix avdelsId to match administrator
   static avdelingsId = 2;
@@ -88,29 +71,9 @@ export class CalendarComponent implements OnInit {
   availabilityClicked = false;
   availabilityOk = false;
 
-  toggleHidden(val: string): void {
-
-    if (val == "Registrer tilgjengelighet") {
-      this.hidden = false;
-    } else if (val == "Registrer vakt") {
-      this.hidden = true;
-    }
-
-    if (val == "byttVakt!") {
-      if (this.byttVakt) {
-        this.byttVakt = false;
-      } else {
-        this.byttVakt = true;
-      }
-    }
-  }
-
-
-
   restOfInit(users: User[]): void {
     this.allUsers = users.map(user =>  new User(user['brukerId'], null, user['stillingsBeskrivelse'], null, user['stillingsProsent'],
       null, null, user['fornavn'], user['etternavn'], user['epost'], user['avdelingId']
-
     ));
   }
 
@@ -133,12 +96,12 @@ export class CalendarComponent implements OnInit {
         (observable) => this.restOfInit(observable)
       );
 
-    this.shiftsUsersCanWork = this.shiftService.getShiftsUsersCanWork(null);
     this.getShifts();
 
 
     this.setPercentageList();
     this.checkIfPercentageIsOk();
+
 
 
 
@@ -248,38 +211,53 @@ export class CalendarComponent implements OnInit {
     //  sets availables
     this.shiftService.getAvailables(this.date).subscribe(res => this.setAvailables(res));
 
+    if(this.userHaveShift() != null) {
+      this.vaktForBytte1.user = this.userHaveShift();
+    }
+
   }
   registerShift(): void {
-    // console.log(this.shiftInForm);
+    console.log(this.shiftInForm);
     let dateStringed = this.date.toISOString().substr(0, 10)+ 'T';
-    // console.log(dateStringed);
+    console.log(dateStringed);
     this.shiftService.addShift(this.shiftInForm, dateStringed);
 
   }
 
   changeDate(year: number, month: number, date: number): void {
-
+    console.log(this.userHaveShiftThisDay);
+    console.log(this.getCurrentUser().fornavn);
     let prevMonth = this.date.getMonth();
     let prevYear = this.date.getFullYear();
-
     if(this.date.getDate() != date) {
       this.date.setDate(date)
     }
     else if (this.date.getMonth() != month) {
-      this.date.setMonth(month);
+      if(Number(this.shiftService.daysInMonth(this.date)) > Number(this.shiftService.daysInMonth(new Date(year, month, date)))) {
+        this.date.setDate(Number(this.shiftService.daysInMonth(new Date(year, month, date))));
+        this.date.setMonth(month);
+      }
     }
     else if (this.date.getFullYear() != year) {
       this.date.setFullYear(year);
     }
     if (this.date.getFullYear() != prevYear || this.date.getMonth() != prevMonth){
       this.getShifts();
-
     }
     this.setPercentageList();
     this.checkIfPercentageIsOk();
-
   }
 
+  userHaveShift(): Shift {
+    this.userHaveShiftThisDay = false;
+    for (let shift of this.daysShifts[this.date.getDate()]) {
+      if(shift.userId == this.getCurrentUser().brukerId){
+        this.userHaveShiftThisDay = true;
+        return shift;
+      }
+    }
+    return null;
+  }
   setshiftInChangeShift(shift: Shift) {
     if(this.byttVakt) {
       this.vaktForBytte1.user = this.usersIndexed[shift.userId];
@@ -288,7 +266,9 @@ export class CalendarComponent implements OnInit {
   }
 
   switchShifts(): void {
-    this.shiftService.changeShifts();
+    let vaktBytte = {'brukerId1': this.getCurrentUser().brukerId, 'vaktId': this.userHaveShift(), 'brukerId2': this.vaktForBytte1};
+    this.shiftService.addVaktBytte(vaktBytte);
+
 
   }
 
@@ -296,11 +276,11 @@ export class CalendarComponent implements OnInit {
     this.availables = [];
 
     for (let available of availablesObs) {
-      if (this.availables[available['tilTid'].substr(0, 7)] == undefined) {
-        this.availables[available['tilTid'].substr(0, 7)] = [];
+      if (this.availables[available['tilTid'].substr(0, 10)] == undefined) {
+        this.availables[available['tilTid'].substr(0, 10)] = [];
       }
 
-      this.availables[available['tilTid'].substr(0, 7)].push([this.usersIndexed[available['userId']], available['fraTid'], available['tilTid']]);
+      this.availables[available['tilTid'].substr(0, 10)].push([this.usersIndexed[available['userId']], available['fraTid'], available['tilTid']]);
     }
   }
 
@@ -316,11 +296,11 @@ export class CalendarComponent implements OnInit {
   }
 
   check(): void {
-
-    // console.log(new Date(this.availables[0][2]));
+    console.log(this.availables);
   }
 
+  //todo: needs to reference actual user
   getCurrentUser(): User{
-    return this.authService.getGlobalUser();
+    return this.usersIndexed[1];
   }
 }

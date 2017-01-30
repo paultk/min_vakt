@@ -1,0 +1,369 @@
+.red-div, .green-div, .yellow-div {
+  width: 120px;
+  height: 30px;
+  color: whitesmoke;
+  border-collapse: collapse;
+  border-radius: 4px;
+  text-align: center;
+  vertical-align: middle;
+  margin: 0 10px !important;
+  padding: 5px 0;
+  float: left;
+}
+
+.color-code {
+  margin: 0 auto;
+  width: 500px;
+}
+
+.red-div-table, .yellow-div-table, .green-div-table {
+  width: 20px;
+  height: 15px;
+  color: whitesmoke;
+  border-collapse: collapse;
+  border-radius: 4px;
+  text-align: center;
+  vertical-align: middle;
+  margin: auto;
+}
+
+.red-div, .red-div-table {
+  background-color: #a94442;
+  border: 1px solid #a94442;
+}
+
+.yellow-div, .yellow-div-table {
+  background-color: #04A3ED;
+  border: 1px solid #04A3ED;
+  color: #eeeeee !important;
+}
+
+.green-div, .green-div-table {
+  background-color: #42A948;
+  border: 1px solid #42A948;
+}
+
+.varsel {
+  color: #006D92;
+}
+
+.top {
+  height: auto;
+  margin: 10px;
+  background-color: whitesmoke;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 10px;
+}
+
+.middle, .bottom {
+  height: auto;
+  margin: 0;
+  background-color: #efefef;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 10px;
+}
+
+.accordion-container {
+  height: auto;
+  background-color: whitesmoke;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 10px;
+  margin: 10px;
+}
+
+.acc-title, .acc-title2 {
+  display: block;
+  float: none;
+  font-size: 15px;
+  width: 300px !important;
+  margin: 15px 0 0 0 !important;
+  padding: 10px;
+  background-color: #efefef;
+  color: #006D92;
+  border: 1px solid #ccc;
+  border-collapse: collapse;
+  border-radius: 4px;
+}
+
+.acc-title:hover, .acc-title2:hover {
+  background-color: #dbdbdb;
+}
+
+.bottom {
+  height: 800px !important;
+}
+
+/*------------------------------*/
+
+.time {
+  display: block;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-collapse: collapse;
+  width: 899px;
+  margin: 10px auto;
+  text-align: left;
+}
+
+.time thead,
+.time tbody {
+  display: block;
+  font-size: 9px;
+  border-collapse: collapse;
+}
+
+.time thead {
+  width: 100%;
+}
+
+.time tbody {
+  overflow-y: scroll;
+  height: 200px;
+  overflow-x: auto;
+}
+
+.time tr {
+  width: auto;
+}
+
+.time th {
+  background-color: #006D92;
+  color: white;
+  width: 30px;
+  height: 30px;
+  margin: 0 auto;
+  border-left: none;
+}
+
+.time td {
+  width: 30px;
+  border-left: 1px solid #ccc;
+}
+
+.time th, .time td {
+  padding: 2px;
+  border-bottom: 1px solid #ccc;
+}
+
+.bruker {
+  padding: 2px;
+  width: 100px !important;
+  border-left: none !important;
+  border-collapse: collapse;
+}
+
+.hour {
+}
+
+.filler {
+  background-color: #006D92;
+  width: 18px !important;
+  padding: 0 !important;
+  border-left: none !important;
+}
+
+.time .slett {
+  width: 60px;
+}
+
+.btn1 {
+  width: auto !important;
+  height: auto !important;
+  font-size: 10px;
+  padding: 5px !important;
+  margin: auto !important;
+}
+
+.form-class {
+  width: 300px;
+  height: 150px;
+  padding: 10px;
+  background-color: #efefef;
+  border: 1px solid #ccc;
+  border-collapse: collapse;
+  border-radius: 4px;
+}
+
+.btn2 {
+  margin: 10px 30px 10px 0 !important;
+}
+
+.bytt-select1 {
+  float: left;
+  width: 200px;
+}
+
+.bytt-select {
+  margin-left: 20px;
+  float: left;
+  width: 200px;
+}
+
+label {
+  float: left;
+  width: auto;
+  margin-right: 1px;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+/*------------------------------*/
+
+.shift1 {
+  width: 300px;
+  margin: 5px 0;
+}
+
+/*------------------------------*/
+
+.two-tables {
+  width: 100%;
+  height: auto;
+}
+
+.tab1 {
+  width: 48%;
+  height: auto;
+  float: left;
+}
+
+.tab2 {
+  width: 48%;
+  height: auto;
+  float: left;
+}
+
+/*------------------------------*/
+
+.users {
+  font-size: 13px;
+  display: block;
+  border: 1px solid #ccc;
+  margin: 10px auto;
+  text-align: left;
+  float: left;
+  width: 100%;
+  background-color: white;
+}
+
+.users thead,
+.users tbody {
+  display: block;
+}
+
+.users tbody {
+  height: 160px;
+  overflow-y: scroll;
+}
+
+.users th {
+  background-color: #006D92;
+  color: white;
+  height: 30px;
+  margin: 0 auto;
+  border-left: none;
+}
+
+.users td {
+  border: 1px solid #ccc;
+}
+
+.users th,
+.users td {
+  width: 120px;
+}
+
+.users .bruker {
+  width: 130px !important;
+}
+
+.users .last {
+  width: 130px !important;
+}
+
+.users .filler{
+  width: 17px !important;
+}
+
+/*------------------------------*/
+
+.availability {
+  font-size: 13px;
+  display: block;
+  border: 1px solid #ccc;
+  margin: 10px auto;
+  text-align: left;
+  float: left;
+  width: 100%;
+  background-color: white;
+}
+
+.availability thead,
+.availability tbody {
+  display: block;
+}
+
+.availability tbody {
+  height: 160px;
+  overflow-y: scroll;
+}
+
+.availability th {
+  background-color: #006D92;
+  color: white;
+  height: 30px;
+  margin: 0 auto;
+  border-left: none;
+}
+
+.availability td {
+  border: 1px solid #ccc;
+}
+
+.availability th,
+.availability td {
+  width: 160px;
+}
+
+.availability .bruker {
+  width: 180px !important;
+}
+
+.availability .filler {
+  width: 17px !important;
+}
+
+/*------------------------------*/
+
+.reg-tilgjengelighet {
+  margin: 10px 0;
+  width: 30%;
+  height: 415px;
+}
+
+.btn3 {
+  margin-left: 0 !important;
+}
+
+/*------------------------------*/
+
+.shift {
+  width: 50%;
+  height: 180px;
+}
+
+.btn4 {
+  margin: 10px 10px 10px 0 !important;
+  float: left;
+}
+
+.btn {
+  float: left;
+  width: auto;
+  box-sizing: border-box;
+  height: 40px;
+  margin: 10px 10px 10px 10px;
+}
