@@ -31,12 +31,12 @@ export class ForgotCredentialsComponent {
   }
 
   cancel() {
-      console.log('cancel');
+      // console.log('cancel');
       this.closePopup();
   }
 
   closePopup(): void {
-      console.log('close');
+      // console.log('close');
     this.router.navigate([{ outlets: { popup: null }}]);
   }
 }

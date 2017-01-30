@@ -76,13 +76,13 @@ export class NotificationComponent implements OnInit {
     //wait 3 Seconds and hide
     setTimeout(function() {
       this.edited2 = false;
-      console.log(this.edited);
+      // console.log(this.edited);
     }.bind(this), 3000);
   }
 
   onSubmit() {
     this.model.fraBrukerId = this.user.brukerId;
-    console.log(this.model);
+    // console.log(this.model);
     // this.submitted = true;
     this.notifService.addNotification(this.model).subscribe(ret => {
       this.updateMessages();
@@ -91,7 +91,7 @@ export class NotificationComponent implements OnInit {
     //wait 3 Seconds and hide
     setTimeout(function() {
       this.edited = false;
-      console.log(this.edited);
+      // console.log(this.edited);
     }.bind(this), 3000);
 
     return this.model = new Notification(0,0,0,"", "", "1999-01-01", false);

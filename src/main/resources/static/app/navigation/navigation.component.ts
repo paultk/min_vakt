@@ -40,7 +40,7 @@ export class NavigationComponent implements OnInit{
    // this.selectedUser = this.authService.getGlobalUser();
 
     const URL = 'http://localhost:8080/melding/get/ulest/ant';
-    console.log(this.authService.getGlobalUser().brukerId);
+    // console.log(this.authService.getGlobalUser().brukerId);
     this.http.post(URL, JSON.stringify(this.authService.getGlobalUser()), {headers: this.headers},)
       .toPromise()
       .then((res) => {

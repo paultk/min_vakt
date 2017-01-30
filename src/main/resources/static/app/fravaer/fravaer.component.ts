@@ -76,11 +76,11 @@ export class FravaerComponent implements OnInit {
 
     this.model.fraTid = this.completeDateFrom[0] + "-" + this.completeDateFrom[1] + "-" + this.completeDateFrom[2] +
       "T" + this.completeDateFrom[3] + ":" + this.completeDateFrom[4] + ":00";
-    console.log(this.model.fraTid);
+    // console.log(this.model.fraTid);
 
     this.model.tilTid = this.completeDateTo[0] + "-" + this.completeDateTo[1] + "-" + this.completeDateTo[2] +
       "T" + this.completeDateTo[3] + ":" + this.completeDateTo[4] + ":00";
-    console.log(this.model.tilTid);
+    // console.log(this.model.tilTid);
 
     this.getVakter();
   }
@@ -89,7 +89,7 @@ export class FravaerComponent implements OnInit {
     let response = this.fravaerService.getVaktByDate2(this.model.fraTid.substr(0, 10));
     Promise.resolve(response)
       .then(res => this.vaktliste = res)
-      .then(() => console.log(this.vaktliste));
+      .then(/*() => console.log(this.vaktliste)*/);
   }
 
   updateUsers() : void {
@@ -112,7 +112,7 @@ export class FravaerComponent implements OnInit {
     }
     let riktigVakt = tempListe[this.selectedVakt.vakt_id]
 
-    console.log(riktigVakt);
+    // console.log(riktigVakt);
 
     if (riktigVakt == null) {
       alert("Valgt ansatt deltok ikke i denne vakten!");
@@ -122,7 +122,7 @@ export class FravaerComponent implements OnInit {
     this.model.brukerVaktId = riktigVakt.brukerVaktId;
 
     this.submitted = true;
-    console.log(this.model);
+    // console.log(this.model);
     this.fravaerService.registerFravaer(this.model);
     this.router.navigate(['../fravaer']);
   }

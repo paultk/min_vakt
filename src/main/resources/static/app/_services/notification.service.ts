@@ -31,22 +31,22 @@ export class NotificationService {
     this.http
       .post('http://localhost:8080/test/json', JSON.stringify(jsonTest), {headers: this.headers},)
       .toPromise()
-      .then(res => console.log(res))
+      .then(/*res => console.log(res)*/)
       .catch(this.handleError);
   }
 
   testConnect(): void {
-    console.log('ping');
+    // console.log('ping');
     this.http
       .get('http://localhost:8080/test', { headers: this.headers })
       .toPromise()
-      .then(res => console.log(res))
+      .then(/*res => console.log(res)*/)
       .catch(ret => this.handleError(ret));
   }
 
   addNotification(notification : Notification): Observable<any> {
     const URL = 'http://localhost:8080/melding/add';
-    console.log("from notificationService");
+    // console.log("from notificationService");
     return this.http
       .post(URL, JSON.stringify(notification), {headers: this.headers},).map((response: Response) =>
     response.json()).catch(ret => this.handleError(ret));
@@ -54,7 +54,7 @@ export class NotificationService {
 
   delete(notification : Notification): Observable<any> {
     const URL = 'http://localhost:8080/melding/delete';
-    console.log("from notificationService -delete");
+    // console.log("from notificationService -delete");
     return this.http
       .post(URL, JSON.stringify(notification), {headers: this.headers},).map((response: Response) =>
         response.json()).catch(ret => this.handleError(ret));
@@ -72,7 +72,7 @@ export class NotificationService {
 
   setLest(id : number) {
     const URL = 'http://localhost:8080/melding/sett/' + id;
-    console.log(URL);
+    // console.log(URL);
     this.http.post(URL, "", { headers:this.headers },)
       .toPromise()
       .then(res => res.json().data)

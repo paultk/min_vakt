@@ -68,8 +68,8 @@ export class VaktBytteComponent implements OnInit{
   //todo: minimalize shift
   setShifts(shifts: any[]): void {
 
-    console.log('shifts');
-    console.log(shifts);
+    // console.log('shifts');
+    // console.log(shifts);
 
     this.monthShifts = shifts;
 

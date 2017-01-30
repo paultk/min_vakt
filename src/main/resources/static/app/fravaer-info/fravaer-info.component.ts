@@ -47,7 +47,7 @@ export class FravaerInfoComponent implements OnInit {
           }
         }
         this.fravaers = funnet;
-        console.log(funnet);
+        // console.log(funnet);
     });
   }
   onSelect(frav: Fravaer): void{
@@ -71,7 +71,7 @@ export class FravaerInfoComponent implements OnInit {
       //this.getFravaers();
       if (this.searchtext != "") {
         let textlowercase = this.searchtext.toLowerCase();
-        console.log(textlowercase);
+        // console.log(textlowercase);
         let funnet: User[] = new Array();
         for (let u of this.users) {
           if (u.fornavn.toLowerCase().includes(textlowercase) || u.etternavn.toLowerCase().includes(textlowercase)) {
@@ -100,8 +100,8 @@ export class FravaerInfoComponent implements OnInit {
     this.getFravaers();
     this.fraUser = new User();
     this.isAdmin = this.user.admin;
-    console.log("here")
-    console.log(this.user)
+    // console.log("here")
+    // console.log(this.user)
   }
 
   selectUser(id : number){

@@ -24,22 +24,22 @@ export class FravaerService {
     this.http
       .post('http://localhost:8080/test/json', JSON.stringify(jsonTest), {headers: this.headers},)
       .toPromise()
-      .then(res => console.log(res))
+      .then(/*res => console.log(res)*/)
       .catch(this.handleError);
   }
 
   testConnect(): void {
-    console.log('ping');
+    // console.log('ping');
     this.http
       .get('http://localhost:8080/test',)
       .toPromise()
-      .then(res => console.log(res))
+      .then(/*res => console.log(res)*/)
       .catch(this.handleError);
   }
 
   registerFravaer(fravaer: Fravaer): void {
     const URL = 'http://localhost:8080/fravaer/add';
-    console.log("from fravaerService");
+    // console.log("from fravaerService");
     this.http
       .post(URL, JSON.stringify(fravaer), {headers: this.headers},)
       .toPromise()
@@ -80,7 +80,7 @@ export class FravaerService {
       frav['kommentar'], frav['brukerId'], frav['vaktId']));
   }
   delete(frav : Fravaer): Observable<any> {
-    console.log(frav);
+    // console.log(frav);
     const URL = 'http://localhost:8080/fravaer/delete';
     return this.http
       .post(URL, JSON.stringify(frav), {headers: this.headers},).map((response: Response) =>

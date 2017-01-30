@@ -33,24 +33,24 @@ export class UserinfoComponent implements OnInit{
   ) {}
 
   onSelect(idNum: number): void{
-    console.log('onSelect() ' + idNum);
+    // console.log('onSelect() ' + idNum);
     for (let u of this.users){
       if(u.brukerId ==idNum){
         this.selectedUser=u;
         this.userService.setEditUser(u);
-        console.log(u);
+        // console.log(u);
       }
     }
 
   }
   searchUsers(): void {
     // this.getUsers();
-    console.log("søking");
+    // console.log("søking");
     this.userService.getUsers1().subscribe(ret => {
       this.users = this.userService.mapUsersFromObs(ret);
       if (this.searchtext != "") {
         let textlowercase = this.searchtext.toLowerCase();
-        console.log(textlowercase);
+        // console.log(textlowercase);
         let funnet: User[] = new Array();
         for (let u of this.users) {
           if (u.fornavn.toLowerCase().includes(textlowercase) || u.etternavn.toLowerCase().includes(textlowercase)
@@ -94,7 +94,7 @@ export class UserinfoComponent implements OnInit{
     this.getUsers();
     this.user = this.authService.getGlobalUser();
     this.isAdmin = this.user.admin;
-    console.log(this.user)
+    // console.log(this.user)
   }
 
   goToUserForm() {

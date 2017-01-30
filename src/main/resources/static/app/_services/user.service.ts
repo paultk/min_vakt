@@ -36,7 +36,7 @@ export class UserService {
       response.json());
   }
   updatePassword(user:User): Observable<any> {
-    console.log(user.plaintextPassord);
+    // console.log(user.plaintextPassord);
     const URL = 'http://localhost:8080/bruker/updatepassord';
     return this.http.post(URL, JSON.stringify(user), {headers:this.headers}).map((response: Response) =>
       response.json());
@@ -116,7 +116,7 @@ export class UserService {
   }
 
   delete(user : User): Observable<any> {
-    console.log(user);
+    // console.log(user);
     const URL = 'http://localhost:8080/bruker/delete';
     return this.http
       .post(URL, JSON.stringify(user), {headers: this.headers},).map((response: Response) =>

@@ -27,7 +27,7 @@ export class ShiftService {
   getShifts(date: Date): Observable<any>{
     let url = `http://localhost:8080/vakt/all/month/${date.toISOString().substr(0, 7)}-01T12:00:00+01:00/2`;
     let time = new Date();
-    console.log('first' + time);
+    // console.log('first' + time);
     return this.http.get(url, {headers : this.headers}).map(
       (response: Response) => response.json()
     );
@@ -38,7 +38,7 @@ export class ShiftService {
     let url = 'http://localhost:8080/vakt/all/month/2017-01-01T12:00:00+01:00/2';
 
     this.http.get(url).toPromise().then(
-      (response) => console.log(response)
+      /*(response) => console.log(response)*/
     );
     console.log(url);
     /*
@@ -65,7 +65,7 @@ export class ShiftService {
 
     let url = `http://localhost:8080/bruker/addtid/${date}/2`;
     this.http.post(url, JSON.stringify(shift.user), {headers: this.headers}).toPromise()
-      .then((response) => console.log(response))
+      .then(/*(response) => console.log(response)*/)
       .catch( (error) => this.handleError(error));
   }
 
@@ -73,7 +73,7 @@ export class ShiftService {
     let dateTo = date.toISOString().substr(0, 7);
     let daysInMonthString = this.daysInMonth(date);
     let url = `http://localhost:8080/tilgjengelighet/all/${dateTo}-01T00:00:00/${dateTo}-28T00:00:00`;
-    console.log(url);
+    // console.log(url);
     return this.http.get(url, {headers : this.headers}).map(
       (response: Response) => response.json()
     );
@@ -81,7 +81,7 @@ export class ShiftService {
 
   getVaktBytter() {
     let url = `http://localhost:8080/vaktbytte/get/alle`;
-    console.log(url);
+    // console.log(url);
     return this.http.get(url, {headers : this.headers}).map(
       (response: Response) => response.json()
     );

@@ -44,22 +44,22 @@ export class UserFormComponent implements OnInit {
   }*/
 
   testConnect4(): void {
-    console.log(this.model.fornavn)
+    // console.log(this.model.fornavn)
   }
 
   onSubmit() {
     this.submitted = true;
-    console.log(this.model);
+    // console.log(this.model);
     this.userService.addUser(this.model);
   }
 
   printFunksjon(): void {
-    console.log(this.model);
+    // console.log(this.model);
   }
 
   getAvdelinger(): void {
     let response = this.avdelingService.getAvdelinger();
-    Promise.resolve(response).then(avdelinger => this.avdelinger = avdelinger).then(() => console.log(this.avdelinger));
+    Promise.resolve(response).then(avdelinger => this.avdelinger = avdelinger).then(/*() => console.log(this.avdelinger)*/);
   }
 
   /*Backup

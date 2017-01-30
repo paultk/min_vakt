@@ -30,8 +30,8 @@ export class InputFieldComponent implements DoCheck {
   fieldValueChange: EventEmitter<string> = new EventEmitter<string>();
 
   testConnect3(): void {
-    console.log('ping3');
-    console.log(this.fieldValue);
+    // console.log('ping3');
+    // console.log(this.fieldValue);
   }
 
   onChanges(newValue: string): void {

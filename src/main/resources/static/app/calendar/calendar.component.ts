@@ -250,9 +250,9 @@ export class CalendarComponent implements OnInit {
 
   }
   registerShift(): void {
-    console.log(this.shiftInForm);
+    // console.log(this.shiftInForm);
     let dateStringed = this.date.toISOString().substr(0, 10)+ 'T';
-    console.log(dateStringed);
+    // console.log(dateStringed);
     this.shiftService.addShift(this.shiftInForm, dateStringed);
 
   }
