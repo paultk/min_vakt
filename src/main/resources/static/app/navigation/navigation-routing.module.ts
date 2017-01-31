@@ -28,7 +28,7 @@ const navigationRoutes: Routes = [
     children: [
       {
         path: '',
-        component: UsersCalendarComponent
+        component: AdminCalendarComponent
       },
       {
         path: 'fravaer',
