@@ -1,6 +1,7 @@
 import {Routes, RouterModule} from "@angular/router";
 import {NavigationComponent} from "./navigation.component";
-import {CalendarComponent} from "../calendar/calendar.component";
+import {AdminCalendarComponent} from "../calendar/calendar_for_admin/admin-calendar.component";
+import {UsersCalendarComponent} from "../calendar/calendar_for_user/users-calendar.component";
 import {FravaerComponent} from "../fravaer/fravaer.component";
 import {UserFormComponent} from "../user-form/user-form.component";
 import {FaqComponent} from "../faq/faq.component";
@@ -27,7 +28,7 @@ const navigationRoutes: Routes = [
     children: [
       {
         path: '',
-        component: CalendarComponent
+        component: UsersCalendarComponent
       },
       {
         path: 'fravaer',
