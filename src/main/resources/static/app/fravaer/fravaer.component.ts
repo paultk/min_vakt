@@ -110,7 +110,7 @@ export class FravaerComponent implements OnInit {
     for (let bv of this.brukervaktListe) {
       tempListe[bv.vaktId] = bv;
     }
-    let riktigVakt = tempListe[this.selectedVakt.vakt_id]
+    let riktigVakt = tempListe[this.selectedVakt.vaktId]
 
     // console.log(riktigVakt);
 

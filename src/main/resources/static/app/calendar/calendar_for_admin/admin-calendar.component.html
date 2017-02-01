@@ -43,11 +43,11 @@
         </td>
         <td></td>
         <td class="slett">
-          <button class="btn1 btn btn-primary">Slett vakt</button>
+          <button class="btn1 btn btn-primary" (click)="delete(shift)">Slett vakt</button>
         </td>
       </tr>
       <tr *ngIf="vaktansvarligIds[date.getDate()] != undefined">
-        <td>VaktAsvarlig:</td>
+        <td>VaktAnsvarlig:</td>
         <td *ngIf="usersIndexed[vaktansvarligIds[date.getDate()][7]]">
           {{usersIndexed[vaktansvarligIds[date.getDate()][7]].etternavn}},
           {{usersIndexed[vaktansvarligIds[date.getDate()][7]].fornavn}}

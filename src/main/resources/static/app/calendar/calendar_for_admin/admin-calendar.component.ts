@@ -85,7 +85,7 @@ export class AdminCalendarComponent implements OnInit {
 
 
   ngOnInit(): void {
-    for (let i = 0; i<100; i++) {
+    for (let i = 0; i < 500; i++) {
       this.ordinaryTimeAndOvertime[i] = new Array();
       this.ordinaryTimeAndOvertime[i][0] = 0;
     }
@@ -138,6 +138,11 @@ export class AdminCalendarComponent implements OnInit {
       this.percentageList[shiftPeriod][stilling] += 1;
     }
   }
+  delete(shift : Shift) {
+    console.log(shift);
+    this.shiftService.delete(shift);
+    this.ngOnInit();
+  }
 
   checkIfPercentageIsOk(): void {
     for(let i = 0; i < 3; i++) {
@@ -181,8 +186,10 @@ export class AdminCalendarComponent implements OnInit {
 
       let brukerId = (this.monthShifts[i]['brukerId'] == 0) ? vaktAnsvarligId : this.monthShifts[i]['brukerId'];
 
+      let vaktId = this.monthShifts[i]['vakt']['vaktId'];
+
       this.daysShifts[date.getDate()].push(
-        new Shift(null, 0, shiftDescript, brukerId, vaktAnsvarligId ));
+        new Shift(null, 0, shiftDescript, brukerId, vaktAnsvarligId, vaktId));
     }
 
 

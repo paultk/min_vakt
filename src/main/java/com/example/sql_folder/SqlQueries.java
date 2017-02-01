@@ -888,9 +888,16 @@ public class SqlQueries extends DBConnection {
 
     public boolean deleteVakt(Vakt vakt) {
         try {
+        	int id = vakt.getVaktId();
+        	deleteQuery = connection.prepareStatement("DELETE FROM bruker_vakt WHERE vakt_id = ?");
+	        deleteQuery.setInt(1, id);
+	        deleteQuery.executeUpdate();
+	        deleteQuery = connection.prepareStatement("DELETE FROM vakt_bytte WHERE vakt_id = ?");
+	        deleteQuery.setInt(1, id);
+	        deleteQuery.executeUpdate();
             String deleteSql = "DELETE FROM vakt WHERE vakt_id = ?";
             deleteQuery = connection.prepareStatement(deleteSql);
-            deleteQuery.setInt(1, vakt.getVaktId());
+            deleteQuery.setInt(1, id);
 
             if (deleteQuery.executeUpdate() == 1) {
                 return true;

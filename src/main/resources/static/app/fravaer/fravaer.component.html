@@ -48,8 +48,8 @@
             <div>Velg en dato for å se brukerens vakter den dagen</div>
             <li *ngFor="let vakt of vaktliste" (click)="onSelect(vakt)"
                 [class.selected]="vakt === selectedVakt">
-              <span class="badge">{{vakt.vakt_id}}</span>
-              <span>{{vakt.fra_tid}}</span>
+              <span class="badge">{{vakt.vaktId}}</span>
+              <span>{{vakt.fraTid}}</span>
             </li>
           </ul>
 

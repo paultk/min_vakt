@@ -4,6 +4,9 @@ import {User} from "../_models/user";
 import {Injectable} from "@angular/core";
 import { USERS } from '../_mock/mock-ansatte';
 import {Observable} from "rxjs";
+import  "rxjs/Rx";
+import 'rxjs/add/operator/toPromise';
+import {Vakt} from "../_models/vakt";
 
 const shifts = [
   // new Shift(new User(1, 1, 1, 3232, 12, 121, false, 'fefe', 'fdg', 'sdffsd',3, 'testUser1'), 3, 12),
@@ -31,6 +34,39 @@ export class ShiftService {
     return this.http.get(url, {headers : this.headers}).map(
       (response: Response) => response.json()
     );
+  }
+  getVakt(id : number): Observable<any>{
+    let url = `http://localhost:8080/vakt/${id}`;
+    // console.log('first' + time);
+    return this.http.get(url, {headers : this.headers}).map(
+      (response: Response) => response.json()
+    );
+  }
+  mapVaktFromObs(inn : Vakt) : Vakt {
+    let foo : Vakt[] = [ inn ];
+    foo = foo.map(usr => new Vakt(usr['vaktId'], usr['vaktansvarligId'], usr['avdelingId'],
+      usr['fraTid'], usr['tilTid'], usr['antPers']));
+    return foo[0];
+  }
+/*  export class Vakt {
+  constructor(
+    public vaktId?: number,
+    public vaktansvarligId?: number,
+    public avdelingId?: number,
+    public fraTid?: string,
+    public tilTid?: string,
+    public antPers?: number
+  ) {}
+}*/
+  delete(shift : Shift) : void {
+    this.getVakt(shift.vaktId).subscribe(ret => {
+      let vakt = this.mapVaktFromObs(ret);
+      console.log(vakt);
+      let url = 'http://localhost:8080/vakt/delete';
+      return this.http.post(url, JSON.stringify(vakt), {headers : this.headers}).map(
+        (response: Response) => response.json()
+      );
+    });
   }
 
 
