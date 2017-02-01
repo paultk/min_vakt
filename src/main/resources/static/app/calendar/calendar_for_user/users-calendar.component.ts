@@ -77,10 +77,18 @@ export class UsersCalendarComponent implements OnInit {
     this.allUsers = users.map(user =>  new User(user['brukerId'], null, user['stillingsBeskrivelse'], null, user['stillingsProsent'],
       null, null, user['fornavn'], user['etternavn'], user['epost'], user['avdelingId']
     ));
+    this.allUsers.forEach(
+      user =>
+        this.usersIndexed[user.brukerId] = user
+    );
   }
 
 
   ngOnInit(): void {
+    for (let i = 0; i < 500; i++) {
+      this.ordinaryTimeAndOvertime[i] = new Array();
+      this.ordinaryTimeAndOvertime[i][0] = 0;
+    }
 
     this.cssClasses['Helsefagarbeider'] = 'yellow-div-table';
     this.cssClasses['Assistent'] = 'green-div-table';
