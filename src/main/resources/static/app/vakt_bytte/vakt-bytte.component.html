@@ -14,11 +14,11 @@
       <th class="knapp"></th>
       <th class="knapp"></th>
     </tr>
-    <tbody>
+    <tbody >
     <tr *ngFor="let vaktBytte of vaktBytter" (click)="brukerId2 = vaktBytte">
-      <td class="bruker" *ngIf="shiftsIndexedById[vaktBytte['vaktId']].fromTime != undefined">{{usersIndexed[vaktBytte['brukerId1']].etternavn}}, {{usersIndexed[vaktBytte['brukerId1']].fornavn}}</td>
-      <td class="dato" *ngIf="shiftsIndexedById[vaktBytte['vaktId']].fromTime != undefined">{{shiftsIndexedById[vaktBytte['vaktId']].fromTime}}</td>
-      <td class="bruker" *ngIf="usersIndexed[vaktBytte['brukerId2']] != undefined">{{usersIndexed[vaktBytte['brukerId2']].etternavn}},
+      <td class="bruker" *ngIf="shiftsIndexedById[vaktBytte['vaktId']]">{{usersIndexed[vaktBytte['brukerId1']].etternavn}}, {{usersIndexed[vaktBytte['brukerId1']].fornavn}}</td>
+      <td class="dato" *ngIf="shiftsIndexedById[vaktBytte['vaktId']]">{{shiftsIndexedById[vaktBytte['vaktId']].fromTime}}</td>
+      <td class="bruker" *ngIf="usersIndexed[vaktBytte['brukerId2']]">{{usersIndexed[vaktBytte['brukerId2']].etternavn}},
         {{usersIndexed[vaktBytte['brukerId2']].fornavn}}
       </td>
       <td class="bruker" *ngIf="usersIndexed[vaktBytte['brukerId2']] == undefined">

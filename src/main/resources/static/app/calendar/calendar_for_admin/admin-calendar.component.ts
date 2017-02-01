@@ -27,6 +27,7 @@ export class AdminCalendarComponent implements OnInit {
     private userService: UserService
   ) {
   }
+  klar : boolean = false;
 
   availableHour1= '23:00:00';
   availableHour2= '07:00:00';
@@ -51,7 +52,7 @@ export class AdminCalendarComponent implements OnInit {
 
   monthShifts: any[] = [];
 
-  daysShifts: Shift[][] = [];
+  daysShifts: Shift[][] = [ ];
 
   //  list of shifts that are in the system
   //  list of users that can work that day, with from and to time
@@ -76,11 +77,18 @@ export class AdminCalendarComponent implements OnInit {
       null, null, user['fornavn'], user['etternavn'], user['epost'], user['avdelingId']
 
     ));
+    this.allUsers.forEach(
+      user =>
+        this.usersIndexed[user.brukerId] = user
+    );
   }
 
 
   ngOnInit(): void {
-
+    for (let i = 0; i<100; i++) {
+      this.ordinaryTimeAndOvertime[i] = new Array();
+      this.ordinaryTimeAndOvertime[i][0] = 0;
+    }
     this.cssClasses['Helsefagarbeider'] = 'yellow-div-table';
     this.cssClasses['Assistent'] = 'green-div-table';
     this.cssClasses['Sykepleier'] = 'red-div-table';
@@ -181,10 +189,7 @@ export class AdminCalendarComponent implements OnInit {
 
     let daysInMonth = new Date(this.date.getFullYear(), this.date.getMonth(), 0).getDate();
 
-    this.allUsers.forEach(
-      user =>
-        this.usersIndexed[user.brukerId] = user
-    );
+
 
     this.allUsers.forEach( user =>
       this.ordinaryTimeAndOvertime[user.brukerId] = [Math.round( (37.5 * daysInMonth / 7 ) * (user.stillingsProsent / 100)), 0]);

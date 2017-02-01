@@ -1,4 +1,4 @@
-<div class="contents">
+<div class="contents" *ngIf="this.usersIndexed.length > 0">
   <div class="top">
     <nav-bar-component [headerField2]="date.getFullYear()" [(headerField)]="date"
                        (pushed)="changeDate(date.getFullYear() +$event, date.getMonth(), date.getDate())"></nav-bar-component>
@@ -30,13 +30,13 @@
         <!--<td>{{shift.etternavn}}</td>-->
         <td class="bruker">{{usersIndexed[shift.userId].etternavn}}, {{usersIndexed[shift.userId].fornavn}}</td>
         <td *ngFor="let b of tempArr; let index = index">
-          <div *ngIf="index <= 8 && shift.toTime == 7"
+          <div *ngIf="index <= 8 && shift.toTime == 7 && cssClasses[usersIndexed[shift.userId]]"
                class="{{cssClasses[usersIndexed[shift.userId].stillingsBeskrivelse]}}">
           </div>
-          <div *ngIf="index >= 8 && index <= 15 && shift.toTime == 15"
+          <div *ngIf="index >= 8 && index <= 15 && shift.toTime == 15 && cssClasses[usersIndexed[shift.userId]]"
                class="{{cssClasses[usersIndexed[shift.userId].stillingsBeskrivelse]}}">
           </div>
-          <div *ngIf="index >= 15 && index <= 24 && shift.toTime == 23"
+          <div *ngIf="index >= 15 && index <= 24 && shift.toTime == 23 && cssClasses[usersIndexed[shift.userId]]"
                class="{{cssClasses[usersIndexed[shift.userId].stillingsBeskrivelse]}}">
           </div>
 
