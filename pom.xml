@@ -5,8 +5,8 @@
 
 	<groupId>com.example</groupId>
 	<artifactId>min_vakt</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
-	<packaging>jar</packaging>
+	<!--<version>0.0.1-SNAPSHOT</version>
+	<packaging>jar</packaging>-->
 
 	<name>min_vakt</name>
 	<description>scrum project</description>

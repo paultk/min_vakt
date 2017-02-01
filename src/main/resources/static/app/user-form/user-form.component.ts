@@ -32,7 +32,7 @@ export class UserFormComponent implements OnInit {
    avdeling = ['St. Olavs Hospital', 'Sentrum sykehus', 'Lade hjelpehjem', 'Ranheim eldreboliger'];
    */
 
-  model = USERS[0];
+  model = new User();
 
   submitted = false;
 
@@ -48,13 +48,14 @@ export class UserFormComponent implements OnInit {
   }
 
   onSubmit() {
+    console.log("pfft: " + this.model.fornavn);
     this.submitted = true;
     // console.log(this.model);
     this.userService.addUser(this.model);
   }
 
   printFunksjon(): void {
-    // console.log(this.model);
+     console.log(this.model);
   }
 
   getAvdelinger(): void {
