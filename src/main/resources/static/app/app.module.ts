@@ -18,7 +18,6 @@ import {InputFieldComponent} from './input-field/input-field.component';
 import {ForgotCredentialsComponent} from './forgot-credentials/forgot-credentials.component';
 import {FravaerComponent} from './fravaer/fravaer.component';
 import {FaqComponent} from "./faq/faq.component";
-import {CalendarComponent} from "./calendar/calendar.component";
 import {NavBarComponent} from "./calendar/nav-bar.component";
 import {ShiftService} from "./_services/shift.service";
 // import "./rxjs-extensions";

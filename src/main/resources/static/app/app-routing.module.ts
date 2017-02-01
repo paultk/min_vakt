@@ -6,7 +6,6 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { LoginComponent } from './login/login.component';
 import {NavigationComponent} from "./navigation/navigation.component";
-import {CalendarComponent} from "./calendar/calendar.component";
 import {AuthGuard} from "./_guards/auth.guard";
 import {PageNotFoundComponent} from "./not-found.component";
 import {ForgotCredentialsComponent} from "./forgot-credentials/forgot-credentials.component";
