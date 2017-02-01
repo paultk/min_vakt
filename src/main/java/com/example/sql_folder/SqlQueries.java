@@ -234,6 +234,7 @@ public class SqlQueries extends DBConnection {
 			PasswordEmail passwordEmail = new PasswordEmail();
 			passwordEmail.setNewPassword();
 			bruker.setPlaintextPassord(passwordEmail.getNewPassword());
+			bruker.hashPassord();
 			Passord newPassord = new Passord(bruker.getSalt(), bruker.getHash());
 			insertPassord(newPassord);
 			int passId = selectPassordId(bruker.getHash(), bruker.getSalt());
@@ -250,6 +251,7 @@ public class SqlQueries extends DBConnection {
 		try {
 			updateQuery = connection.prepareStatement("UPDATE  bruker SET \n" +
 					"stilling_beskrivelse =  ?,\n" +
+					"passord_id =  ?,\n" +
 					"avdeling_id =  ?,\n" +
 					"fornavn =  ?,\n" +
 					"etternavn =  ?,\n" +
@@ -260,15 +262,16 @@ public class SqlQueries extends DBConnection {
 					"admin =  ?\n" +
                     " WHERE bruker_id = ?;");
 			updateQuery.setString(1, bruker.getStillingsBeskrivelse());
-			updateQuery.setInt(2, bruker.getAvdelingId());
-			updateQuery.setString(3, bruker.getFornavn());
-			updateQuery.setString(4, bruker.getEtternavn());
-			updateQuery.setDouble(5, bruker.getTimelonn());
-			updateQuery.setInt(6, bruker.getTelefonNr());
-			updateQuery.setString(7, bruker.getEpost());
-			updateQuery.setInt(8, bruker.getStillingsProsent());
-			updateQuery.setBoolean(9, bruker.isAdmin());
-			updateQuery.setInt(10, bruker.getBrukerId());
+			updateQuery.setInt(2, bruker.getPassordId());
+			updateQuery.setInt(3, bruker.getAvdelingId());
+			updateQuery.setString(4, bruker.getFornavn());
+			updateQuery.setString(5, bruker.getEtternavn());
+			updateQuery.setDouble(6, bruker.getTimelonn());
+			updateQuery.setInt(7, bruker.getTelefonNr());
+			updateQuery.setString(8, bruker.getEpost());
+			updateQuery.setInt(9, bruker.getStillingsProsent());
+			updateQuery.setBoolean(10, bruker.isAdmin());
+			updateQuery.setInt(11, bruker.getBrukerId());
 			updateQuery.executeUpdate();
 			return true;
 		}

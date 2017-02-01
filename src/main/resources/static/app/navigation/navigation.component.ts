@@ -16,6 +16,7 @@ import {AuthenticationService} from "../_services/authentication.service";
 export class NavigationComponent implements OnInit{
   users: User[];
   numMessages = 0;
+  globalUser: User;
 
 
   private headers = new Headers({'Content-Type': 'application/json', 'token': localStorage.getItem('sessionToken')});
@@ -57,6 +58,7 @@ export class NavigationComponent implements OnInit{
   }
 
   ngOnInit(): void {
+    this.globalUser = this.authService.getGlobalUser();
     this.getUsers();
    this.setNumMessages();
    setInterval(() => {this.setNumMessages();}, 2000);

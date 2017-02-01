@@ -28,6 +28,10 @@ const navigationRoutes: Routes = [
     children: [
       {
         path: '',
+        component: UsersCalendarComponent
+      },
+      {
+        path: 'admin',
         component: AdminCalendarComponent
       },
       {

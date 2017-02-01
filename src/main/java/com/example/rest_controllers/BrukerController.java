@@ -55,15 +55,10 @@ public class BrukerController {
 	}*/
 
 	@RequestMapping(value="/bruker/glemtpassord", method=RequestMethod.POST)
-	public boolean resetBrukerPassord(@RequestBody Bruker bruker, @RequestHeader (value = "token") String token) throws AuthException {
-		if (TokenManager.verifiser(token)) {
-			System.out.println(bruker.getEpost());
-			bruker = query.selectBruker(bruker.getEpost());
-			return query.resetBrukerPassord(bruker);
-		}
-		else {
-			throw new AuthException("Token not authenticated");
-		}
+	public boolean resetBrukerPassord(@RequestBody Bruker bruker) throws AuthException {
+		System.out.println(bruker.getEpost());
+		bruker = query.selectBruker(bruker.getEpost());
+		return query.resetBrukerPassord(bruker);
 	}
 
 	@RequestMapping(value="/bruker/delete", method=RequestMethod.POST)

@@ -1,18 +1,18 @@
 import {Vakt} from '../_models/vakt';
 
 export const VAKTER: Vakt[] = [
-  {vakt_id: 0, vaktansvarlig_id: 1, avdeling_id: 1, fra_tid: "2017-01-16T15:00:00",
-    til_tid: "2017-01-16T15:00:00", ant_pers: 3},
-  {vakt_id: 1, vaktansvarlig_id: 1, avdeling_id: 2, fra_tid: "2017-01-04T15:00:00",
-    til_tid: "2017-01-16T15:00:00", ant_pers: 5},
-  {vakt_id: 2, vaktansvarlig_id: 2, avdeling_id: 2, fra_tid: "2017-01-03T15:00:00",
-    til_tid: "2017-01-16T15:00:00", ant_pers: 6},
-  {vakt_id: 3, vaktansvarlig_id: 2, avdeling_id: 2, fra_tid: "2017-01-05T15:00:00",
-    til_tid: "2017-01-16T15:00:00", ant_pers: 8},
-  {vakt_id: 4, vaktansvarlig_id: 2, avdeling_id: 1, fra_tid: "2017-01-06T15:00:00",
-    til_tid: "2017-01-16T15:00:00", ant_pers: 2},
-  {vakt_id: 5, vaktansvarlig_id: 1, avdeling_id: 1, fra_tid: "2017-01-10T15:00:00",
-    til_tid: "2017-01-16T15:00:00", ant_pers: 13},
-  {vakt_id: 6, vaktansvarlig_id: 1, avdeling_id: 1, fra_tid: "2017-01-10T09:05:00",
-    til_tid: "2017-01-16T15:00:00", ant_pers: 5}
+  {vaktId: 0, vaktansvarligId: 1, avdelingId: 1, fraTid: "2017-01-16T15:00:00",
+    tilTid: "2017-01-16T15:00:00", antPers: 3},
+  {vaktId: 1, vaktansvarligId: 1, avdelingId: 2, fraTid: "2017-01-04T15:00:00",
+    tilTid: "2017-01-16T15:00:00", antPers: 5},
+  {vaktId: 2, vaktansvarligId: 2, avdelingId: 2, fraTid: "2017-01-03T15:00:00",
+    tilTid: "2017-01-16T15:00:00", antPers: 6},
+  {vaktId: 3, vaktansvarligId: 2, avdelingId: 2, fraTid: "2017-01-05T15:00:00",
+    tilTid: "2017-01-16T15:00:00", antPers: 8},
+  {vaktId: 4, vaktansvarligId: 2, avdelingId: 1, fraTid: "2017-01-06T15:00:00",
+    tilTid: "2017-01-16T15:00:00", antPers: 2},
+  {vaktId: 5, vaktansvarligId: 1, avdelingId: 1, fraTid: "2017-01-10T15:00:00",
+    tilTid: "2017-01-16T15:00:00", antPers: 13},
+  {vaktId: 6, vaktansvarligId: 1, avdelingId: 1, fraTid: "2017-01-10T09:05:00",
+    tilTid: "2017-01-16T15:00:00", antPers: 5}
 ]

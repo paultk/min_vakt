@@ -44,7 +44,12 @@
   <div class="container-fluid">
     <ul class="nav side-menu">
       <li>
-        <a routerLink="">
+        <a *ngIf="globalUser.admin" routerLink="./admin">
+          <span class="glyphicon"></span> Vaktliste
+        </a>
+      </li>
+      <li>
+        <a *ngIf="!globalUser.admin" routerLink="">
           <span class="glyphicon"></span> Vaktliste
         </a>
       </li>
