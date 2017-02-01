@@ -44,12 +44,12 @@
   <div class="container-fluid">
     <ul class="nav side-menu">
       <li>
-        <a *ngIf="globalUser.admin" routerLink="./admin">
+        <a *ngIf="this.authService.getGlobalUser().admin" routerLink="./admin">
           <span class="glyphicon"></span> Vaktliste
         </a>
       </li>
       <li>
-        <a *ngIf="!globalUser.admin" routerLink="">
+        <a *ngIf="!this.authService.getGlobalUser().admin" routerLink="">
           <span class="glyphicon"></span> Vaktliste
         </a>
       </li>
