@@ -45,7 +45,11 @@ export class LoginComponent {
   }
 
   goToNavigation() {
-    this.router.navigate(['/navigation']);
+    if (this.theUser.admin) {
+      this.router.navigate(['/navigation/admin']);
+    } else {
+      this.router.navigate(['/navigation']);
+    }
   }
 
   restOfSetUser(user: User[]): void {
