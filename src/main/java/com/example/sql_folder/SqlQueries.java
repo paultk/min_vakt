@@ -1872,41 +1872,12 @@ public class SqlQueries extends DBConnection {
 		return false;
 	}
 
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		SqlQueries query = new SqlQueries();
-//		System.out.println();
-//		System.out.println(Arrays.toString(query.selectVakterAvdeling(1)));
-		/*LocalDateTime fra1 = LocalDateTime.now();
-		LocalDateTime til1 = fra1.plusHours(8);
-		LocalDateTime fra2 = fra1.plusDays(1);
-		LocalDateTime til2 = fra2.plusHours(8);
-		LocalDateTime fra3 = fra2.plusDays(1);
-		LocalDateTime til3 = fra3.plusHours(8);
-		LocalDateTime fra4 = fra3.plusDays(1);
-		LocalDateTime til4 = fra4.plusHours(8);
 
-		Vakt vakt1 = new Vakt(16, 16, 2,  fra1, til1, 10);
-		Vakt vakt2 = new Vakt(16, 16, 2, fra2, til2, 20);
-		Vakt vakt3 = new Vakt(16, 16, 2, fra3, til3, 30);
-		Vakt vakt4 = new Vakt(16, 16, 2, fra4, til4, 40);
-		query.insertVakt(vakt1);
-		query.insertVakt(vakt2);
-		query.insertVakt(vakt3);
-		query.insertVakt(vakt4);*/
-		/*query.insertBrukerVakt(16, 102);
-		query.insertBrukerVakt(16, 103);
-		query.insertBrukerVakt(16, 104);
-		query.insertBrukerVakt(16, 105);*/
-		/*Overtid overtid1 = new Overtid(4, 16, 4, 102, "overtid test1");
-		Overtid overtid2 = new Overtid(5, 16, 10, 103, "overtid test2");
-		query.insertOvertid(overtid1);
-		query.insertOvertid(overtid2);*/
-
-		//System.out.println(query.calculateMonthlyWage(16, LocalDate.now()));
-		//System.out.println(Arrays.toString(query.selectAllVakterMonth(LocalDateTime.parse("2017-02-01T12:30:00"),1)));
 
 		Bruker bruker = new Bruker("Sykepleier", 3, 90133787, 100, 250,
 		true, "Axel", "Kvistad", "axel.b.kvistad@gmail.com", "abcDEF!#");
 		query.insertBruker(bruker);
-    }
+    }*/
 }

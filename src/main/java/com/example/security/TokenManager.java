@@ -20,7 +20,7 @@ public class TokenManager {
 		LocalDateTime time = LocalDateTime.now();
 		//TODO set actual timeouts?
 		//Set timeouts here
-		time = time.plusHours(3);
+		time = time.plusHours(12);
 //		time = time.plusSeconds(30);
 		Date date = Date.from(time.atZone(ZoneId.systemDefault()).toInstant());
 		String token = JWT.create().withIssuer(issuer).withSubject(username).withClaim("admin", admin).withExpiresAt(date).sign(Algorithm.HMAC256(secret));
@@ -45,7 +45,7 @@ public class TokenManager {
 	}
 
 	//Run this to create a token, copy-paste from log
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		try {
 			System.out.println(TokenManager.lagToken("admin", true));
 			System.out.println(TokenManager.lagToken("ikkeadmin", false));
@@ -53,5 +53,5 @@ public class TokenManager {
 		catch (Exception e) {
 			e.printStackTrace();
 		}
-	}
+	}*/
 }

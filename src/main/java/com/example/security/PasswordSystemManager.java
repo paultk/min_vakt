@@ -139,7 +139,7 @@ public class PasswordSystemManager {
         return null;
     }
 
-    public static void main(String[] args) {
+    /*public static void main(String[] args) {
         String testPassword = "abcDEF!#";
         String hashHex = "0492F50418F9D05039504B90B2F980871D5D34D340B5ABB1B0F3D5D9A12017A0";
         String saltHex = "9187DE9DADB3318455C8053DE0B62B1A";
@@ -151,5 +151,5 @@ public class PasswordSystemManager {
 
         System.out.println(generatePassword());
 
-    }
+    }*/
 }
