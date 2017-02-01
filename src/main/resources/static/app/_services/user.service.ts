@@ -52,6 +52,7 @@ export class UserService {
   }
 
   getUsers1(): Observable<User[]> {
+    this.headers = new Headers({'Content-Type': 'application/json', 'token': localStorage.getItem('sessionToken')});
     return this.http.get(this.UsersURL, {headers: this.headers}).map((response: Response) =>
       response.json());
   }
@@ -64,6 +65,7 @@ export class UserService {
 
 
   getUsers(): Promise<User[]> {
+    this.headers = new Headers({'Content-Type': 'application/json', 'token': localStorage.getItem('sessionToken')});
     const URL = 'http://localhost:8080/bruker/alle';
     let returnPromise: User[] = [];
     let as: Object[] = [];
