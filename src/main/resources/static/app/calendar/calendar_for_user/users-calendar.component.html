@@ -30,13 +30,13 @@
         <!--<td>{{shift.etternavn}}</td>-->
         <td class="bruker">{{usersIndexed[shift.userId].etternavn}}, {{usersIndexed[shift.userId].fornavn}}</td>
         <td *ngFor="let b of tempArr; let index = index">
-          <div *ngIf="index <= 8 && shift.toTime == 7 && cssClasses[usersIndexed[shift.userId]]"
+          <div *ngIf="index <= 8 && shift.toTime == 7 "
                class="{{cssClasses[usersIndexed[shift.userId].stillingsBeskrivelse]}}">
           </div>
-          <div *ngIf="index >= 8 && index <= 15 && shift.toTime == 15 && cssClasses[usersIndexed[shift.userId]]"
+          <div *ngIf="index >= 8 && index <= 15 && shift.toTime == 15 "
                class="{{cssClasses[usersIndexed[shift.userId].stillingsBeskrivelse]}}">
           </div>
-          <div *ngIf="index >= 15 && index <= 24 && shift.toTime == 23 && cssClasses[usersIndexed[shift.userId]]"
+          <div *ngIf="index >= 15 && index <= 24 && shift.toTime == 23 "
                class="{{cssClasses[usersIndexed[shift.userId].stillingsBeskrivelse]}}">
           </div>
 
@@ -102,9 +102,9 @@
             <div class="form-class">
               <form>
                 <label for="bytt-select1">Vakt å bytte</label>
-                <select class="bytt-select1 form-control" id="bytt-select1" [(ngModel)]="vaktForBytte1.user" name="first">
-                  <option *ngFor="let shift of daysShifts[date.getDate()]">{{usersIndexed[shift.userId].etternavn}},
-                    {{usersIndexed[shift.userId].fornavn}}
+                <select class="bytt-select1 form-control" id="bytt-select1" [(ngModel)]="vaktForBytte1.userId" name="first">
+                  <option *ngFor="let user of allUsers" [value]="user.brukerId">{{user.etternavn}},
+                    {{user.fornavn}}
                   </option>
                 </select>
                 <!--Denne skal bort etterhvert
@@ -115,6 +115,7 @@
                 </select>
               -->
                 <button class="btn2 btn btn-primary btn-large" (click)="switchShifts()">Bytt</button>
+                <button class="btn2 btn btn-primary btn-large" (click)="check()">check</button>
               </form>
             </div>
           </template>

@@ -138,10 +138,10 @@ export class AdminCalendarComponent implements OnInit {
       this.percentageList[shiftPeriod][stilling] += 1;
     }
   }
-  delete(shift : Shift) {
+  deleteShift(shift : Shift) {
     console.log(shift);
-    this.shiftService.delete(shift);
-    this.ngOnInit();
+    this.shiftService.deleteShift(shift);
+    // this.ngOnInit();
   }
 
   checkIfPercentageIsOk(): void {

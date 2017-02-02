@@ -170,7 +170,9 @@ export class UsersCalendarComponent implements OnInit {
       this.daysShifts[i] = [];
     }
     for (let i in this.monthShifts) {
+
       let date = new Date(this.monthShifts[i]['vakt']['tilTid']);
+      let vaktId = this.monthShifts[i]['vakt']['vaktId'];
       let vaktAnsvarligId = this.monthShifts[i]['vakt']['vaktansvarligId'];
       // night = toTime = 0700, day = toTime = 1500, evening = toTime = 2300
       let toTimeSliced = this.monthShifts[i]['vakt']['tilTid'].slice(11, 13) as number;
@@ -186,7 +188,7 @@ export class UsersCalendarComponent implements OnInit {
       let brukerId = (this.monthShifts[i]['brukerId'] == 0) ? vaktAnsvarligId : this.monthShifts[i]['brukerId'];
 
       this.daysShifts[date.getDate()].push(
-        new Shift(null, 0, shiftDescript, brukerId, vaktAnsvarligId ));
+        new Shift(null, 0, shiftDescript, brukerId, vaktAnsvarligId, vaktId ));
     }
 
 
@@ -276,7 +278,7 @@ export class UsersCalendarComponent implements OnInit {
   }
 
   switchShifts(): void {
-    let vaktBytte = {'brukerId1': this.getCurrentUser().brukerId, 'vaktId': this.userHaveShift(), 'brukerId2': this.vaktForBytte1};
+    let vaktBytte = {'brukerId1': this.getCurrentUser().brukerId, 'vaktId': this.userHaveShift().vaktId, 'brukerId2': this.vaktForBytte1.userId};
     this.shiftService.addVaktBytte(vaktBytte);
 
 
@@ -306,7 +308,10 @@ export class UsersCalendarComponent implements OnInit {
   }
 
   check(): void {
-    console.log(this.availables);
+    let vaktBytte = {'brukerId1': this.getCurrentUser().brukerId, 'vaktId': this.userHaveShift().vaktId, 'brukerId2': this.vaktForBytte1.user.brukerId};
+    console.log(vaktBytte);
+    console.log(this.vaktForBytte1);
+    // console.log(this.userHaveShiftThisDay);
   }
 
   //todo: needs to reference actual user

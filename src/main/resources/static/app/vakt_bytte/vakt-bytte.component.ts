@@ -146,18 +146,19 @@ export class VaktBytteComponent implements OnInit{
     let prevMonth = this.date.getMonth();
     let prevYear = this.date.getFullYear();
     if(this.date.getDate() != date) {
-      this.date.setDate(date)
+      this.date.setDate(date);
     }
     else if (this.date.getMonth() != month) {
-      if(Number(this.shiftService.daysInMonth(this.date)) > Number(this.shiftService.daysInMonth(new Date(year, month, date)))) {
-        this.date.setDate(Number(this.shiftService.daysInMonth(new Date(year, month, date))));
-        this.date.setMonth(month);
-      }
+      this.date.setDate(1);
+      this.date.setMonth(month);
+
     }
     else if (this.date.getFullYear() != year) {
       this.date.setFullYear(year);
     }
     if (this.date.getFullYear() != prevYear || this.date.getMonth() != prevMonth){
+      console.log('date::::');
+      console.log(this.date);
       this.getShifts();
     }
   }

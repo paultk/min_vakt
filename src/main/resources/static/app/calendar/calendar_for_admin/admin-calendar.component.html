@@ -28,22 +28,31 @@
       <tbody>
       <tr *ngFor="let shift of daysShifts[this.date.getDate()]; let rows = index">
         <!--<td>{{shift.etternavn}}</td>-->
+        <!--<div *ngIf="index <= 8 && shift.toTime == 7"
+               class="{{cssClasses[usersIndexed[shift.userId].stillingsBeskrivelse]}}">
+          </div>
+          <div *ngIf="index >= 8 && index <= 15 && shift.toTime == 15"
+               class="{{cssClasses[usersIndexed[shift.userId].stillingsBeskrivelse]}}">
+          </div>
+          <div *ngIf="index >= 15 && index <= 24 && shift.toTime == 23"
+               class="{{cssClasses[usersIndexed[shift.userId].stillingsBeskrivelse]}}">
+          </div>-->
         <td class="bruker">{{usersIndexed[shift.userId].etternavn}}, {{usersIndexed[shift.userId].fornavn}}</td>
         <td *ngFor="let b of tempArr; let index = index">
-          <div *ngIf="index <= 8 && shift.toTime == 7 && cssClasses[usersIndexed[shift.userId]]"
+          <div *ngIf="index <= 8 && shift.toTime == 7"
                class="{{cssClasses[usersIndexed[shift.userId].stillingsBeskrivelse]}}">
           </div>
-          <div *ngIf="index >= 8 && index <= 15 && shift.toTime == 15 && cssClasses[usersIndexed[shift.userId]]"
+          <div *ngIf="index >= 8 && index <= 15 && shift.toTime == 15 "
                class="{{cssClasses[usersIndexed[shift.userId].stillingsBeskrivelse]}}">
           </div>
-          <div *ngIf="index >= 15 && index <= 24 && shift.toTime == 23 && cssClasses[usersIndexed[shift.userId]]"
+          <div *ngIf="index >= 15 && index <= 24 && shift.toTime == 23"
                class="{{cssClasses[usersIndexed[shift.userId].stillingsBeskrivelse]}}">
           </div>
 
         </td>
         <td></td>
         <td class="slett">
-          <button class="btn1 btn btn-primary" (click)="delete(shift)">Slett vakt</button>
+          <button class="btn1 btn btn-primary" (click)="deleteShift(shift)">Slett vakt</button>
         </td>
       </tr>
       <tr *ngIf="vaktansvarligIds[date.getDate()] != undefined">
