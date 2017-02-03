@@ -1832,7 +1832,8 @@ public class SqlQueries extends DBConnection {
 			Bruker tilBruker = selectBruker(brukerId2);
 			String advarselMelding = "Dette er en automatisk varsel: \n\nBruker " + fraBruker.getFornavn() + " " +
 					fraBruker.getEtternavn() + " har sendt inn ønske om å bytte vakt med bruker " + tilBruker.getFornavn() +
-					" " + tilBruker.getEtternavn() + ". Du er registrert som vaktansvarlig for denne vakten.";
+					" " + tilBruker.getEtternavn() + ". Du er registrert som vaktansvarlig for denne vakten, og må" +
+					" godkjenne eller avslå forespørselen.";
 			insertMelding(new Melding(0,adminBruker.getBrukerId(), fraBruker.getBrukerId(), "Varsel om vaktbytte",
 					advarselMelding, null, false));
 		} catch (SQLException e) {
