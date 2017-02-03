@@ -40,11 +40,16 @@ export class ProfilComponent implements OnInit {
   }
 
   changePass() : void {
-    if (this.pass1 != "" && this.pass2 != "" && this.pass1 == this.pass2) {
-      this.user.plaintextPassord=this.pass1;
-      this.userService.updatePassword(this.user).subscribe(ret => {
-        this.authService.logout();
-      });
+    if (this.pass1 != "" && this.pass2 != "") {
+      if (this.pass1 == this.pass2) {
+        this.user.plaintextPassord = this.pass1;
+        this.userService.updatePassword(this.user).subscribe(ret => {
+          this.authService.logout();
+        });
+      }
+      else {
+        alert("Passordene må være like!");
+      }
     }
   }
 
