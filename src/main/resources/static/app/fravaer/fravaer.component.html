@@ -54,7 +54,7 @@
           </ul>
 
           <input-field [field]='"Kommentar:"' [(fieldValue)]="model.kommentar" id="drittFelt"></input-field>
-          <button type="button" class="btn btn-default btn-primary" (click)="onSubmit()" [disabled]="!fravaerForm.valid">Registrer fravær</button>
+          <button type="submit" routerLink="../fravaerinfo" class="btn btn-default btn-primary" [disabled]="!fravaerForm.valid">Registrer fravær</button>
         </form>
       </div>
     </div>

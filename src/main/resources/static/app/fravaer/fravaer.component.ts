@@ -101,6 +101,7 @@ export class FravaerComponent implements OnInit {
   }
 
   onSubmit(): void {
+    console.log("SUCCEED");
     if (this.selectedVakt == null || this.selectedUser == null) {
       return;
     }
@@ -124,7 +125,7 @@ export class FravaerComponent implements OnInit {
     this.submitted = true;
     // console.log(this.model);
     this.fravaerService.registerFravaer(this.model);
-    this.router.navigate(['../fravaer']);
+    this.router.navigate(['../fravaerinfo']);
   }
 
   ngOnInit() {
