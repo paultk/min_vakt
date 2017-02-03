@@ -58,13 +58,13 @@ export class ShiftService {
     public antPers?: number
   ) {}
 }*/
-  delete(shift : Shift) : void {
+  deleteShift(shift : Shift) : void {
     this.getVakt(shift.vaktId).subscribe(ret => {
       let vakt = this.mapVaktFromObs(ret);
       console.log(vakt);
       let url = 'http://localhost:8080/vakt/delete';
       return this.http.post(url, JSON.stringify(vakt), {headers : this.headers}).map(
-        (response: Response) => response.json()
+        (response: Response) => console.log(response.json())
       );
     });
   }
@@ -98,6 +98,8 @@ export class ShiftService {
     if(tempTid == 0) date += '07:00';
     else if(tempTid == 0) date += '15:00';
     else if(tempTid == 0) date += '23:00';
+    console.log("shgift tid")
+    console.log(date)
 
     let url = `http://localhost:8080/bruker/addtid/${date}/2`;
     this.http.post(url, JSON.stringify(shift.user), {headers: this.headers}).toPromise()
@@ -124,6 +126,7 @@ export class ShiftService {
   }
   addVaktBytte(vaktBytte: any): Promise<boolean> {
 
+    console.log(vaktBytte)
 
     let url = 'http://localhost:8080/vaktbytte/bytt';
     return this.http.post(url, JSON.stringify(vaktBytte), {headers: this.headers}).toPromise()
@@ -155,6 +158,7 @@ export class ShiftService {
   }
 
   byttVakter(vaktBytte: any) {
+    console.log(vaktBytte);
     let url = 'http://localhost:8080/brukervakt/bytt';
     this.http.post(url, JSON.stringify(vaktBytte), {headers: this.headers}).toPromise()
       .then((response) => response.json())
@@ -162,7 +166,7 @@ export class ShiftService {
   }
 
   deleteVaktBytte(vaktBytte: any): void {
-    let url = 'http://localhost:8080/vaktbytte/delete';
+    let url = 'http://localhost:8080/vaktbytte/deleteShift';
     this.http.post(url, JSON.stringify(vaktBytte), {headers: this.headers}).toPromise()
       .then((response) => response.json())
       .catch( (error) => this.handleError(error));
